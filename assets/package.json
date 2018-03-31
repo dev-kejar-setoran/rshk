@@ -1,0 +1,19 @@
+{
+  "name": "hse-nindya-mockup",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@gitlab.com:pragmainf/mockup/hse-nindya.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "semantic-ui": "^2.3.0",
+    "semantic-ui-calendar": "0.0.8"
+  }
+}
