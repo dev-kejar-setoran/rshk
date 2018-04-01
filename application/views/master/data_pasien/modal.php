@@ -4,7 +4,9 @@
     Form Pasien
   </div>
   <div class="content">
-    <form class="ui data form" id="dataForm" action="<?php echo site_url('master/data_pasien/add_process'); ?>" method="POST" style="padding-top: 1rem;">
+    <form class="ui data form" id="dataForm" action="" method="POST" style="padding-top: 1rem;">
+      <input type="hidden" id="id_pasien" value="">
+      <input type="hidden" id="form" value="">
       <div class="ui grid">
         <div class="sixteen wide column">
           <div class="ui inline grid field">
@@ -19,13 +21,13 @@
             <label class="six wide column" style="margin-right: 0">Jenis Kelamin</label>
             <div class="four wide column field">
               <div class="ui radio checkbox">
-                <input type="radio" id="jenis_kelamin" checked="checked">
+                <input type="radio" name="jenis_kelamin" value="L" id="jenis_kelamin" checked="checked">
                 <label>Laki-laki</label>
               </div>
             </div>
             <div class="four wide column field">
               <div class="ui radio checkbox">
-                <input type="radio" id="jenis_kelamin">
+                <input type="radio" name="jenis_kelamin" value="P" id="jenis_kelamin">
                 <label>Perempuan</label>
               </div>
             </div>
