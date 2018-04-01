@@ -25,9 +25,9 @@ class data_pasien extends MY_Controller {
         print_r($this->input->post()); exit();
         // set rule
         $this->form_validation->set_rules('nama_pasien', 'Nama', 'required');
-        $this->form_validation->set_rules('nomor_kartu', 'nomor kartu', 'required|max_length[20]');
-        $this->form_validation->set_rules('jenis_kelamin', 'JK', 'required|max_length[55]');
-        $this->form_validation->set_rules('tempat_lahir', 'tempat lahir', 'max_length[55]');
+        // $this->form_validation->set_rules('nomor_kartu', 'nomor kartu', 'required|max_length[20]');
+        // $this->form_validation->set_rules('jenis_kelamin', 'JK', 'required|max_length[55]');
+        // $this->form_validation->set_rules('tempat_lahir', 'tempat lahir', 'max_length[55]');
         // validasi form
         if ($this->form_validation->run() == TRUE) {
             // parameter update
