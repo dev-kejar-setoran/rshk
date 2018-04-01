@@ -62,6 +62,14 @@
         </h2>
       </div>
 
+      <div class="ui success message transition hidden">
+        <i class="close icon"></i>
+        <div class="header">
+          Your user registration was successful.
+        </div>
+        <p>You may now log-in with the username you have chosen</p>
+      </div>
+
       <div class="ui clearing divider" style="border-top: none !important; margin:10px"></div>
 
       <div class="ui grid">
@@ -88,6 +96,9 @@
                   </div>
                 </div>
               </form>
+
+
+
 
               <table class="ui celled table">
                 <thead class="center aligned">
@@ -154,7 +165,6 @@
     </div>
   </div>
 
-  <?php include('modal.php') ?>
 
   <!-- <script src="../../../js/es6-promise.auto.min.js"></script> -->
   <script src="<?php echo $this->config->item('base_url_file');?>assets/plugins/jQuery/jquery-2.2.3.min.js"></script>
@@ -182,5 +192,44 @@
   </script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.5/Chart.min.js">></script>
   <script src="<?php echo $this->config->item('base_url_file');?>assets/js/dummy.js"></script>
+
+  <?php include('modal.php') ?>
+
+<script type="text/javascript">
+$('.ui.form')
+  .form({
+    on: 'blur',
+    fields: {
+      empty: {
+        identifier  : 'nama_tautan',
+        rules: [
+          {
+            type   : 'empty',
+            prompt : 'Silahkan isi Nama'
+          }
+        ]
+      },
+      fields: {
+        identifier  : 'tautan',
+        rules: [
+          {
+            type   : 'empty',
+            prompt : 'Silahkan isi Tautan'
+          }
+        ]
+      },
+      fields: {
+        identifier  : 'deskripsi',
+        rules: [
+          {
+            type   : 'empty',
+            prompt : 'Silahkan isi Deskripsi'
+          }
+        ]
+      }
+    }
+  })
+;
+</script>
 </body>
 </html>

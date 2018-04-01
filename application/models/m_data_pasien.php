@@ -13,7 +13,7 @@ class m_data_pasien extends CI_Model {
 
     // fungsi tampil semua
     public function get_all() {
-        $sql = "SELECT * FROM m_data_pasien ";
+        $sql = "SELECT id_pasien, nama_pasien, nomor_kartu, tempat_lahir,tgl_lahir, created_at, created_by FROM m_data_pasien ";
         $query = $this->db->query($sql);
         if ($query->num_rows() > 0) {
             $result = $query->result_array();
@@ -25,9 +25,30 @@ class m_data_pasien extends CI_Model {
     }
 
     // tambah
-    public function create2($params) {
+    public function get_add($params) {
         return $this->db->insert('m_data_pasien', $params);
     }
+
+    // detail data
+    public function get_detail_data($params) {
+        $sql = "SELECT *
+                FROM m_data_pasien 
+                WHERE id_pasien = ?";
+        $query = $this->db->query($sql, $params);
+        if ($query->num_rows() > 0) {
+            $result = $query->row_array();
+            $query->free_result();
+            return $result;
+        } else {
+            return array();
+        }
+    }
+
+    // ubah
+    public function update($params, $where) {
+        return $this->db->update('m_data_pasien', $params, $where);
+    }
+    
 
 }
 

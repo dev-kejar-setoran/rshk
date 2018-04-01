@@ -9,6 +9,7 @@
   <link rel="stylesheet" type="text/css" href="<?php echo $this->config->item('base_url_file');?>assets/semantic/semantic.min.css">
   <link rel="stylesheet" href="<?php echo $this->config->item('base_url_file');?>assets/plugins/sweetalert/sweetalert2.min.css">
   <link rel="stylesheet" href="<?php echo $this->config->item('base_url_file');?>assets/css/app.css">
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css">
 
   <style type="text/css">
   .ui.file.input input[type="file"] {
@@ -82,7 +83,7 @@
                     <i class="refresh icon"></i>
                   </button>
                   <div style="margin-left: auto; margin-right: 1px;">
-                    <button type="button" class="ui blue add button" onclick="openModal()">
+                    <button type="button" class="ui blue add button" onclick="form_add()">
                       <i class="plus icon"></i>
                       Tambah Data
                     </button>
@@ -91,10 +92,10 @@
                 </div>
               </form>
 
-              <table class="ui celled table">
-                <thead class="center aligned">
-                  <tr>
-                    <th>No</th>
+              <table id="tb_data" class="display ui celled tabl" style="width:100%">
+                <thead>
+                    <tr>
+                        <th>No</th>
                     <th>Nama</th>
                     <th>Nomor Kartu</th>
                     <th>Tempat Lahir</th>
@@ -102,10 +103,10 @@
                     <th>Tanggal Entry</th>
                     <th>Oleh</th>
                     <th>Aksi</th>
-                  </tr>
+                    </tr>
                 </thead>
-                <tbody id="tb_data"></tbody>
               </table>
+
             </div>
           </div>
         </div>
@@ -146,9 +147,15 @@
       .modal("refresh");
     }
   </script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.5/Chart.min.js">></script>
+  <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.5/Chart.min.js"></script>
   <script src="<?php echo $this->config->item('base_url_file');?>assets/js/dummy.js"></script>
   <?php include('js.php') ?>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+    } );
+</script>
 
 </body>
 </html>
