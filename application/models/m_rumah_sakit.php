@@ -19,7 +19,14 @@ class m_rumah_sakit extends CI_Model {
 		
 		$this->db->insert('m_rumah_sakit', $data);
         return true;
-	}
+    }
+    
+    function edit_data($id){
+        $result = json_encode($this->db->get_where('m_rumah_sakit',array("id_dokumen"=>$id))->row());
+		$this->output
+			->set_content_type('application/json')
+			->set_output($result);
+    }
 
 	// function edit_data($where,$table){		
 	// 	return $this->db->get_where($table,$where);
