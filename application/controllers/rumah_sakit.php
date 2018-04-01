@@ -23,12 +23,25 @@ class Rumah_Sakit extends MY_Controller {
     }
     function createRS(){
         $data = array(
-            'nama' => $_POST['nama'],
+            'nama_rumah_sakit' => $_POST['nama'],
             'alamat' => $_POST['alamat'],
             'no_telp' => $_POST['no_telp'],
             'created_by' => "Azhar"
         );
-        $this->m_rumah_sakit->createRS($data);
+        $this->m_rumah_sakit->input_data($data);
+    }
+    function edit_data($id){
+        $result = json_encode($this->db->get_where('m_rumah_sakit',array("id_dokumen"=>$id))->row());
+		$this->output
+			->set_content_type('application/json')
+			->set_output($result);
+    }
+
+    function delete_RS(){
+        $id = $_POST['id'];
+        //print_r($id);
+        $this->db->where('id_rumah_sakit', $id);
+		$this->db->delete('m_rumah_sakit');
     }
 
 }

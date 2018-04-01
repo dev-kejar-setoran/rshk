@@ -104,6 +104,7 @@
           </tr>
         </thead>
         <tbody>
+
         <?php
           $no=1;
           if (is_array($data) || is_object($data)){
@@ -111,16 +112,18 @@
             foreach($data as $getRS){ 
               
         ?>
-          <td class="center aligned"><?php echo $no++; ?></td>
-          <td class="center aligned"><?php echo $getRS['nama']; ?></td>
-          <td class="center aligned"><?php echo $getRS['alamat']; ?></td>
-          <td class="center aligned"><?php echo $getRS['no_telp']; ?></td>
-          <td class="center aligned"><?php echo $getRS['created_at']; ?></td>
-          <td class="center aligned"><?php echo $getRS['created_by']; ?></td>
-          <td class="center aligned">
-            <button type="button" data-content="Ubah Data" data-id="" class="ui mini orange icon edit button" onclick="updateModal()"><i class="edit icon"></i></button>
-            <button type="button" data-content="Hapus Data" data-id="" class="ui mini red icon delete button"><i class="trash icon"></i></button>
-          </td>
+          <tr>
+            <td class="center aligned"><?php echo $no++; ?></td>
+            <td class="center aligned"><?php echo $getRS['nama_rumah_sakit']; ?></td>
+            <td class="center aligned"><?php echo $getRS['alamat']; ?></td>
+            <td class="center aligned"><?php echo $getRS['no_telp']; ?></td>
+            <td class="center aligned"><?php echo $getRS['created_at']; ?></td>
+            <td class="center aligned"><?php echo $getRS['created_by']; ?></td>
+            <td class="center aligned">
+              <button type="button" data-content="Ubah Data" data-id="" class="ui mini orange icon edit button" onclick="updateModal()"><i class="edit icon"></i></button>
+              <button type="button" data-content="Hapus Data" data-id="" class="ui mini red icon button" onclick="deleteModal(<?php echo $getRS['id_rumah_sakit'];?>)"><i class="trash icon"></i></button>
+            </td>
+          </tr>
             <?php }}; ?>
       </tbody>
     </table>
@@ -189,6 +192,34 @@
         },
         onApprove : function() {
           window.alert('Data Berhasil Disimpan');
+        }
+      })
+      .modal('show')
+      .modal("refresh");
+    }
+    function deleteModal(id){
+      var id = id;
+      console.log(id);
+      $('.delete')
+      .modal({
+        onDeny    : function(){
+          window.alert('Batal Hapus ?');
+          
+        },
+        onApprove : function() {
+          $.ajax({
+         type: "POST",
+         url: "<?php echo base_url();?>rumah_sakit/delete_RS", 
+         data: {
+            id: id
+          },
+         dataType: "text",  
+         cache:false,
+         success: 
+              function(data){
+                window.alert('Data Berhasil Dihapus');  //as a debugging message.
+              }
+          });
         }
       })
       .modal('show')
