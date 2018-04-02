@@ -6,8 +6,8 @@ class MY_Controller extends CI_Controller
     {
         parent::__construct();
         // cek status login user
-        $session['username']=$this->session->userdata('username');
-        if(empty($session['username'])){
+        $session['id_user']=$this->session->userdata('id_user');
+        if(empty($session['id_user'])){
             session_destroy();
             echo '<meta http-equiv="refresh" content="0;URL=\''.base_url('auth').'\'" />  ';
             //redirect('auth');

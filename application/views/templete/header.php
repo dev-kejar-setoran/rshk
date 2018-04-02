@@ -22,7 +22,7 @@
         </div>
 
         <div class="ui pointing dropdown item" tabindex="0">
-            <img class="ui avatar image" src="<?php echo 'http://' . $_SERVER['HTTP_HOST'] . '/rsharapankita/assets/img/avatar04.png'; ?>"> <span><?php  echo $this->session->userdata('username'); ?></span> <i class="dropdown icon"></i>
+            <img class="ui avatar image" src="<?php echo 'http://' . $_SERVER['HTTP_HOST'] . '/rsharapankita/assets/img/avatar04.png'; ?>"> <span><?php  echo $this->session->userdata('nama_lengkap'); ?></span> <i class="dropdown icon"></i>
             <div class="menu transition hidden" tabindex="-1">
                 <a class="item" href="#"><i class="user icon"></i> Profil</a>
                 <a class="item" href="<?php echo base_url('Auth/get_logout'); ?>"><i class="sign out icon"></i> Logout</a>

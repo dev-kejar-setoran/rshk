@@ -48,6 +48,7 @@ function get_validation()
       $data = array(
         'status' => true,
         'email'=>$value['email'],
+        'nama_lengkap'=>$value['nama_lengkap'],
         'id_user'=>$value['id_user']
       );
     }

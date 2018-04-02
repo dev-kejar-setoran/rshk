@@ -12,9 +12,11 @@ class m_data_pasien extends CI_Model {
     // public $db_tabel = 'guru';
 
     // fungsi tampil semua
-    public function get_all() {
-        $sql = "SELECT id_pasien, nama_pasien, nomor_kartu, tempat_lahir,tgl_lahir, created_at, created_by FROM m_data_pasien ";
-        $query = $this->db->query($sql);
+    public function get_all($params) {
+        $sql = "SELECT id_pasien, nama_pasien, nomor_kartu, tempat_lahir,tgl_lahir, created_at, created_by 
+                FROM m_data_pasien 
+                WHERE nama_pasien LIKE ? AND nomor_kartu LIKE ?";
+        $query = $this->db->query($sql,$params);
         if ($query->num_rows() > 0) {
             $result = $query->result_array();
             $query->free_result();
