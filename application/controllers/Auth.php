@@ -37,17 +37,17 @@ class Auth extends CI_Controller {
 function get_validation()
 {
   $this->load->model('auth_model');
-  $username=$this->input->post('email');
+  $email=$this->input->post('email');
   $password=md5($this->input->post('password'));
    //print_r($password); exit();
-  $d = $this->auth_model->get_validation(array($username,$password));
+  $d = $this->auth_model->get_validation(array($email,$password));
   // print_r($d); exit();
   if(count($d)==1)
   {
     foreach ($d as $key => $value) {
       $data = array(
         'status' => true,
-        'username'=>$value['username'],
+        'email'=>$value['email'],
         'id_user'=>$value['id_user']
       );
     }
@@ -63,7 +63,7 @@ function get_validation()
 
 function get_logout()
 {
-  $session['username']=$this->session->unset_userdata('username');
+  $session['email']=$this->session->unset_userdata('email');
   $session['status']= $this->session->unset_userdata('status');
   $session['role']= $this->session->unset_userdata('ROLE');
 

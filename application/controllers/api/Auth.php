@@ -14,13 +14,13 @@ class Auth extends CI_Controller {
 			$check_auth_client = $this->m_api_auth->check_auth_client();
 			if($check_auth_client == true){
 				$params = json_decode(file_get_contents('php://input'), TRUE);
-				if ($params['username'] == "" || $params['password'] == "") {
+				if ($params['email'] == "" || $params['password'] == "") {
 
-					$response = array('status' => 400,'message' =>  'User atau password Salah!');
+					$response = array('status' => 400,'message' =>  'Email atau password Salah!');
 				} else {
-					$username = $params['username'];
+					$email = $params['email'];
 					$password = $params['password'];
-					$response = $this->m_api_auth->login($username,$password);
+					$response = $this->m_api_auth->login($email,$password);
 					//}
 					json_output($response['status'],$response);
 					

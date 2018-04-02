@@ -1753,15 +1753,15 @@ abstract class REST_Controller extends CI_Controller {
      * Perform LDAP Authentication
      *
      * @access protected
-     * @param string $username The username to validate
+     * @param string $email The email to validate
      * @param string $password The password to validate
      * @return bool
      */
-    protected function _perform_ldap_auth($username = '', $password = NULL)
+    protected function _perform_ldap_auth($email = '', $password = NULL)
     {
-        if (empty($username))
+        if (empty($email))
         {
-            log_message('debug', 'LDAP Auth: failure, empty username');
+            log_message('debug', 'LDAP Auth: failure, empty email');
             return FALSE;
         }
 
@@ -1804,15 +1804,15 @@ abstract class REST_Controller extends CI_Controller {
         }
 
         // Search for user
-        if (($res_id = ldap_search($ldapconn, $ldap['basedn'], "uid=$username")) === FALSE)
+        if (($res_id = ldap_search($ldapconn, $ldap['basedn'], "uid=$email")) === FALSE)
         {
-            log_message('error', 'LDAP Auth: User '.$username.' not found in search');
+            log_message('error', 'LDAP Auth: User '.$email.' not found in search');
             return FALSE;
         }
 
         if (ldap_count_entries($ldapconn, $res_id) !== 1)
         {
-            log_message('error', 'LDAP Auth: Failure, username '.$username.'found more than once');
+            log_message('error', 'LDAP Auth: Failure, email '.$email.'found more than once');
             return FALSE;
         }
 
@@ -1831,7 +1831,7 @@ abstract class REST_Controller extends CI_Controller {
         // User found, could not authenticate as user
         if (($link_id = ldap_bind($ldapconn, $user_dn, $password)) === FALSE)
         {
-            log_message('error', 'LDAP Auth: Failure, username/password did not match: ' . $user_dn);
+            log_message('error', 'LDAP Auth: Failure, email/password did not match: ' . $user_dn);
             return FALSE;
         }
 
@@ -1848,15 +1848,15 @@ abstract class REST_Controller extends CI_Controller {
      * Perform Library Authentication - Override this function to change the way the library is called
      *
      * @access protected
-     * @param string $username The username to validate
+     * @param string $email The email to validate
      * @param string $password The password to validate
      * @return bool
      */
-    protected function _perform_library_auth($username = '', $password = NULL)
+    protected function _perform_library_auth($email = '', $password = NULL)
     {
-        if (empty($username))
+        if (empty($email))
         {
-            log_message('error', 'Library Auth: Failure, empty username');
+            log_message('error', 'Library Auth: Failure, empty email');
             return FALSE;
         }
 
@@ -1880,20 +1880,20 @@ abstract class REST_Controller extends CI_Controller {
             $this->load->library($auth_library_class);
         }
 
-        return $this->{$auth_library_class}->$auth_library_function($username, $password);
+        return $this->{$auth_library_class}->$auth_library_function($email, $password);
     }
 
     /**
      * Check if the user is logged in
      *
      * @access protected
-     * @param string $username The user's name
+     * @param string $email The user's name
      * @param bool|string $password The user's password
      * @return bool
      */
-    protected function _check_login($username = NULL, $password = FALSE)
+    protected function _check_login($email = NULL, $password = FALSE)
     {
-        if (empty($username))
+        if (empty($email))
         {
             return FALSE;
         }
@@ -1905,7 +1905,7 @@ abstract class REST_Controller extends CI_Controller {
         if ( ! $this->config->item('auth_source') && $rest_auth === 'digest')
         {
             // For digest we do not have a password passed as argument
-            return md5($username.':'.$this->config->item('rest_realm').':'.(isset($valid_logins[$username]) ? $valid_logins[$username] : ''));
+            return md5($email.':'.$this->config->item('rest_realm').':'.(isset($valid_logins[$email]) ? $valid_logins[$email] : ''));
         }
 
         if ($password === FALSE)
@@ -1915,24 +1915,24 @@ abstract class REST_Controller extends CI_Controller {
 
         if ($auth_source === 'ldap')
         {
-            log_message('debug', "Performing LDAP authentication for $username");
+            log_message('debug', "Performing LDAP authentication for $email");
 
-            return $this->_perform_ldap_auth($username, $password);
+            return $this->_perform_ldap_auth($email, $password);
         }
 
         if ($auth_source === 'library')
         {
-            log_message('debug', "Performing Library authentication for $username");
+            log_message('debug', "Performing Library authentication for $email");
 
-            return $this->_perform_library_auth($username, $password);
+            return $this->_perform_library_auth($email, $password);
         }
 
-        if (array_key_exists($username, $valid_logins) === FALSE)
+        if (array_key_exists($email, $valid_logins) === FALSE)
         {
             return FALSE;
         }
 
-        if ($valid_logins[$username] !== $password)
+        if ($valid_logins[$email] !== $password)
         {
             return FALSE;
         }
@@ -1977,27 +1977,27 @@ abstract class REST_Controller extends CI_Controller {
         }
 
         // Returns NULL if the SERVER variables PHP_AUTH_USER and HTTP_AUTHENTICATION don't exist
-        $username = $this->input->server('PHP_AUTH_USER');
+        $email = $this->input->server('PHP_AUTH_USER');
         $http_auth = $this->input->server('HTTP_AUTHENTICATION');
 
         $password = NULL;
-        if ($username !== NULL)
+        if ($email !== NULL)
         {
             $password = $this->input->server('PHP_AUTH_PW');
         }
         elseif ($http_auth !== NULL)
         {
-            // If the authentication header is set as basic, then extract the username and password from
-            // HTTP_AUTHORIZATION e.g. my_username:my_password. This is passed in the .htaccess file
+            // If the authentication header is set as basic, then extract the email and password from
+            // HTTP_AUTHORIZATION e.g. my_email:my_password. This is passed in the .htaccess file
             if (strpos(strtolower($http_auth), 'basic') === 0)
             {
                 // Search online for HTTP_AUTHORIZATION workaround to explain what this is doing
-                list($username, $password) = explode(':', base64_decode(substr($this->input->server('HTTP_AUTHORIZATION'), 6)));
+                list($email, $password) = explode(':', base64_decode(substr($this->input->server('HTTP_AUTHORIZATION'), 6)));
             }
         }
 
         // Check if the user is logged into the system
-        if ($this->_check_login($username, $password) === FALSE)
+        if ($this->_check_login($email, $password) === FALSE)
         {
             $this->_force_login();
         }
@@ -2036,18 +2036,18 @@ abstract class REST_Controller extends CI_Controller {
 
         // We need to retrieve authentication data from the $digest_string variable
         $matches = [];
-        preg_match_all('@(username|nonce|uri|nc|cnonce|qop|response)=[\'"]?([^\'",]+)@', $digest_string, $matches);
+        preg_match_all('@(email|nonce|uri|nc|cnonce|qop|response)=[\'"]?([^\'",]+)@', $digest_string, $matches);
         $digest = (empty($matches[1]) || empty($matches[2])) ? [] : array_combine($matches[1], $matches[2]);
 
-        // For digest authentication the library function should return already stored md5(username:restrealm:password) for that username see rest.php::auth_library_function config
-        $username = $this->_check_login($digest['username'], TRUE);
-        if (array_key_exists('username', $digest) === FALSE || $username === FALSE)
+        // For digest authentication the library function should return already stored md5(email:restrealm:password) for that email see rest.php::auth_library_function config
+        $email = $this->_check_login($digest['email'], TRUE);
+        if (array_key_exists('email', $digest) === FALSE || $email === FALSE)
         {
             $this->_force_login($unique_id);
         }
 
         $md5 = md5(strtoupper($this->request->method).':'.$digest['uri']);
-        $valid_response = md5($username.':'.$digest['nonce'].':'.$digest['nc'].':'.$digest['cnonce'].':'.$digest['qop'].':'.$md5);
+        $valid_response = md5($email.':'.$digest['nonce'].':'.$digest['nc'].':'.$digest['cnonce'].':'.$digest['qop'].':'.$md5);
 
         // Check if the string don't compare (case-insensitive)
         if (strcasecmp($digest['response'], $valid_response) !== 0)

@@ -17,16 +17,17 @@ class M_api_auth extends CI_Model {
         }
     }
 
-    public function login($username,$password)
+    public function login($email,$password)
     {
-        $q  = $this->db->select('password,id_user')->from('m_users')->where('username',$username)->get()->row();
+        $q  = $this->db->select('password,id_user,role')->from('m_users')->where('email',$email)->get()->row();
 
         if($q == ""){
-             echo $username + "Username tidak ditemukan";
-            return array('status' => 401,'message' => 'Username tidak ditemukan.');
+             echo $email + "Email tidak ditemukan";
+            return array('status' => 401,'message' => 'Email tidak ditemukan.');
         } else {
             $hashed_password = $q->password;
             $id_user              = $q->id_user;
+             $role              = $q->role;
             // echo $hashed_password ." ".$password;
             echo $password;
 
@@ -43,7 +44,7 @@ class M_api_auth extends CI_Model {
               return array('status' => 500,'message' => 'Internal server error.');
           } else {
               $this->db->trans_commit();
-              return array('status' => 200,'message' => 'Successfully login.','id_user' => $id_user, 'token' => $token);
+              return array('status' => 200,'message' => 'Successfully login.','id_user' => $id_user,'role' => $role, 'token' => $token);
           }
       } else {
         return array('status' => 401,'message' => ': Passwod Salah.');
