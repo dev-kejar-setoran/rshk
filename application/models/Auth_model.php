@@ -6,14 +6,14 @@ class Auth_model extends CI_Model {
     // function get_validation($username=null,$password=null)
     // {
         
-    //     $sql = "SELECT id_user, username, nama_lengkap, role, status FROM m_user WHERE email='$username' AND password='$password' ";
+    //     $sql = "SELECT id_user, username, nama_lengkap, role, status FROM m_users WHERE email='$username' AND password='$password' ";
     //     $query = $this->db->query($sql);
     //     return $query->result();
 
     // }
 
     function get_validation($params) {
-        $sql = "SELECT id_user, username, nama_lengkap, status FROM m_user 
+        $sql = "SELECT id_user, username, nama_lengkap, status FROM m_users 
                 WHERE email= ? AND password = ?";
         $query = $this->db->query($sql, $params);
         if ($query->num_rows() > 0) {
