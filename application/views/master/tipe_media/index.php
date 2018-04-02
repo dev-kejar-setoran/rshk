@@ -5,12 +5,14 @@
   <title>PJNHK | Backend</title>
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 
-  <link rel="shortcut icon" type="image/x-icon" href="../../../favicon.ico">
+  <link rel="shortcut icon" type="image/x-icon" href="<?php echo $this->config->item('base_url_file');?>assets/img/favicon.ico">
 
-  <link rel="stylesheet" type="text/css" href="../../../semantic/semantic.min.css">
-  <link rel="stylesheet" href="../../../plugins/sweetalert/sweetalert2.min.css">
+  <link rel="stylesheet" type="text/css" href="<?php echo $this->config->item('base_url_file');?>assets/semantic/semantic.min.css">
+  <link rel="stylesheet" href="<?php echo $this->config->item('base_url_file');?>assets/plugins/sweetalert/sweetalert2.min.css">
 
-  <link rel="stylesheet" href="../../../css/app.css">
+  <link rel="stylesheet" href="<?php echo $this->config->item('base_url_file');?>assets/css/app.css">
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css">
+  <style type="text/css">
   <style type="text/css">
   .ui.file.input input[type="file"] {
     display: none;
@@ -31,11 +33,11 @@
 <body id="app">
 
   <header>
-    <?php include('../../../partials/header.php'); ?>
+    <?php $this->load->view('templete/header.php'); ?>
   </header>
 
   <div class="ui sidebar inverted visible vertical menu">
-    <?php include('../../../partials/sidebar.php'); ?>
+    <?php $this->load->view('templete/sidebar.php'); ?>
   </div>
 
   <div id="cover">
@@ -81,7 +83,7 @@
                     <i class="refresh icon"></i>
                   </button>
                   <div style="margin-left: auto; margin-right: 1px;">
-                    <button type="button" class="ui blue add button" onclick="openModal()">
+                    <button type="button" class="ui blue add button" onclick="form_add()">
                       <i class="plus icon"></i>
                       Tambah Data
                     </button>
@@ -90,8 +92,8 @@
                 </div>
               </form>
 
-              <table class="ui celled table">
-                <thead class="center aligned">
+               <table id="tb_data" class="display ui celled tabl" style="width:100%">
+                <thead>
                   <tr>
                     <th>No</th>
                     <th>Nama</th>
@@ -101,41 +103,6 @@
                     <th>Aksi</th>
                   </tr>
                 </thead>
-                <tbody>
-                  <tr>
-                    <td class="center aligned">1</td>
-                    <td class="center aligned">Utama</td>
-                    <td>A voluptatem eveniet consectetur assumenda, magni odit odio.</td>
-                    <td class="center aligned">24 Februari 2018</td>
-                    <td class="center aligned">admin</td>
-                    <td class="center aligned">
-                      <button type="button" data-content="Ubah Data" data-id="" class="ui mini orange icon edit button" onclick="openModal()"><i class="edit icon"></i></button>
-                      <button type="button" data-content="Hapus Data" data-id="" class="ui mini red icon delete button"><i class="trash icon"></i></button>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td class="center aligned">2</td>
-                    <td class="center aligned">Utama</td>
-                    <td>Nam eaque quam eveniet aut magnam atque ratione architecto.</td>
-                    <td class="center aligned">24 Februari 2018</td>
-                    <td class="center aligned">admin</td>
-                    <td class="center aligned">
-                      <button type="button" data-content="Ubah Data" data-id="" class="ui mini orange icon edit button" onclick="openModal()"><i class="edit icon"></i></button>
-                      <button type="button" data-content="Hapus Data" data-id="" class="ui mini red icon delete button"><i class="trash icon"></i></button>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td class="center aligned">3</td>
-                    <td class="center aligned">Utama</td>
-                    <td>Quod quasi, porro.</td>
-                    <td class="center aligned">24 Februari 2018</td>
-                    <td class="center aligned">admin</td>
-                    <td class="center aligned">
-                      <button type="button" data-content="Ubah Data" data-id="" class="ui mini orange icon edit button" onclick="openModal()"><i class="edit icon"></i></button>
-                      <button type="button" data-content="Hapus Data" data-id="" class="ui mini red icon delete button"><i class="trash icon"></i></button>
-                    </td>
-                  </tr>
-                </tbody>
               </table>
             </div>
           </div>
@@ -144,7 +111,7 @@
       </div>
     </div>
 
-    <?php include('../../../partials/footer.php'); ?>
+    <?php $this->load->view('templete/footer.php'); ?>
 
     <div v-cloak>
       <!-- @yield('additional') -->
@@ -156,18 +123,40 @@
   <script>
   </script>
   <!-- <script src="../../../js/es6-promise.auto.min.js"></script> -->
+   <script src="<?php echo $this->config->item('base_url_file');?>assets/plugins/jQuery/jquery-2.2.3.min.js"></script>
+  <script src="<?php echo $this->config->item('base_url_file');?>assets/plugins/jQuery/jquery.form.min.js"></script>
+  <script src="<?php echo $this->config->item('base_url_file');?>assets/plugins/jQueryUI/jquery-ui.min.js"></script>
+  <script src="<?php echo $this->config->item('base_url_file');?>assets/plugins/slimScroll/jquery.slimscroll.min.js"></script>
+  <script src="<?php echo $this->config->item('base_url_file');?>assets/plugins/fastclick/fastclick.js"></script>
+  <script src="<?php echo $this->config->item('base_url_file');?>assets/plugins/sweetalert/sweetalert2.min.js"></script>
+  <script src="<?php echo $this->config->item('base_url_file');?>assets/semantic/semantic.min.js"></script>
 
-  <script src="../../../plugins/jQuery/jquery-2.2.3.min.js"></script>
-  <script src="../../../plugins/jQuery/jquery.form.min.js"></script>
-  <script src="../../../plugins/jQueryUI/jquery-ui.min.js"></script>
-  <script src="../../../plugins/slimScroll/jquery.slimscroll.min.js"></script>
-  <script src="../../../plugins/fastclick/fastclick.js"></script>
-  <script src="../../../plugins/sweetalert/sweetalert2.min.js"></script>
-  <script src="../../../semantic/semantic.min.js"></script>
+  <script src="<?php echo $this->config->item('base_url_file');?>assets/js/mfs-script.js"></script>
+  <script>
+     function openModal(){
+      $('.ui.modal.formUtama')
+      .modal({
+        observeChanges: true,
+        closable: false,
+        detachable: false,
+        onShow: function() {
+          $('.ui.dropdown').dropdown();
+        }
+      })
+      .modal('show')
+      .modal("refresh");
+    }
+    function modal_hapus(){
+      $('.ui.modal.form_hapus')
+      .modal('show')
+      .modal("refresh");
+    }
+  </script>
 
-  <script src="../../../js/mfs-script.js"></script>
 
+  <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.5/Chart.min.js">></script>
-  <script src="../../../js/dummy.js"></script>
+  <script src="<?php echo $this->config->item('base_url_file');?>assets/js/dummy.js"></script>
+  <?php include('js.php') ?>
 </body>
 </html>

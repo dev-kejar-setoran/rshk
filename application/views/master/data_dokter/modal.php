@@ -1,12 +1,13 @@
-<div class="ui tiny modal">
+<div class="ui tiny modal formUtama">
   <!-- <i class="close icon"></i> -->
   <div class="header">
     Form Data Dokter
   </div>
   <div class="content">
-    <form class="ui data form" id="form-data" method="post">
-      <input type="hidden" name="action" value="create" enctype="multipart/form-data">
-      
+    <form class="ui data form" id="dataForm" method="post">
+      <input type="hidden" name="action" value="create" enctype="multipart/dataForm">
+      <input type="hidden" id="id_dokter" value="">
+      <input type="hidden" id="form" value="">
       <div class="ui grid">
         <div class="five wide column">
           <div class="field image-container">
@@ -27,7 +28,7 @@
           </div>
           <div class="field">
             <label for="">Spesialisasi</label>
-            <select name="filter[spesialisasi]" class="ui dropdown selection" id="spesialisasi">
+            <select name="filter[spesialisasi]" class="ui dropdown selection" id="id_spesialisasi">
               <option value="">Pilih spesialisasi</option>
               <option value="1">Kardiologi</option>
               <option value="2">Anestesi</option>
@@ -35,7 +36,7 @@
           </div>
           <div class="field">
             <label for="">Jabatan</label>
-            <select name="filter[jabatan]" class="ui dropdown selection" id="jabatan">
+            <select name="filter[jabatan]" class="ui dropdown selection" id="id_jabatan">
               <option value="">Pilih jabatan</option>
               <option value="1">Senior Konsultan</option>
               <option value="2">Kepala Departemen</option>
@@ -47,35 +48,33 @@
     </form>
   </div>
   <div class="actions">
-    <div class="ui black deny button">
+    <div class="ui black deny button" id="btn_batal">
       Batal
     </div>
-    <div class="ui positive right labeled icon button" onclick="simpan_data()">
-      Simpan <i class="save icon"></i>
+    <div class="ui positive right labeled icon button" id="btn_simpan">
+      Simpan
+      <i class="save icon"></i>
     </div>
   </div>
 </div>
 
 
-<script type="text/javascript">
-    function simpan_data(){
-        var nama_dokter = $('#nama_dokter').val();
-        var spesialisasi = $('#spesialisasi').val();
-        var jabatan = $('#jabatan').val();
 
-        $.ajax({
-            type: "POST",
-            url: "<?php echo base_url('data_dokter/add_save'); ?>",
-            data: {"nama_dokter":nama_dokter,"spesialisasi":spesialisasi
-                    ,"jabatan":jabatan},
-            success: function(resp){
-                    alert('Sukses' + resp);
-                    // $("#hasil").html(resp);
-            },
-            error:function(event, textStatus, errorThrown) {
-               alert('Error Message: '+ textStatus + ' , HTTP Error: '+errorThrown);
-            }
-        });
-    }
-    
-</script>
+  <div class="ui tiny form_hapus modal">
+    <div class="header">
+      Hapus Data
+    </div>
+    <div class="content">
+      <p>Apakah anda yakin untuk menghapus <b id="data_hapus"></b> ?</p>
+      <input type="hidden" id="id_hapus" name="id_hapus">
+    </div>
+    <div class="actions">
+      <div class="ui negative button">
+        No
+      </div>
+      <div class="ui positive right labeled icon button" id="btn_hapus">
+        Yes
+        <i class="checkmark icon"></i>
+      </div>
+    </div>
+  </div>

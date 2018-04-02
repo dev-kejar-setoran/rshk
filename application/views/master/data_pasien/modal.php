@@ -1,4 +1,4 @@
-<div class="ui tiny modal">
+<div class="ui tiny modal formUtama">
   <!-- <i class="close icon"></i> -->
   <div class="header">
     Form Pasien
@@ -77,3 +77,24 @@
   </div>
   
 </div>
+
+
+
+  <div class="ui tiny form_hapus modal">
+    <div class="header">
+      Hapus Data
+    </div>
+    <div class="content">
+      <p>Apakah anda yakin untuk menghapus <b id="data_hapus"></b> ?</p>
+      <input type="hidden" id="id_hapus" name="id_hapus">
+    </div>
+    <div class="actions">
+      <div class="ui negative button">
+        No
+      </div>
+      <div class="ui positive right labeled icon button" id="btn_hapus">
+        Yes
+        <i class="checkmark icon"></i>
+      </div>
+    </div>
+  </div>

@@ -45,10 +45,16 @@ class m_data_pasien extends CI_Model {
     }
 
     // ubah
-    public function update($params, $where) {
+    public function get_edit($params, $where) {
         return $this->db->update('m_data_pasien', $params, $where);
     }
     
+
+    // delete
+    public function get_delete($where){
+        return $this->db->delete('m_data_pasien', $where);
+    }
+
 
 }
 
