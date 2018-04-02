@@ -11,6 +11,7 @@
   <link rel="stylesheet" href="<?php echo $this->config->item('base_url_file');?>assets/plugins/sweetalert/sweetalert2.min.css">
 
   <link rel="stylesheet" href="<?php echo $this->config->item('base_url_file');?>assets/css/app.css">
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css">
   <style type="text/css">
   .ui.file.input input[type="file"] {
     display: none;
@@ -81,7 +82,7 @@
                     <i class="refresh icon"></i>
                   </button>
                   <div style="margin-left: auto; margin-right: 1px;">
-                    <button type="button" class="ui blue add button" onclick="openModal()">
+                    <button type="button" class="ui blue add button" onclick="form_add()">
                       <i class="plus icon"></i>
                       Tambah Data
                     </button>
@@ -90,8 +91,8 @@
                 </div>
               </form>
 
-              <table class="ui celled table">
-                <thead class="center aligned">
+              <table id="tb_data" class="display ui celled tabl" style="width:100%">
+                <thead>
                   <tr>
                     <th>No</th>
                     <th>Nama</th>
@@ -101,29 +102,6 @@
                     <th>Aksi</th>
                   </tr>
                 </thead>
-                <tbody>
-                  <?php 
-                  $no = 1;
-                  foreach($kategori_diskusi as $kd){ 
-                  ?>
-                  <tr>
-                    <td class="center aligned"><?php echo $no++ ?></td>
-                    <td class="center aligned"><?php echo $kd->nama_kategori_diskusi ?></td>
-                    <td class="center aligned"><?php echo $kd->deskripsi ?></td>
-                    <td class="center aligned"><?php echo $kd->created_at ?></td>
-                    <td class="center aligned"><?php echo $kd->created_by ?></td>
-                    <td class="center aligned">
-                      <button type="button" data-content="Ubah Data" data-id="" class="ui mini orange icon edit button" onclick="openModal()"><i class="edit icon"></i></button>
-                      <button type="button" data-content="Hapus Data" data-id="" class="ui mini red icon delete button"><i class="trash icon"></i></button>
-                    </td>
-                  </tr> 
-                  <?php } ?>
-                  <?php if ($kategori_diskusi == null) { ?>
-                  <tr>
-                      <td colspan="6" style="text-align:center">Data Tidak Ditemukan</td>
-                  </tr>
-                  <?php } ?>
-                </tbody>
               </table>
             </div>
           </div>
@@ -154,8 +132,30 @@
   <script src="<?php echo $this->config->item('base_url_file');?>assets/semantic/semantic.min.js"></script>
 
   <script src="<?php echo $this->config->item('base_url_file');?>assets/js/mfs-script.js"></script>
+  <script>
+     function openModal(){
+      $('.ui.modal.formUtama')
+      .modal({
+        observeChanges: true,
+        closable: false,
+        detachable: false,
+        onShow: function() {
+          $('.ui.dropdown').dropdown();
+        }
+      })
+      .modal('show')
+      .modal("refresh");
+    }
+    function modal_hapus(){
+      $('.ui.modal.form_hapus')
+      .modal('show')
+      .modal("refresh");
+    }
+  </script>
 
+  <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.5/Chart.min.js">></script>
   <script src="<?php echo $this->config->item('base_url_file');?>assets/js/dummy.js"></script>
+  <?php include('js.php') ?>
 </body>
 </html>

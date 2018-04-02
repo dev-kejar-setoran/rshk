@@ -134,7 +134,7 @@
   <script src="<?php echo $this->config->item('base_url_file');?>assets/js/mfs-script.js"></script>
   <script>
     function openModal(){
-      $('.ui.modal')
+      $('.ui.modal.formUtama')
       .modal({
         observeChanges: true,
         closable: false,
@@ -146,16 +146,21 @@
       .modal('show')
       .modal("refresh");
     }
+    function modal_hapus(){
+      $('.ui.modal.form_hapus')
+      .modal('show')
+      .modal("refresh");
+    }
   </script>
   <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.5/Chart.min.js"></script>
   <script src="<?php echo $this->config->item('base_url_file');?>assets/js/dummy.js"></script>
   <?php include('js.php') ?>
 
-<script type="text/javascript">
-    $(document).ready(function() {
-    } );
-</script>
+  <script type="text/javascript">
+      $(document).ready(function() {
+      } );
+  </script>
 
 </body>
 </html>
