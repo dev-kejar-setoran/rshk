@@ -21,6 +21,5 @@
       .modal("refresh");
     }
   </script>
-  <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.5/Chart.min.js"></script>
+  <script src="<?php echo $this->config->item('base_url_file');?>assets/plugins/datatables/jquery.dataTables.min.js"></script>
   <script src="<?php echo $this->config->item('base_url_file');?>assets/js/dummy.js"></script>

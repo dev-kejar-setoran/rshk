@@ -7,7 +7,8 @@
   <link rel="stylesheet" type="text/css" href="<?php echo $this->config->item('base_url_file');?>assets/semantic/semantic.min.css">
   <link rel="stylesheet" href="<?php echo $this->config->item('base_url_file');?>assets/plugins/sweetalert/sweetalert2.min.css">
   <link rel="stylesheet" href="<?php echo $this->config->item('base_url_file');?>assets/css/app.css">
-  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css">
+  <link rel="stylesheet" href="<?php echo $this->config->item('base_url_file');?>assets/plugins/datatables/jquery.dataTables.min.css">
+  <!-- <link rel="stylesheet" href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css"> -->
   <style type="text/css">
   .ui.file.input input[type="file"] {
     display: none;
