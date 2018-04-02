@@ -72,7 +72,7 @@ public function auth()
 {
     $id_user  = $this->input->get_request_header('User-ID', TRUE);
     $token     = $this->input->get_request_header('Authorization', TRUE);
-    $q  = $this->db->select('expired_at')->from('users_authentication')->where('id_user',$id_user)->where('token',$token)->get()->row();
+    $q  = $this->db->select('expired_at')->from('m_users_authentication')->where('id_user',$id_user)->where('token',$token)->get()->row();
     if($q == ""){
         return json_output(401,array('status' => 401,'message' => 'Unauthorized.'));
     } else {
