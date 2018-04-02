@@ -1,43 +1,13 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <meta charset="utf-8">
-  <title>PJNHK | Backend</title>
-  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-
-  <link rel="shortcut icon" type="image/x-icon" href="../../../favicon.ico">
-
-  <link rel="stylesheet" type="text/css" href="../../../semantic/semantic.min.css">
-  <link rel="stylesheet" href="../../../plugins/sweetalert/sweetalert2.min.css">
-
-  <link rel="stylesheet" href="../../../css/app.css">
-  <style type="text/css">
-  .ui.file.input input[type="file"] {
-    display: none;
-  }
-  .ui.button>.ui.floated.label {
-    position: absolute;
-    top: 15px;
-    right: -10px;
-  }
-  .table tr th{
-    white-space: nowrap;
-  }
-</style>
-<!-- @yield('css') -->
-<!-- @yield('styles') -->
-</head>
-
+  <?php $this->load->view('templete/head.php'); ?>
 <body id="app">
-
   <header>
-    <?php include('../../../partials/header.php'); ?>
+    <?php $this->load->view('templete/header.php'); ?>
   </header>
-
   <div class="ui sidebar inverted visible vertical menu">
-    <?php include('../../../partials/sidebar.php'); ?>
+    <?php $this->load->view('templete/sidebar.php'); ?>
   </div>
-
   <div id="cover">
     <div class="ui active inverted dimmer">
       <div class="ui text loader">Loading</div>
@@ -152,21 +122,6 @@
 
   <?php include('modal.php') ?>
 
-  <script>
-  </script>
-  <!-- <script src="../../../js/es6-promise.auto.min.js"></script> -->
-
-  <script src="../../../plugins/jQuery/jquery-2.2.3.min.js"></script>
-  <script src="../../../plugins/jQuery/jquery.form.min.js"></script>
-  <script src="../../../plugins/jQueryUI/jquery-ui.min.js"></script>
-  <script src="../../../plugins/slimScroll/jquery.slimscroll.min.js"></script>
-  <script src="../../../plugins/fastclick/fastclick.js"></script>
-  <script src="../../../plugins/sweetalert/sweetalert2.min.js"></script>
-  <script src="../../../semantic/semantic.min.js"></script>
-
-  <script src="../../../js/mfs-script.js"></script>
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.5/Chart.min.js">></script>
-  <script src="../../../js/dummy.js"></script>
+  <?php $this->load->view('templete/headerjs.php'); ?>
 </body>
 </html>

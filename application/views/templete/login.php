@@ -12,12 +12,12 @@
   <link rel="shortcut icon" href="favicon.ico">
   <?php if(isset($_headercss)){echo $_headercss;}?>
 
-  <link rel="apple-touch-icon" sizes="180x180" href="<?php echo $this->config->item('base_url_file');?>assets/img/apple-touch-icon.png?v=zXr4R5YArk">
-  <link rel="icon" type="image/png" sizes="32x32" href="<?php echo $this->config->item('base_url_file');?>assets/img/favicon-32x32.png?v=zXr4R5YArk">
-  <link rel="icon" type="image/png" sizes="16x16" href="<?php echo $this->config->item('base_url_file');?>assets/img/favicon-16x16.png?v=zXr4R5YArk">
+  <link rel="apple-touch-icon" sizes="180x180" href="<?php echo base_url();?>assets/img/apple-touch-icon.png?v=zXr4R5YArk">
+  <link rel="icon" type="image/png" sizes="32x32" href="<?php echo base_url();?>assets/img/favicon-32x32.png?v=zXr4R5YArk">
+  <link rel="icon" type="image/png" sizes="16x16" href="<?php echo base_url();?>assets/img/favicon-16x16.png?v=zXr4R5YArk">
   <link rel="manifest" href="/manifest.json?v=zXr4R5YArk">
   <link rel="mask-icon" href="/safari-pinned-tab.svg?v=zXr4R5YArk" color="#5bbad5">
-  <link rel="shortcut icon" href="<?php echo $this->config->item('base_url_file');?>assets/img/favicon.ico?v=zXr4R5YArk">
+  <link rel="shortcut icon" href="<?php echo base_url();?>assets/img/favicon.ico?v=zXr4R5YArk">
   <meta name="theme-color" content="#ffffff">
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -46,7 +46,7 @@
             <div class="description logo">
               <h1>WEB PORTAL<br><small>PUSAT JANTUNG NASIONAL HARAPAN KITA</small></h1>
             </div>
-            <img class="logo" src="<?php echo $this->config->item('base_url_file');?>assets/img/icon.png" height="240" alt="Logo"/>
+            <img class="logo" src="<?php echo base_url();?>assets/img/icon.png" height="240" alt="Logo"/>
           </div>
           <div class="col-sm-6 col-md-4 form-box">
             <div class="form-bottom">
@@ -58,7 +58,7 @@
                     <div class="text-center m-t m-b"><a href="#" class="forget margin"><?php echo $message ?></a></div>
                   <?php endif ?>
                 </div>
-                <form role="form" action="<?php echo $this->config->item('base_url');?>Auth/get_validation" method="post" class="login-form clearfix">
+                <form role="form" action="<?php echo base_url();?>Auth/get_validation" method="post" class="login-form clearfix">
                   <div class="form-group">
                     <input type="email" name="email" placeholder="Email..." class="form-username form-control no-border" id="form-username" value="" pattern=".{2,40}" required title="2 to 40 characters" maxlength="40">
                   </div>

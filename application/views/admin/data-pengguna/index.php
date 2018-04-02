@@ -5,12 +5,11 @@
   <title>PJNHK | Backend</title>
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 
-  <link rel="shortcut icon" type="image/x-icon" href="../../../favicon.ico">
+  <link rel="shortcut icon" type="image/x-icon" href="<?php echo base_url();?>assets/img/favicon.ico">
+  <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>assets/semantic/semantic.min.css">
+  <link rel="stylesheet" href="<?php echo base_url();?>assets/plugins/sweetalert/sweetalert2.min.css">
 
-  <link rel="stylesheet" type="text/css" href="../../../semantic/semantic.min.css">
-  <link rel="stylesheet" href="../../../plugins/sweetalert/sweetalert2.min.css">
-
-  <link rel="stylesheet" href="../../../css/app.css">
+  <link rel="stylesheet" href="<?php echo base_url();?>assets/css/app.css">
   <style type="text/css">
   .ui.file.input input[type="file"] {
     display: none;
