@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class data_dokter extends CI_Controller {
+class slider extends CI_Controller {
 
     public function __construct()
     {
@@ -14,11 +14,8 @@ class data_dokter extends CI_Controller {
     function index()
     {
         $data['title_page']='Data Dokter';
-        // $data['data_dokter'] = $this->m_data_dokter->get_all();
-        $data['combo_spesialisasi'] = $this->m_data_dokter->getSpesialisasi(); 
-        $data['combo_jabatan'] = $this->m_data_dokter->getJabatan(); 
-
-		$this->load->view('master/data_dokter/index', $data);
+        $data['data_dokter'] = $this->m_data_dokter->get_all();
+		$this->load->view('website/slider/index', $data);
 	}
 
    // untuk load data table

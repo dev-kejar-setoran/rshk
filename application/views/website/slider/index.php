@@ -5,12 +5,13 @@
   <title>PJNHK | Backend</title>
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 
-  <link rel="shortcut icon" type="image/x-icon" href="../../../favicon.ico">
+  <link rel="shortcut icon" type="image/x-icon" href="<?php echo $this->config->item('base_url_file');?>assets/img/favicon.ico">
 
-  <link rel="stylesheet" type="text/css" href="../../../semantic/semantic.min.css">
-  <link rel="stylesheet" href="../../../plugins/sweetalert/sweetalert2.min.css">
+  <link rel="stylesheet" type="text/css" href="<?php echo $this->config->item('base_url_file');?>assets/semantic/semantic.min.css">
+  <link rel="stylesheet" href="<?php echo $this->config->item('base_url_file');?>assets/plugins/sweetalert/sweetalert2.min.css">
 
-  <link rel="stylesheet" href="../../../css/app.css">
+
+  <link rel="stylesheet" href="<?php echo $this->config->item('base_url_file');?>assets/css/app.css">
   <style type="text/css">
   .ui.file.input input[type="file"] {
     display: none;
@@ -31,11 +32,11 @@
 <body id="app">
 
   <header>
-    <?php include('../../../partials/header.php'); ?>
+    <?php $this->load->view('templete/header.php'); ?>
   </header>
 
   <div class="ui sidebar inverted visible vertical menu">
-    <?php include('../../../partials/sidebar.php'); ?>
+    <?php $this->load->view('templete/sidebar.php'); ?>
   </div>
 
   <div id="cover">
@@ -117,7 +118,7 @@
                   <tr>
                     <td class="center aligned">1</td>
                     <td class="center aligned">Consequatur nesciunt sunt.</td>
-                    <td class="center aligned"><img src="../../../img/avatar04.png" alt="icon" width="80"></td>
+                    <td class="center aligned"><img src="../assets/img/avatar04.png" alt="icon" width="80"></td>
                     <td class="center aligned">Kiri</td>
                     <td class="center aligned"><span class="ui fluid green label">Published</span></td>
                     <td class="center aligned">24 Februari 2018</td>
@@ -130,7 +131,7 @@
                   <tr>
                     <td class="center aligned">2</td>
                     <td class="center aligned">Illo beatae!</td>
-                    <td class="center aligned"><img src="../../../img/avatar04.png" alt="icon" width="80"></td>
+                    <td class="center aligned"><img src="../assets/img/avatar04.png" alt="icon" width="80"></td>
                     <td class="center aligned">Kanan</td>
                     <td class="center aligned"><span class="ui fluid orange label">Draft</span></td>
                     <td class="center aligned">24 Februari 2018</td>
@@ -149,7 +150,7 @@
       </div>
     </div>
 
-    <?php include('../../../partials/footer.php'); ?>
+    <?php $this->load->view('templete/footer.php'); ?>
 
     <div v-cloak>
       <!-- @yield('additional') -->
@@ -162,15 +163,15 @@
   </script>
   <!-- <script src="../../../js/es6-promise.auto.min.js"></script> -->
 
-  <script src="../../../plugins/jQuery/jquery-2.2.3.min.js"></script>
-  <script src="../../../plugins/jQuery/jquery.form.min.js"></script>
-  <script src="../../../plugins/jQueryUI/jquery-ui.min.js"></script>
-  <script src="../../../plugins/slimScroll/jquery.slimscroll.min.js"></script>
-  <script src="../../../plugins/fastclick/fastclick.js"></script>
-  <script src="../../../plugins/sweetalert/sweetalert2.min.js"></script>
-  <script src="../../../semantic/semantic.min.js"></script>
+  <script src="<?php echo $this->config->item('base_url_file');?>assets/plugins/jQuery/jquery-2.2.3.min.js"></script>
+  <script src="<?php echo $this->config->item('base_url_file');?>assets/plugins/jQuery/jquery.form.min.js"></script>
+  <script src="<?php echo $this->config->item('base_url_file');?>assets/plugins/jQueryUI/jquery-ui.min.js"></script>
+  <script src="<?php echo $this->config->item('base_url_file');?>assets/plugins/slimScroll/jquery.slimscroll.min.js"></script>
+  <script src="<?php echo $this->config->item('base_url_file');?>assets/plugins/fastclick/fastclick.js"></script>
+  <script src="<?php echo $this->config->item('base_url_file');?>assets/plugins/sweetalert/sweetalert2.min.js"></script>
+  <script src="<?php echo $this->config->item('base_url_file');?>assets/semantic/semantic.min.js"></script>
 
-  <script src="../../../js/mfs-script.js"></script>
+  <script src="<?php echo $this->config->item('base_url_file');?>assets/js/mfs-script.js"></script>
 
   <script>
     function openModal(){
@@ -188,7 +189,8 @@
     }
   </script>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.5/Chart.min.js">></script>
-  <script src="../../../js/dummy.js"></script>
+  <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.5/Chart.min.js"></script>
+  <script src="<?php echo $this->config->item('base_url_file');?>assets/js/dummy.js"></script>
 </body>
 </html>

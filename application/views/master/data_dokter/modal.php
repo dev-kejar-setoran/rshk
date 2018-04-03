@@ -29,18 +29,19 @@
           <div class="field">
             <label for="">Spesialisasi</label>
             <select name="filter[spesialisasi]" class="ui dropdown selection" id="id_spesialisasi">
-              <option value="">Pilih spesialisasi</option>
-              <option value="1">Kardiologi</option>
-              <option value="2">Anestesi</option>
+              <option value="0">Pilih spesialisasi</option>
+              <?php foreach ($combo_spesialisasi as $key) {
+                echo "<option value='".$key->id_spesialisasi."'>".$key->nama_spesialisasi."<option>";
+              } ?>
             </select>
           </div>
           <div class="field">
             <label for="">Jabatan</label>
             <select name="filter[jabatan]" class="ui dropdown selection" id="id_jabatan">
-              <option value="">Pilih jabatan</option>
-              <option value="1">Senior Konsultan</option>
-              <option value="2">Kepala Departemen</option>
-              <option value="3">Jabatan 3</option>
+              <option value="0">Pilih jabatan</option>
+              <?php foreach ($combo_jabatan as $key) {
+                echo "<option value='".$key->id_jabatan_dokter."'>".$key->nama_jabatan_dokter."<option>";
+              } ?>
             </select>
           </div>
         </div>

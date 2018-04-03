@@ -8,9 +8,16 @@ class m_data_dokter extends CI_Model {
     }
 
     private $_table1 = "m_data_dokter"; //nama table 
+    private $_table2 = "m_spesialisasi"; //nama table 
+    private $_table3 = "m_jabatan_dokter"; //nama table 
 
     public function get_all(){
-    $query = $this->db->get($this->_table1);
+    $this->db->select('a.*, b.id_spesialisasi, b.nama_spesialisasi, c.id_jabatan_dokter, c.nama_jabatan_dokter');
+    $this->db->from($this->_table1 . ' a');
+    $this->db->join($this->_table2 . ' b', 'b.id_spesialisasi = a.id_spesialisasi');    
+    $this->db->join($this->_table3 . ' c', 'c.id_jabatan_dokter = a.id_jabatan');    
+    // $this->db->order_by('a.ID_KONTRAK_TRANS DESC');
+    $query = $this->db->get();
 
     if ($query->num_rows() > 0) {
             $result = $query->result_array();
@@ -21,6 +28,30 @@ class m_data_dokter extends CI_Model {
         return $result;
 
    	}
+
+    // combo spesialisasi
+    function getSpesialisasi() {
+        $query = "SELECT id_spesialisasi, nama_spesialisasi FROM m_spesialisasi";
+        $q = $this->db->query($query);
+        if ($q->num_rows() > 0) {
+            foreach ($q->result() as $row){
+                    $data[] = $row;
+                }
+        }
+        return $data;
+    }
+
+    // combo Jabatan
+    function getJabatan() {
+        $query = "SELECT id_jabatan_dokter, nama_jabatan_dokter FROM m_jabatan_dokter";
+        $q = $this->db->query($query);
+        if ($q->num_rows() > 0) {
+            foreach ($q->result() as $row){
+                    $data[] = $row;
+                }
+        }
+        return $data;
+    }
 
    	
     // tambah
