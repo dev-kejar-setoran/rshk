@@ -13,7 +13,7 @@ class Auth_model extends CI_Model {
     // }
 
     function get_validation($params) {
-        $sql = "SELECT id_user, username, nama_lengkap, status FROM m_user 
+        $sql = "SELECT * FROM m_users 
                 WHERE email= ? AND password = ?";
         $query = $this->db->query($sql, $params);
         if ($query->num_rows() > 0) {

@@ -56,11 +56,11 @@ class CI_FTP {
 	public $hostname = '';
 
 	/**
-	 * FTP Username
+	 * FTP email
 	 *
 	 * @var	string
 	 */
-	public $username = '';
+	public $email = '';
 
 	/**
 	 * FTP Password
@@ -190,7 +190,7 @@ class CI_FTP {
 	 */
 	protected function _login()
 	{
-		return @ftp_login($this->conn_id, $this->username, $this->password);
+		return @ftp_login($this->conn_id, $this->email, $this->password);
 	}
 
 	// --------------------------------------------------------------------

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 30 Mar 2018 pada 06.24
+-- Waktu pembuatan: 02 Apr 2018 pada 16.55
 -- Versi server: 10.1.31-MariaDB
 -- Versi PHP: 7.2.3
 
@@ -19,8 +19,28 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `db_rsharkit`
+-- Database: `db_rshk`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `ci_sessions`
+--
+
+CREATE TABLE `ci_sessions` (
+  `id` varchar(40) NOT NULL,
+  `ip_address` varchar(45) NOT NULL,
+  `timestamp` int(10) UNSIGNED NOT NULL DEFAULT '0',
+  `data` blob NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data untuk tabel `ci_sessions`
+--
+
+INSERT INTO `ci_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES
+('a472e3ivurou6qactflt283ugur87ao6', '::1', 1522676688, 0x5f5f63695f6c6173745f726567656e65726174657c693a313532323637363538323b);
 
 -- --------------------------------------------------------
 
@@ -189,8 +209,8 @@ CREATE TABLE `m_role_menu` (
 --
 
 CREATE TABLE `m_role_user` (
+  `role` varchar(50) NOT NULL,
   `id_role_menu` int(11) NOT NULL,
-  `id_user` varchar(50) NOT NULL,
   `created_by` varchar(50) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
   `updated_by` varchar(50) NOT NULL,
@@ -287,22 +307,60 @@ CREATE TABLE `m_tipe_pendaftar` (
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `m_user`
+-- Struktur dari tabel `m_users`
 --
 
-CREATE TABLE `m_user` (
+CREATE TABLE `m_users` (
   `id_user` int(11) NOT NULL,
   `username` varchar(50) NOT NULL,
   `password` varchar(60) NOT NULL,
   `nama_lengkap` varchar(50) NOT NULL,
   `email` varchar(50) NOT NULL,
   `tlp` varchar(15) NOT NULL,
+  `role` varchar(20) NOT NULL,
   `status` int(1) NOT NULL,
+  `last_login` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `created_by` varchar(50) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
   `updated_by` varchar(50) NOT NULL,
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data untuk tabel `m_users`
+--
+
+INSERT INTO `m_users` (`id_user`, `username`, `password`, `nama_lengkap`, `email`, `tlp`, `role`, `status`, `last_login`, `created_by`, `created_at`, `updated_by`, `updated_at`) VALUES
+(1, 'admin', '$1$Dtqyvz7/$wZSaZbfHgn0UbLlVi1HHp0', 'Admin', 'admin@gmail.com', '123456', 'admin', 0, '2018-04-02 15:44:48', '', '2018-04-02 13:44:48', '', '2018-04-02 13:44:48');
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `m_users_authentication`
+--
+
+CREATE TABLE `m_users_authentication` (
+  `id_auth` int(11) NOT NULL,
+  `id_user` int(11) NOT NULL,
+  `token` varchar(255) NOT NULL,
+  `expired_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data untuk tabel `m_users_authentication`
+--
+
+INSERT INTO `m_users_authentication` (`id_auth`, `id_user`, `token`, `expired_at`, `created_at`, `updated_at`) VALUES
+(0, 1, '$1$qa3QpuQq$G2GDYBJmIMMnFXPyu0nXs.', '2018-04-01 14:09:25', '2018-04-01 02:09:25', '2018-04-01 02:09:25'),
+(0, 1, '$1$BlKR5IuW$kMpJLhAWV3gjfLAgcId3B1', '2018-04-01 14:18:24', '2018-04-01 02:18:24', '2018-04-01 02:18:24'),
+(0, 1, '$1$/BCTc5Kn$l9mJ16wIweyZllA55tppT0', '2018-04-02 07:55:46', '2018-04-02 00:55:46', '2018-04-02 00:55:46'),
+(0, 1, '$1$l5q23yGq$MzD609YSwXpwCo2PQk4ee.', '2018-04-03 02:54:54', '2018-04-02 19:54:54', '2018-04-02 19:54:54'),
+(0, 1, '$1$wrDstXNP$gUojU7HHxd9KLwxyn9dho1', '2018-04-03 03:12:05', '2018-04-02 20:12:05', '2018-04-02 20:12:05'),
+(0, 1, '$1$kQY/HEJq$3VFeg3acSyXF7SfBIcrTJ0', '2018-04-03 03:13:55', '2018-04-02 20:13:55', '2018-04-02 20:13:55'),
+(0, 1, '$1$3tWMTMhb$tUv.mpQA1gTeuw9BLbBoR1', '2018-04-03 03:43:02', '2018-04-02 20:43:02', '2018-04-02 20:43:02'),
+(0, 1, '$1$K1AHvdlE$85AZbcic4bHfJoz9giOZ2/', '2018-04-03 03:44:48', '2018-04-02 20:44:48', '2018-04-02 20:44:48');
 
 -- --------------------------------------------------------
 
@@ -425,6 +483,13 @@ CREATE TABLE `t_website_slider` (
 --
 
 --
+-- Indeks untuk tabel `ci_sessions`
+--
+ALTER TABLE `ci_sessions`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `ci_sessions_timestamp` (`timestamp`);
+
+--
 -- Indeks untuk tabel `m_cara_bayar`
 --
 ALTER TABLE `m_cara_bayar`
@@ -509,9 +574,9 @@ ALTER TABLE `m_tipe_pendaftar`
   ADD PRIMARY KEY (`id_tipe_pendaftar`);
 
 --
--- Indeks untuk tabel `m_user`
+-- Indeks untuk tabel `m_users`
 --
-ALTER TABLE `m_user`
+ALTER TABLE `m_users`
   ADD PRIMARY KEY (`id_user`);
 
 --
@@ -564,13 +629,13 @@ ALTER TABLE `m_data_pasien`
 -- AUTO_INCREMENT untuk tabel `m_rumah_sakit`
 --
 ALTER TABLE `m_rumah_sakit`
-  MODIFY `id_rumah_sakit` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_rumah_sakit` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT untuk tabel `m_user`
+-- AUTO_INCREMENT untuk tabel `m_users`
 --
-ALTER TABLE `m_user`
-  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `m_users`
+  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

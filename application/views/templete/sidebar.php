@@ -68,43 +68,43 @@
         Master
     </div>
     <div class="ui content ">
-        <a href="#" class=" item">
+        <a href="<?php echo base_url();?>master/data_dokter" class=" item">
             <i class=" icon"></i> Data Dokter
         </a>
-        <a href="#" class=" item">
+        <a href="<?php echo base_url();?>master/data_pasien" class=" item">
             <i class=" icon"></i> Data Pasien
         </a>
-        <a href="#" class=" item">
+        <a href="<?php echo base_url();?>master/kontrak" class=" item">
             <i class=" icon"></i> Kontak
         </a>
-        <a href="#" class=" item">
+        <a href="<?php echo base_url();?>master/tautan" class=" item">
             <i class=" icon"></i> Tautan
         </a>
-        <a href="#" class=" item">
+        <a href="<?php echo base_url();?>master/kewarganegaraan" class=" item">
             <i class=" icon"></i> Kewarganegaraan
         </a>
-        <a href="#" class=" item">
+        <a href="<?php echo base_url();?>master/rumah_sakit" class=" item">
             <i class=" icon"></i> Rumah Sakit
         </a>
-        <a href="#" class=" item">
+        <a href="<?php echo base_url();?>master/poli" class=" item">
             <i class=" icon"></i> Poli
         </a>
-        <a href="#" class=" item">
+        <a href="<?php echo base_url();?>master/kategori_diskusi" class=" item">
             <i class=" icon"></i> Kategori Diskusi
         </a>
-        <a href="#" class=" item">
+        <a href="<?php echo base_url();?>master/spesialisasi" class=" item">
             <i class=" icon"></i> Spesialisasi
         </a>
-        <a href="#" class=" item">
+        <a href="<?php echo base_url();?>master/jabatan_dokter" class=" item">
             <i class=" icon"></i> Jabatan Dokter
         </a>
-        <a href="#" class=" item">
+        <a href="<?php echo base_url();?>master/tipe_media" class=" item">
             <i class=" icon"></i> Tipe Media
         </a>
-        <a href="#" class=" item">
+        <a href="<?php echo base_url();?>master/tipe_pendaftar" class=" item">
             <i class=" icon"></i> Tipe Pendaftar
         </a>
-        <a href="#" class=" item">
+        <a href="<?php echo base_url();?>master/cara_bayar" class=" item">
             <i class=" icon"></i> Cara Bayar
         </a>
     </div>
@@ -115,10 +115,10 @@
         Setting
     </div>
     <div class="ui content ">
-        <a href="#" class=" item">
+        <a href="<?php echo base_url();?>setting/data_pengguna" class=" item">
             <i class=" icon"></i> Data Pengguna
         </a>
-        <a href="#" class=" item">
+        <a href="<?php echo base_url();?>setting/hak_akses" class=" item">
             <i class=" icon"></i> Hak Akses
         </a>
     </div>

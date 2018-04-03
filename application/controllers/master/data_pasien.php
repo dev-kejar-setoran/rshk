@@ -15,7 +15,7 @@ class data_pasien extends MY_Controller {
     public function index()
     {
         $data['title_page']='Data Pasien';
-        $data['tabel_data'] = $this->m_data_pasien->get_all();
+        //$data['tabel_data'] = $this->m_data_pasien->get_all();
         //echo json_encode($data['tabel_data']);
         //print_r($data); exit();
         $this->load->view('master/data_pasien/index', $data);
@@ -23,10 +23,24 @@ class data_pasien extends MY_Controller {
 
     // untuk load data table
     public function load_json(){
-        $res = $this->m_data_pasien->get_all();
+        // parameter search 
+        $nama_pasien = $this->input->post('nama_pasien');
+        $nomor_kartu = $this->input->post('nomor_kartu');
+        $filter['nama_pasien'] = empty($nama_pasien) ? '%' : '%' . $nama_pasien . '%';
+        $filter['nomor_kartu'] = empty($nomor_kartu) ? '%' :  $nomor_kartu;
+        $params = array($filter['nama_pasien'], $filter['nomor_kartu']);
+        // get data dari model dengan param
+        $res = $this->m_data_pasien->get_all($params);
+        // periksa jika data kosong
+        if (empty($res)) {
+            echo json_encode(""); 
+            return;
+        }
+        // 
+        $no = 1;
         foreach ($res as $data) {
             $row=array();
-            $row[]=$data['id_pasien'];
+            $row[]=$no++;
             $row[]=$data['nama_pasien'];
             $row[]=$data['nomor_kartu'];
             $row[]=$data['tempat_lahir'];

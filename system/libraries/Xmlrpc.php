@@ -586,11 +586,11 @@ class XML_RPC_Client extends CI_Xmlrpc
 
 	/**
 	 *
-	 * Server username
+	 * Server email
 	 *
 	 * @var	string
 	 */
-	public $username;
+	public $email;
 
 	/**
 	 * Server password
@@ -659,9 +659,9 @@ class XML_RPC_Client extends CI_Xmlrpc
 
 		$url = parse_url('http://'.$server);
 
-		if (isset($url['user'], $url['pass']))
+		if (isset($url['email'], $url['pass']))
 		{
-			$this->username = $url['user'];
+			$this->email = $url['email'];
 			$this->password = $url['pass'];
 		}
 
@@ -730,7 +730,7 @@ class XML_RPC_Client extends CI_Xmlrpc
 		$op = 'POST '.$this->path.' HTTP/1.0'.$r
 			.'Host: '.$this->server.$r
 			.'Content-Type: text/xml'.$r
-			.(isset($this->username, $this->password) ? 'Authorization: Basic '.base64_encode($this->username.':'.$this->password).$r : '')
+			.(isset($this->email, $this->password) ? 'Authorization: Basic '.base64_encode($this->email.':'.$this->password).$r : '')
 			.'User-Agent: '.$this->xmlrpcName.$r
 			.'Content-Length: '.strlen($msg->payload).$r.$r
 			.$msg->payload;
