@@ -7,29 +7,50 @@ class m_rumah_sakit extends CI_Model {
         parent::__construct();
     }
 
-    // private $_table1 = "m_data_dokter"; //nama table 
+    // fungsi tampil semua
+    public function get_all($params) {
+        $sql = "SELECT id_rumah_sakit, nama_rumah_sakit, alamat, no_telp, created_at, created_by 
+                FROM m_rumah_sakit 
+                WHERE nama_rumah_sakit LIKE ?";
+        $query = $this->db->query($sql,$params);
+        if ($query->num_rows() > 0) {
+            $result = $query->result_array();
+            $query->free_result();
+        } else {
+            $result = array();
+        }
+        return $result;
+    }
 
-    public function tampil_data(){
-        $queryGet= $this->db->get('m_rumah_sakit');
-        return $queryGet;
+   	// tambah
+    public function get_add($params) {
+        return $this->db->insert('m_rumah_sakit', $params);
+    }
 
-   	}
+    // detail data
+    public function get_detail_data($params) {
+        $sql = "SELECT *
+                FROM m_rumah_sakit 
+                WHERE id_rumah_sakit = ?";
+        $query = $this->db->query($sql, $params);
+        if ($query->num_rows() > 0) {
+            $result = $query->row_array();
+            $query->free_result();
+            return $result;
+        } else {
+            return array();
+        }
+    }
 
-   	function input_data($data){
-		
-		$this->db->insert('m_rumah_sakit', $data);
-        return true;
+    // ubah
+    public function get_edit($params, $where) {
+        return $this->db->update('m_rumah_sakit', $params, $where);
     }
     
-    function edit_data($id){
-        $result = json_encode($this->db->get_where('m_rumah_sakit',array("id_dokumen"=>$id))->row());
-		$this->output
-			->set_content_type('application/json')
-			->set_output($result);
-    }
 
-	// function edit_data($where,$table){		
-	// 	return $this->db->get_where($table,$where);
-	// }
+    // delete
+    public function get_delete($where){
+        return $this->db->delete('m_rumah_sakit', $where);
+    }
 
 }

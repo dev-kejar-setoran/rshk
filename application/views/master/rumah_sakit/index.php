@@ -41,16 +41,16 @@
           <form class="ui filter form">
            <div class="inline fields">
              <div class="field">
-              <input name="filter[cara_bayar]" placeholder="Rumah Sakit" type="text">
+              <input id="filter_nama_rumah_sakit" placeholder="Rumah Sakit" type="text">
             </div>
-            <button type="button" class="ui teal icon filter button" data-content="Cari Data">
+            <button type="button" id="btn_cari" class="ui teal icon filter button" data-content="Cari Data">
               <i class="search icon"></i>
             </button>
-            <button type="reset" class="ui icon reset button" data-content="Bersihkan Pencarian">
+            <button type="reset" id="btn_reset" class="ui icon reset button" data-content="Bersihkan Pencarian">
               <i class="refresh icon"></i>
             </button>
             <div style="margin-left: auto; margin-right: 1px;">
-              <button type="button" class="ui blue add button" onclick="createModal();">
+              <button type="button" class="ui blue add button" onclick="form_add();">
                 <i class="plus icon"></i>
                 Tambah Data
               </button>
@@ -59,8 +59,8 @@
           </div>
         </form>
 
-        <table class="ui celled table">
-         <thead class="center aligned">
+      <table id="tb_data" class="display ui celled tabl" style="width:100%">
+        <thead class="center aligned">
            <tr>
             <th>No</th>
             <th>Nama</th>
@@ -71,30 +71,7 @@
             <th class="two wide column">Aksi</th>
           </tr>
         </thead>
-        <tbody>
-
-        <?php
-          $no=1;
-          if (is_array($data) || is_object($data)){
-            
-            foreach($data as $getRS){ 
-              
-        ?>
-          <tr>
-            <td class="center aligned"><?php echo $no++; ?></td>
-            <td class="center aligned"><?php echo $getRS['nama_rumah_sakit']; ?></td>
-            <td class="center aligned"><?php echo $getRS['alamat']; ?></td>
-            <td class="center aligned"><?php echo $getRS['no_telp']; ?></td>
-            <td class="center aligned"><?php echo $getRS['created_at']; ?></td>
-            <td class="center aligned"><?php echo $getRS['created_by']; ?></td>
-            <td class="center aligned">
-              <button type="button" data-content="Ubah Data" data-id="" class="ui mini orange icon edit button" onclick="updateModal()"><i class="edit icon"></i></button>
-              <button type="button" data-content="Hapus Data" data-id="" class="ui mini red icon button" onclick="deleteModal(<?php echo $getRS['id_rumah_sakit'];?>)"><i class="trash icon"></i></button>
-            </td>
-          </tr>
-            <?php }}; ?>
-      </tbody>
-    </table>
+      </table>
   </div>
 </div>
 </div>
@@ -107,78 +84,7 @@
 </div>
 
 <?php include('modal.php'); ?>
-  <?php $this->load->view('templete/headerjs.php'); ?>
-  <script>
-    function createModal(){
-      $('.create')
-      .modal({
-        onDeny    : function(){
-          window.alert('Batal Simpan ?');
-          
-        },
-        onApprove : function() {
-          $.ajax({
-         type: "POST",
-         url: "<?php echo base_url();?>rumah_sakit/createRS", 
-         data: {
-            nama: $("#nama").val(),
-            alamat: $("#alamat").val(),
-            no_telp: $("#no_telp").val()
-          },
-         dataType: "text",  
-         cache:false,
-         success: 
-              function(data){
-                window.alert('Data Berhasil Disimpan');  //as a debugging message.
-              }
-          });
-        }
-      })
-      .modal('show')
-      .modal("refresh");
-    }
-    function updateModal(){
-      $('.update')
-      .modal({
-        onDeny    : function(){
-          window.alert('Batal Simpan ?');
-          
-        },
-        onApprove : function() {
-          window.alert('Data Berhasil Disimpan');
-        }
-      })
-      .modal('show')
-      .modal("refresh");
-    }
-    function deleteModal(id){
-      var id = id;
-      console.log(id);
-      $('.delete')
-      .modal({
-        onDeny    : function(){
-          window.alert('Batal Hapus ?');
-          
-        },
-        onApprove : function() {
-          $.ajax({
-         type: "POST",
-         url: "<?php echo base_url();?>rumah_sakit/delete_RS", 
-         data: {
-            id: id
-          },
-         dataType: "text",  
-         cache:false,
-         success: 
-              function(data){
-                window.alert('Data Berhasil Dihapus');  //as a debugging message.
-              }
-          });
-        }
-      })
-      .modal('show')
-      .modal("refresh");
-    }
-  </script>
+<?php $this->load->view('templete/headerjs.php'); ?>
+<?php include('js.php') ?>
 </body>
 </html>

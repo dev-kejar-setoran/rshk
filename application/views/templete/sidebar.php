@@ -83,7 +83,7 @@
         <a href="<?php echo base_url();?>master/kewarganegaraan" class=" item">
             <i class=" icon"></i> Kewarganegaraan
         </a>
-        <a href="<?php echo base_url();?>master/rumah_sakit" class=" item">
+        <a href="<?php echo base_url();?>rumah_sakit" class=" item">
             <i class=" icon"></i> Rumah Sakit
         </a>
         <a href="<?php echo base_url();?>master/poli" class=" item">
