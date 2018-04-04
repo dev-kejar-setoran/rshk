@@ -1,34 +1,6 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <meta charset="utf-8">
-  <title>PJNHK | Backend</title>
-  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-
-  <link rel="shortcut icon" type="image/x-icon" href="<?php echo $this->config->item('base_url_file');?>assets/img/favicon.ico">
-
-  <link rel="stylesheet" type="text/css" href="<?php echo $this->config->item('base_url_file');?>assets/semantic/semantic.min.css">
-  <link rel="stylesheet" href="<?php echo $this->config->item('base_url_file');?>assets/plugins/sweetalert/sweetalert2.min.css">
-
-
-  <link rel="stylesheet" href="<?php echo $this->config->item('base_url_file');?>assets/css/app.css">
-  <style type="text/css">
-  .ui.file.input input[type="file"] {
-    display: none;
-  }
-  .ui.button>.ui.floated.label {
-    position: absolute;
-    top: 15px;
-    right: -10px;
-  }
-  .table tr th{
-    white-space: nowrap;
-  }
-</style>
-<!-- @yield('css') -->
-<!-- @yield('styles') -->
-</head>
-
+  <?php $this->load->view('templete/head.php'); ?>s
 <body id="app">
 
   <header>
@@ -92,7 +64,7 @@
                     <i class="refresh icon"></i>
                   </button>
                   <div style="margin-left: auto; margin-right: 1px;">
-                    <button type="button" class="ui blue add button" onclick="openModal()">
+                    <button type="button" class="ui blue add button" onclick="form_add()">
                       <i class="plus icon"></i>
                       Tambah Data
                     </button>
@@ -159,38 +131,7 @@
 
   <?php include('modal.php') ?>
   
-  <script>
-  </script>
-  <!-- <script src="../../../js/es6-promise.auto.min.js"></script> -->
-
-  <script src="<?php echo $this->config->item('base_url_file');?>assets/plugins/jQuery/jquery-2.2.3.min.js"></script>
-  <script src="<?php echo $this->config->item('base_url_file');?>assets/plugins/jQuery/jquery.form.min.js"></script>
-  <script src="<?php echo $this->config->item('base_url_file');?>assets/plugins/jQueryUI/jquery-ui.min.js"></script>
-  <script src="<?php echo $this->config->item('base_url_file');?>assets/plugins/slimScroll/jquery.slimscroll.min.js"></script>
-  <script src="<?php echo $this->config->item('base_url_file');?>assets/plugins/fastclick/fastclick.js"></script>
-  <script src="<?php echo $this->config->item('base_url_file');?>assets/plugins/sweetalert/sweetalert2.min.js"></script>
-  <script src="<?php echo $this->config->item('base_url_file');?>assets/semantic/semantic.min.js"></script>
-
-  <script src="<?php echo $this->config->item('base_url_file');?>assets/js/mfs-script.js"></script>
-
-  <script>
-    function openModal(){
-      $('.ui.modal')
-      .modal({
-        observeChanges: true,
-        closable: false,
-        detachable: false,
-        onShow: function() {
-          $('.ui.dropdown').dropdown();
-        }
-      })
-      .modal('show')
-      .modal("refresh");
-    }
-  </script>
-
-  <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.5/Chart.min.js"></script>
-  <script src="<?php echo $this->config->item('base_url_file');?>assets/js/dummy.js"></script>
+  <?php $this->load->view('templete/headerjs.php'); ?>
+    <?php include('js.php') ?>
 </body>
 </html>

@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class kategori_diskusi extends CI_Controller {
+class kategori_diskusi extends MY_Controller {
 
     public function __construct()
     {
@@ -13,18 +13,28 @@ class kategori_diskusi extends CI_Controller {
     function index()
     {
         $data['title_page']='Kategori Diskusi';
-        $data['kategori_diskusi'] = $this->m_kategori_diskusi->get_all();
-
 		$this->load->view('master/kategori_diskusi/index', $data);
 
 	}
 
     // untuk load data table
     public function load_json(){
-        $res = $this->m_kategori_diskusi->get_all();
+        $nama_kategori_diskusi = $this->input->post('nama_kategori_diskusi');
+        $filter['nama_kategori_diskusi'] = empty($nama_kategori_diskusi) ? '' : $nama_kategori_diskusi;
+        $params = $filter['nama_kategori_diskusi'];
+        // get data dari model dengan param
+
+        $res = $this->m_kategori_diskusi->get_all($params);
+         // periksa jika data kosong
+        if (empty($res)) {
+            echo json_encode(""); 
+            return;
+        }
+        // 
+        $no = 1;
         foreach ($res as $data) {
             $row=array();
-            $row[]=$data['id_kategori_diskusi'];
+            $row[]=$no++;
             $row[]=$data['nama_kategori_diskusi'];
             $row[]=$data['deskripsi'];
             $row[]=$data['created_at'];
@@ -44,7 +54,7 @@ class kategori_diskusi extends CI_Controller {
         $data = array(
             'nama_kategori_diskusi' => $this->input->post('nama_kategori_diskusi'),
             'deskripsi' => $this->input->post('deskripsi'),
-            'created_by' => $this->session->userdata('username'),
+            'created_by' => $this->session->userdata('nama_lengkap'),
             'created_at' => date('Y-m-d H:i:s'),
         );
          // run fungsi update

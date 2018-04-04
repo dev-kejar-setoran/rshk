@@ -9,16 +9,19 @@ class m_kategori_diskusi extends CI_Model {
 
     private $_table1 = "m_kategori_diskusi"; //nama table 
 
-    public function get_all(){
-    $query = $this->db->get($this->_table1);
+    public function get_all($params){
+        $this->db->select('*');
+        $this->db->like('nama_kategori_diskusi', $params);
+        
+        $query = $this->db->get($this->_table1);
 
-    if ($query->num_rows() > 0) {
-            $result = $query->result_array();
-            $query->free_result();
-        } else {
-            $result = array();
-        }
-        return $result;
+        if ($query->num_rows() > 0) {
+                $result = $query->result_array();
+                $query->free_result();
+            } else {
+                $result = array();
+            }
+            return $result;
 
     }
 

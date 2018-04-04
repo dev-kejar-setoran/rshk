@@ -42,12 +42,12 @@
               <form class="ui filter form">
                 <div class="inline fields">
                   <div class="field">
-                    <input name="filter[cara_bayar]" placeholder="Kategori Diskusi" type="text">
+                    <input id="filter_nama_kategori_diskusi" placeholder="Kategori Diskusi" type="text">
                   </div>
-                  <button type="button" class="ui teal icon filter button" data-content="Cari Data">
+                  <button type="button" id="btn_cari" class="ui teal icon filter button" data-content="Cari Data">
                     <i class="search icon"></i>
                   </button>
-                  <button type="reset" class="ui icon reset button" data-content="Bersihkan Pencarian">
+                  <button type="reset" id="btn_reset" class="ui icon reset button" data-content="Bersihkan Pencarian">
                     <i class="refresh icon"></i>
                   </button>
                   <div style="margin-left: auto; margin-right: 1px;">

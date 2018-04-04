@@ -1,11 +1,11 @@
-<div class="ui medium modal">
+<div class="ui medium modal formUtama">
   <!-- <i class="close icon"></i> -->
   <div class="header">
     Form Slider
   </div>
   <div class="content">
-    <form class="ui data form" id="form-data" method="post">
-      <input type="hidden" name="action" value="create" enctype="multipart/form-data">
+    <form class="ui data form" id="dataForm" method="post">
+      <input type="hidden" name="action" value="create" enctype="multipart/dataForm">
       
       <div class="ui grid">
         <div class="six wide column">

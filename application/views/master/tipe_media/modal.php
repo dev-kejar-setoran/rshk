@@ -10,7 +10,7 @@
       <div class="ui form">
         <div class="field">
           <label>Tipe Media</label>
-          <input type="text" name="first-name" placeholder="Nama Tipe Media" id="nama_tipe_media">
+          <input type="text" name="nama_tipe_media" id="nama_tipe_media" placeholder="Nama Tipe Media" >
         </div>
         <div class="field">
           <label>Deskripsi</label>
@@ -29,24 +29,3 @@
     </div>
   </div>
 </div>
-
-
-
-  <div class="ui tiny form_hapus modal">
-    <div class="header">
-      Hapus Data
-    </div>
-    <div class="content">
-      <p>Apakah anda yakin untuk menghapus <b id="data_hapus"></b> ?</p>
-      <input type="hidden" id="id_hapus" name="id_hapus">
-    </div>
-    <div class="actions">
-      <div class="ui negative button">
-        No
-      </div>
-      <div class="ui positive right labeled icon button" id="btn_hapus">
-        Yes
-        <i class="checkmark icon"></i>
-      </div>
-    </div>
-  </div>

@@ -41,10 +41,10 @@
               <form class="ui filter form">
                 <div class="inline fields">
                   <div class="field">
-                    <input name="filter[nama]" placeholder="Nama Dokter" type="text">
+                    <input id="filter_nama_dokter" placeholder="Nama Dokter" type="text">
                   </div>
                   <div class="field">
-                    <select name="filter[spesialisasi]" id="" class="ui dropdown selection">
+                    <select id="filter_id_spesialisasi" class="ui dropdown selection">
                       <option value="0">Semua spesialisasi</option>
                       <?php foreach ($combo_spesialisasi as $key) {
                         echo "<option value='".$key->id_spesialisasi."'>".$key->nama_spesialisasi."<option>";
@@ -52,17 +52,17 @@
                     </select>
                   </div>
                   <div class="field">
-                    <select name="filter[jabatan]" id="" class="ui dropdown selection">
+                    <select id="filter_id_jabatan" class="ui dropdown selection">
                       <option value="0">Semua Jabatan</option>
                       <?php foreach ($combo_jabatan as $key) {
                         echo "<option value='".$key->id_jabatan_dokter."'>".$key->nama_jabatan_dokter."<option>";
                       } ?>
                     </select>
                   </div>
-                  <button type="button" class="ui teal icon filter button" data-content="Cari Data">
+                  <button type="button" id="btn_cari" class="ui teal icon filter button" data-content="Cari Data">
                     <i class="search icon"></i>
                   </button>
-                  <button type="reset" class="ui icon reset button" data-content="Bersihkan Pencarian">
+                  <button type="reset" id="btn_reset" class="ui icon reset button" data-content="Bersihkan Pencarian">
                     <i class="refresh icon"></i>
                   </button>
                   <div style="margin-left: auto; margin-right: 1px;">

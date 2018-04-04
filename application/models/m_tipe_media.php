@@ -7,11 +7,13 @@ class m_tipe_media extends CI_Model {
         parent::__construct();
     }
 
-    // private $_table1 = "m_tipe_media"; //nama table 
+    private $_table1 = "m_tipe_media"; //nama table 
 
-      public function get_all(){
-    $query = $this->db->get('m_tipe_media');
+    public function get_all($params){
+    $this->db->select('*');
+    $this->db->like('nama_tipe_media', $params);
 
+    $query = $this->db->get($this->_table1);
     if ($query->num_rows() > 0) {
             $result = $query->result_array();
             $query->free_result();
@@ -24,7 +26,7 @@ class m_tipe_media extends CI_Model {
 
     // tambah
     public function get_add($params) {
-        return $this->db->insert('m_tipe_media', $params);
+        return $this->db->insert($this->_table1, $params);
     }
 
     // detail data
@@ -44,12 +46,12 @@ class m_tipe_media extends CI_Model {
 
     // ubah
     public function get_edit($params, $where) {
-        return $this->db->update('m_tipe_media', $params, $where);
+        return $this->db->update($this->_table1, $params, $where);
     }
     
 
     // delete
     public function get_delete($where){
-        return $this->db->delete('m_tipe_media', $where);
+        return $this->db->delete($this->_table1, $where);
     }
 }

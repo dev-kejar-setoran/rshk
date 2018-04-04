@@ -14,7 +14,6 @@ class data_dokter extends CI_Controller {
     function index()
     {
         $data['title_page']='Data Dokter';
-        // $data['data_dokter'] = $this->m_data_dokter->get_all();
         $data['combo_spesialisasi'] = $this->m_data_dokter->getSpesialisasi(); 
         $data['combo_jabatan'] = $this->m_data_dokter->getJabatan(); 
 
@@ -23,10 +22,24 @@ class data_dokter extends CI_Controller {
 
    // untuk load data table
     public function load_json(){
-        $res = $this->m_data_dokter->get_all();
+        $nama_dokter = $this->input->post('nama_dokter');
+        $id_spesialisasi = $this->input->post('id_spesialisasi');
+        $id_jabatan = $this->input->post('id_jabatan');
+        $params1 = empty($nama_dokter) ? '' : $nama_dokter;
+        $params2 = $id_spesialisasi == 0 ? '' : $id_spesialisasi;
+        $params3 = $id_jabatan == 0 ? '' : $id_jabatan;
+        // get data dari model dengan param
+        $res = $this->m_data_dokter->get_all($params1, $params2, $params3);
+        // periksa jika data kosong
+        if (empty($res)) {
+            echo json_encode(""); 
+            return;
+        }
+        // 
+        $no = 1;
         foreach ($res as $data) {
             $row=array();
-            $row[]=$data['id_dokter'];
+            $row[]=$no++;
             $row[]=$data['nama_dokter'];
             $row[]=$data['nama_spesialisasi'];
             $row[]=$data['nama_jabatan_dokter'];
@@ -48,7 +61,7 @@ class data_dokter extends CI_Controller {
             'nama_dokter' => $this->input->post('nama_dokter'),
             'id_spesialisasi' => $this->input->post('id_spesialisasi'),
             'id_jabatan' => $this->input->post('id_jabatan'),
-            'created_by' => $this->session->userdata('username'),
+            'created_by' => $this->session->userdata('nama_lengkap'),
             'created_at' => date('Y-m-d H:i:s'),
         );
          // run fungsi update

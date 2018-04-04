@@ -2,6 +2,14 @@
 <script type="text/javascript">
     $(document).ready(function(){
         load(); // load tb
+        // btn cari
+        $("#btn_cari").click(function(){  
+            var nama_kategori_diskusi=$('#filter_nama_kategori_diskusi').val();
+            load(nama_kategori_diskusi); 
+        });
+         $("#btn_reset").click(function(){  
+            load();
+        });
         // click simpan 
         $("#btn_simpan").click(function(){      
             simpan();
@@ -19,11 +27,21 @@
         alert("The paragraph was clicked.");
     }
     // load data table
-    function load(nama_ketegori_diskusi='') {
+    function load(nama_kategori_diskusi='') {
         var t_table = $('#tb_data').DataTable();
         t_table.destroy();
         t_table = $('#tb_data').DataTable( {
-            "ajax": "<?php echo base_url('master/kategori_diskusi/load_json') ?>"
+            "ajax": { 
+            "url": "<?php echo base_url('master/kategori_diskusi/load_json') ?>",
+            "type": "POST",
+            "data": {"nama_kategori_diskusi": nama_kategori_diskusi},
+        },
+        "language": {
+              "emptyTable": "No data available in table",
+              "zeroRecords": "No records to display"
+            },
+            searching: false,
+
         } );
        // t_table.destroy();
     } 
@@ -79,64 +97,54 @@
             success: function(msg) {
                 var msg=$.parseJSON(msg);
                 if (msg.status=='sukses') {
-                    alert(msg.pesan);
+                    title_msg = 'Tersimpan!',
+                    type_msg = 'success'
                 }
                 else if (msg.status=='gagal') {
-                    alert(msg.pesan);
+                     title_msg = 'Gagal Tersimpan!',
+                    type_msg = 'warning'
                 }
                 load();
+                swal(title_msg, msg.pesan, type_msg);
             },
         }); 
     }
 
 
     function form_hapus(data_id=""){
-        $("#form").val('edit_process'); // set untuk form edit
-        //alert(data_id);
-        $.ajax({// menggunakan ajax form
-            url: "<?php echo base_url('master/kategori_diskusi/get_detail_data'); ?>",
-            type: "POST",
-            data: {"data_id": data_id},
-            beforeSend: function () {
-                // non removable loading
-                // $('#loading_modal').modal({
-                //     backdrop: 'static', keyboard: false
-                // });
-            },
-            success: function (output) {
-                var output = $.parseJSON(output);
-                //alert(JSON.stringify(output));
-                $("#data_hapus").text(output.data.nama_kategori_diskusi);
-                $("#id_hapus").val(output.data.id_kategori_diskusi);
-                modal_hapus();
-            },
-        });
-    }
-
-
-    // proses tambah data
-    function hapus() {        
-        var id_hapus=$('#id_hapus').val();
-        $.ajax({
-            url: "<?php echo base_url('master/kategori_diskusi/delete_process'); ?>",
-            type: "POST",
-            data: {
-                "id_hapus":id_hapus
-            },
-            beforeSubmit: function() {
-                //loading
-            },
-            success: function(msg) {
-                var msg=$.parseJSON(msg);
-                if (msg.status=='sukses') {
-                    alert(msg.pesan);
-                }
-                else if (msg.status=='gagal') {
-                    alert(msg.pesan);
-                }
-                load();
-            },
-        }); 
+        swal({
+              title: 'Hapus Data',
+              text: "Apakah Anda ingin menghapus data ini? #" + data_id,
+              type: 'warning',
+              showCancelButton: true,
+              confirmButtonColor: '#3085d6',
+              cancelButtonColor: '#999',
+              confirmButtonText: 'Hapus',
+              cancelButtonText: 'Batal'
+          }).then(value => {
+             $.ajax({// menggunakan ajax form
+                url: "<?php echo base_url('master/kategori_diskusi/delete_process'); ?>",
+                type: "POST",
+                data: {
+                    "id_hapus":data_id
+                },
+                beforeSend: function () {
+                    // non removable loading
+                    // $('#loading_modal').modal({
+                    //     backdrop: 'static', keyboard: false
+                    // });
+                },
+                success: function (msg) {
+                    var msg=$.parseJSON(msg);
+                    load();
+                    swal(
+                      'Deleted!',
+                      msg.pesan,
+                      'success'
+                      );
+                },
+            });
+        }).catch(swal.noop)
     }
 
 </script>

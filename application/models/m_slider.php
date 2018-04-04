@@ -1,27 +1,15 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class m_data_dokter extends CI_Model {
+class m_slider extends CI_Model {
 
  public function __construct() {
         parent::__construct();
     }
 
-    private $_table1 = "m_data_dokter"; //nama table 
-    private $_table2 = "m_spesialisasi"; //nama table 
-    private $_table3 = "m_jabatan_dokter"; //nama table 
+    private $_table1 = "t_website_slider"; //nama table
 
-    public function get_all($params1, $params2, $params3){
-
-        // print_r($params[0]); die();
-    $this->db->select('a.*, b.nama_spesialisasi, c.nama_jabatan_dokter');
-    $this->db->from($this->_table1 . ' a');
-    $this->db->join($this->_table2 . ' b', 'b.id_spesialisasi = a.id_spesialisasi', 'right');    
-    $this->db->join($this->_table3 . ' c', 'c.id_jabatan_dokter = a.id_jabatan', 'right');  
-    $this->db->like('a.nama_dokter',$params1);
-    $this->db->or_where('a.id_spesialisasi',$params2);
-    $this->db->or_where('a.id_jabatan',$params3);
-    
+    public function get_all(){
     $query = $this->db->get($this->_table1);
 
     if ($query->num_rows() > 0) {
