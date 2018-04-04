@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 02 Apr 2018 pada 16.55
+-- Waktu pembuatan: 04 Apr 2018 pada 08.03
 -- Versi server: 10.1.31-MariaDB
 -- Versi PHP: 7.2.3
 
@@ -40,7 +40,17 @@ CREATE TABLE `ci_sessions` (
 --
 
 INSERT INTO `ci_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES
-('a472e3ivurou6qactflt283ugur87ao6', '::1', 1522676688, 0x5f5f63695f6c6173745f726567656e65726174657c693a313532323637363538323b);
+('05j2fnvpgi6jt4tttv3fo6teusm5s21u', '::1', 1522694649, 0x5f5f63695f6c6173745f726567656e65726174657c693a313532323639343634393b7374617475737c623a313b656d61696c7c733a31353a2261646d696e40676d61696c2e636f6d223b6e616d615f6c656e676b61707c733a303a22223b69645f757365727c733a313a2231223b),
+('0c23bfpdqqpuguo6c5k7ppn7prlp4agu', '::1', 1522692922, 0x5f5f63695f6c6173745f726567656e65726174657c693a313532323639323932323b7374617475737c623a313b656d61696c7c733a31353a2261646d696e40676d61696c2e636f6d223b6e616d615f6c656e676b61707c733a303a22223b69645f757365727c733a313a2231223b),
+('2gb5ibj52l6mkdkrnie1ihojo7eesg0g', '::1', 1522693946, 0x5f5f63695f6c6173745f726567656e65726174657c693a313532323639333934363b7374617475737c623a313b656d61696c7c733a31353a2261646d696e40676d61696c2e636f6d223b6e616d615f6c656e676b61707c733a303a22223b69645f757365727c733a313a2231223b),
+('5i55or9t7lvjruk83n21247k69vs39f1', '::1', 1522694920, 0x5f5f63695f6c6173745f726567656e65726174657c693a313532323639343732323b7374617475737c623a313b656d61696c7c733a31353a2261646d696e40676d61696c2e636f6d223b6e616d615f6c656e676b61707c733a303a22223b69645f757365727c733a313a2231223b),
+('81qeluqu3a84ecf88jv722fs07ihmeed', '::1', 1522693622, 0x5f5f63695f6c6173745f726567656e65726174657c693a313532323639333632323b7374617475737c623a313b656d61696c7c733a31353a2261646d696e40676d61696c2e636f6d223b6e616d615f6c656e676b61707c733a303a22223b69645f757365727c733a313a2231223b),
+('900h932vehtngugbdhaqusonucrivgj9', '::1', 1522694336, 0x5f5f63695f6c6173745f726567656e65726174657c693a313532323639343333363b7374617475737c623a313b656d61696c7c733a31353a2261646d696e40676d61696c2e636f6d223b6e616d615f6c656e676b61707c733a303a22223b69645f757365727c733a313a2231223b),
+('c7k20v04md2e7v3g5bhidfkquki0cq11', '::1', 1522692592, 0x5f5f63695f6c6173745f726567656e65726174657c693a313532323639323539323b),
+('jg1q7ldch7odpcbesuv7hhq8pr7srakn', '::1', 1522814820, 0x5f5f63695f6c6173745f726567656e65726174657c693a313532323831343732353b7374617475737c623a313b656d61696c7c733a31353a2261646d696e40676d61696c2e636f6d223b6e616d615f6c656e676b61707c733a303a22223b69645f757365727c733a313a2231223b),
+('lu420n1smi0uvdpfsc6jjnc3ogh387lb', '::1', 1522821789, 0x5f5f63695f6c6173745f726567656e65726174657c693a313532323832313738383b),
+('p8uvrrk4ar00m86d2bfgekprf4acekg8', '::1', 1522691755, 0x5f5f63695f6c6173745f726567656e65726174657c693a313532323639313735353b),
+('vi1hjdvfqhuoatvd9ugvduft98stivs4', '::1', 1522693316, 0x5f5f63695f6c6173745f726567656e65726174657c693a313532323639333331363b7374617475737c623a313b656d61696c7c733a31353a2261646d696e40676d61696c2e636f6d223b6e616d615f6c656e676b61707c733a303a22223b69645f757365727c733a313a2231223b);
 
 -- --------------------------------------------------------
 
@@ -69,13 +79,21 @@ CREATE TABLE `m_data_dokter` (
   `id_dokter` int(11) NOT NULL,
   `nama_dokter` varchar(50) NOT NULL,
   `id_spesialisasi` int(11) NOT NULL,
-  `id_jabatan` int(11) NOT NULL,
+  `id_jabatan_dokter` int(11) NOT NULL,
   `foto` varchar(100) NOT NULL,
   `created_by` varchar(50) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
   `updated_by` varchar(50) NOT NULL,
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data untuk tabel `m_data_dokter`
+--
+
+INSERT INTO `m_data_dokter` (`id_dokter`, `nama_dokter`, `id_spesialisasi`, `id_jabatan_dokter`, `foto`, `created_by`, `created_at`, `updated_by`, `updated_at`) VALUES
+(1, 'Dr Azhar', 1, 1, 'sdf.jpg', 'asf', '2018-04-02 16:41:51', 'asf', '2018-04-02 16:41:51'),
+(2, 'Dr.Arif', 1, 1, 'aa.jpg', 'asf', '0000-00-00 00:00:00', 'asf', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -114,6 +132,13 @@ CREATE TABLE `m_jabatan_dokter` (
   `updated_by` varchar(50) NOT NULL,
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data untuk tabel `m_jabatan_dokter`
+--
+
+INSERT INTO `m_jabatan_dokter` (`id_jabatan_dokter`, `nama_jabatan_dokter`, `alamat`, `deskripsi`, `created_by`, `created_at`, `updated_by`, `updated_at`) VALUES
+(1, 'Direktur Utama', '-', '-', '-', '0000-00-00 00:00:00', '-', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -252,6 +277,14 @@ CREATE TABLE `m_spesialisasi` (
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data untuk tabel `m_spesialisasi`
+--
+
+INSERT INTO `m_spesialisasi` (`id_spesialisasi`, `nama_spesialisasi`, `alamat`, `deskripsi`, `created_by`, `created_at`, `updated_by`, `updated_at`) VALUES
+(1, 'Kardiologi', '-', '-', '-', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00'),
+(2, 'Varkuler', '-', '-', '-', '2018-04-02 16:38:58', '-', '2018-04-02 16:38:58');
+
 -- --------------------------------------------------------
 
 --
@@ -331,7 +364,7 @@ CREATE TABLE `m_users` (
 --
 
 INSERT INTO `m_users` (`id_user`, `username`, `password`, `nama_lengkap`, `email`, `tlp`, `role`, `status`, `last_login`, `created_by`, `created_at`, `updated_by`, `updated_at`) VALUES
-(1, 'admin', '$1$Dtqyvz7/$wZSaZbfHgn0UbLlVi1HHp0', 'Admin', 'admin@gmail.com', '123456', 'admin', 0, '2018-04-02 15:44:48', '', '2018-04-02 13:44:48', '', '2018-04-02 13:44:48');
+(1, 'admin', '827ccb0eea8a706c4c34a16891f84e7b', '', 'admin@gmail.com', '', 'admin', 0, '2018-04-02 19:00:07', '', '2018-04-02 17:00:07', '', '2018-04-02 17:00:07');
 
 -- --------------------------------------------------------
 
@@ -360,7 +393,20 @@ INSERT INTO `m_users_authentication` (`id_auth`, `id_user`, `token`, `expired_at
 (0, 1, '$1$wrDstXNP$gUojU7HHxd9KLwxyn9dho1', '2018-04-03 03:12:05', '2018-04-02 20:12:05', '2018-04-02 20:12:05'),
 (0, 1, '$1$kQY/HEJq$3VFeg3acSyXF7SfBIcrTJ0', '2018-04-03 03:13:55', '2018-04-02 20:13:55', '2018-04-02 20:13:55'),
 (0, 1, '$1$3tWMTMhb$tUv.mpQA1gTeuw9BLbBoR1', '2018-04-03 03:43:02', '2018-04-02 20:43:02', '2018-04-02 20:43:02'),
-(0, 1, '$1$K1AHvdlE$85AZbcic4bHfJoz9giOZ2/', '2018-04-03 03:44:48', '2018-04-02 20:44:48', '2018-04-02 20:44:48');
+(0, 1, '$1$K1AHvdlE$85AZbcic4bHfJoz9giOZ2/', '2018-04-03 03:44:48', '2018-04-02 20:44:48', '2018-04-02 20:44:48'),
+(0, 1, '$1$GqM34.r5$farn7xbY8083ihf2PxfKt0', '2018-04-03 06:18:48', '2018-04-02 23:18:48', '2018-04-02 23:18:48'),
+(0, 1, '$1$8GlkO5P5$gQJEGGiDHwRxTp7/jh1eu0', '2018-04-03 06:19:26', '2018-04-02 23:19:26', '2018-04-02 23:19:26'),
+(0, 1, '$1$hM3JfoFH$HFyNbkP7pJm5qTBgAAHtz1', '2018-04-03 06:19:46', '2018-04-02 23:19:46', '2018-04-02 23:19:46'),
+(0, 1, '$1$RMOM0CAV$B4OLxrmjBiqz29tPku6Wo.', '2018-04-03 06:20:15', '2018-04-02 23:20:15', '2018-04-02 23:20:15'),
+(0, 1, '$1$bUtoaftS$6ao7CY4BRuPdEPIVCzfhN.', '2018-04-03 06:20:44', '2018-04-02 23:20:44', '2018-04-02 23:20:44'),
+(0, 1, '$1$uS8/dv0j$3SKbyjPHrN5xn5ePSAQ71/', '2018-04-03 06:20:45', '2018-04-02 23:20:45', '2018-04-02 23:20:45'),
+(0, 1, '$1$Jm8/GIPw$JS07chaU6uBRLd6q.43I4.', '2018-04-03 06:21:12', '2018-04-02 23:21:12', '2018-04-02 23:21:12'),
+(0, 1, '$1$Zh35AC0b$lwSl2bCkzxoeXBjmFtlWq/', '2018-04-03 06:21:16', '2018-04-02 23:21:16', '2018-04-02 23:21:16'),
+(0, 1, '$1$e/vzv7q9$9fR6jlrzWl.SImmo64GyN0', '2018-04-03 06:21:17', '2018-04-02 23:21:17', '2018-04-02 23:21:17'),
+(0, 1, '$1$9zxDLTlS$Vefez.rlZaJPRzrQyxV9N.', '2018-04-03 06:25:35', '2018-04-02 23:25:35', '2018-04-02 23:25:35'),
+(0, 1, '$1$NgZyGhX3$w8eMlWHayuJA/sIcLEfQm/', '2018-04-03 06:51:59', '2018-04-02 23:51:59', '2018-04-02 23:51:59'),
+(0, 1, '$1$EiSj8W01$YJMfyzEGDjvND9ljeEZNy.', '2018-04-03 06:57:13', '2018-04-02 23:57:13', '2018-04-02 23:57:13'),
+(0, 1, '$1$UxJ4MxSc$uQMTg7LjPLDjmbvGsuZIe0', '2018-04-03 07:15:35', '2018-04-03 00:00:07', '2018-04-02 19:15:35');
 
 -- --------------------------------------------------------
 
@@ -620,16 +666,34 @@ ALTER TABLE `t_website_slider`
 --
 
 --
+-- AUTO_INCREMENT untuk tabel `m_data_dokter`
+--
+ALTER TABLE `m_data_dokter`
+  MODIFY `id_dokter` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- AUTO_INCREMENT untuk tabel `m_data_pasien`
 --
 ALTER TABLE `m_data_pasien`
   MODIFY `id_pasien` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT untuk tabel `m_jabatan_dokter`
+--
+ALTER TABLE `m_jabatan_dokter`
+  MODIFY `id_jabatan_dokter` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT untuk tabel `m_rumah_sakit`
 --
 ALTER TABLE `m_rumah_sakit`
   MODIFY `id_rumah_sakit` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT untuk tabel `m_spesialisasi`
+--
+ALTER TABLE `m_spesialisasi`
+  MODIFY `id_spesialisasi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT untuk tabel `m_users`
