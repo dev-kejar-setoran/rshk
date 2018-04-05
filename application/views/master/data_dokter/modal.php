@@ -14,7 +14,7 @@
             <span class="image-preview" style="height: 180px">Pilih Gambar</span>
             <div class="ui fluid file input action">
               <input type="text" readonly="">
-              <input type="file" class="ten wide column" id="attachment" name="attachment[]" autocomplete="off" multiple="">
+              <input type="file" class="ten wide column" id="attachment" name="attachment" autocomplete="off" multiple="">
               <div class="ui blue button file">
                 Cari...
               </div>
@@ -29,19 +29,21 @@
           <div class="field">
             <label for="">Spesialisasi</label>
             <select name="filter[spesialisasi]" class="ui dropdown selection" id="id_spesialisasi">
-              <option value="0">Pilih spesialisasi</option>
-              <?php foreach ($combo_spesialisasi as $key) {
-                echo "<option value='".$key->id_spesialisasi."'>".$key->nama_spesialisasi."<option>";
-              } ?>
+              <option value="">Pilih spesialisasi</option>
+                <?php foreach($combo_spesialisasi as $rows){
+                    echo "<option value='$rows->id_spesialisasi'>$rows->nama_spesialisasi</option>;";
+                  }
+                ?>
             </select>
           </div>
           <div class="field">
             <label for="">Jabatan</label>
             <select name="filter[jabatan]" class="ui dropdown selection" id="id_jabatan">
-              <option value="0">Pilih jabatan</option>
-              <?php foreach ($combo_jabatan as $key) {
-                echo "<option value='".$key->id_jabatan_dokter."'>".$key->nama_jabatan_dokter."<option>";
-              } ?>
+              <option value="">Pilih jabatan</option>
+              <?php foreach($combo_jabatan as $rows){
+                  echo "<option value='$rows->id_jabatan_dokter'>$rows->nama_jabatan_dokter</option>;";
+                }
+              ?>
             </select>
           </div>
         </div>
@@ -58,24 +60,3 @@
     </div>
   </div>
 </div>
-
-
-
-  <div class="ui tiny form_hapus modal">
-    <div class="header">
-      Hapus Data
-    </div>
-    <div class="content">
-      <p>Apakah anda yakin untuk menghapus <b id="data_hapus"></b> ?</p>
-      <input type="hidden" id="id_hapus" name="id_hapus">
-    </div>
-    <div class="actions">
-      <div class="ui negative button">
-        No
-      </div>
-      <div class="ui positive right labeled icon button" id="btn_hapus">
-        Yes
-        <i class="checkmark icon"></i>
-      </div>
-    </div>
-  </div>

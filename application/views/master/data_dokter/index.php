@@ -45,18 +45,20 @@
                   </div>
                   <div class="field">
                     <select id="filter_id_spesialisasi" class="ui dropdown selection">
-                      <option value="0">Semua spesialisasi</option>
-                      <?php foreach ($combo_spesialisasi as $key) {
-                        echo "<option value='".$key->id_spesialisasi."'>".$key->nama_spesialisasi."<option>";
-                      } ?>
+                      <option value="">Semua spesialisasi</option>
+                      <?php foreach($combo_spesialisasi as $rows){
+                          echo "<option value='$rows->id_spesialisasi'>$rows->nama_spesialisasi</option>;";
+                        }
+                      ?>
                     </select>
                   </div>
                   <div class="field">
                     <select id="filter_id_jabatan" class="ui dropdown selection">
-                      <option value="0">Semua Jabatan</option>
-                      <?php foreach ($combo_jabatan as $key) {
-                        echo "<option value='".$key->id_jabatan_dokter."'>".$key->nama_jabatan_dokter."<option>";
-                      } ?>
+                      <option value="">Semua Jabatan</option>
+                        <?php foreach($combo_jabatan as $rows){
+                          echo "<option value='$rows->id_jabatan_dokter'>$rows->nama_jabatan_dokter</option>;";
+                        }
+                        ?>
                     </select>
                   </div>
                   <button type="button" id="btn_cari" class="ui teal icon filter button" data-content="Cari Data">

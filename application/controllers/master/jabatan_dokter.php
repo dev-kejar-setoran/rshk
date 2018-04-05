@@ -1,36 +1,39 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class data_dokter extends CI_Controller {
+class jabatan_dokter extends MY_Controller {
 
     public function __construct()
     {
         parent::__construct();
-         //$this->auth->validation();
-        $this->load->helper(array('form', 'url'));
+        //$this->auth->validation();
         $this->load->library('form_validation');
-        $this->load->model('m_data_dokter');
+        $this->load->model('m_jabatan_dokter');
+        $this->load->model('m_data_pasien');
     }
 
-    function index()
+    // default
+    public function index()
     {
-        $data['title_page']='Data Dokter';
-        $data['combo_spesialisasi'] = $this->m_data_dokter->getSpesialisasi(); 
-        $data['combo_jabatan'] = $this->m_data_dokter->getJabatan(); 
+        $data['spesialisasi'] = $this->m_jabatan_dokter->get_spesialsisasi();
+         //echo json_encode($data['spesialisasi']);
+        // $this->load->view('master/jabatan_dokter/index',$data);
+         $data['title_page']='Jabatan Dokter';
+        // $data['tabel_data'] = $this->m_jabatan_dokter->get_all();
+           //echo json_encode($data['tabel_data']);
+        //print_r($data); exit();
+        $this->load->view('master/jabatan_dokter/index',$data);
+        
+    }
 
-		$this->load->view('master/data_dokter/index', $data);
-	}
-
-   // untuk load data table
+    // untuk load data table
     public function load_json(){
-        $nama_dokter = $this->input->post('nama_dokter');
-        $id_spesialisasi = $this->input->post('id_spesialisasi');
-        $id_jabatan = $this->input->post('id_jabatan');
-        $params1 = empty($nama_dokter) ? '' : $nama_dokter;
-        $params2 = empty($id_spesialisasi) ? '' : $id_spesialisasi;
-        $params3 = empty($id_jabatan) ? '' : $id_jabatan;
+        // parameter search 
+        $nama_jabatan = $this->input->post('filter_jabatan');
+        $filter['filter_jabatan'] = empty($nama_jabatan) ? '%' : '%' . $nama_jabatan . '%';
+        $params = array($filter['filter_jabatan']);
         // get data dari model dengan param
-        $res = $this->m_data_dokter->get_all($params1, $params2, $params3);
+        $res = $this->m_jabatan_dokter->get_all($params);
         // periksa jika data kosong
         if (empty($res)) {
             echo json_encode(""); 
@@ -41,33 +44,32 @@ class data_dokter extends CI_Controller {
         foreach ($res as $data) {
             $row=array();
             $row[]=$no++;
-            $row[]=$data['nama_dokter'];
-            $row[]=$data['nama_spesialisasi'];
             $row[]=$data['nama_jabatan_dokter'];
+            $row[]=$data['deskripsi'];
             $row[]=$data['created_at'];
             $row[]=$data['created_by'];
-            $row[]='<button type="button" data-content="Ubah Data" data-id="'.$data["id_dokter"].'" class="ui mini orange icon edit button" onclick="form_edit(\''.$data["id_dokter"].'\')"><i class="edit icon"></i></button>
-            <button type="button" data-content="Hapus Data" data-id="'.$data["id_dokter"].'" class="ui mini red icon delete button"  onclick="form_hapus(\''.$data["id_dokter"].'\')" ><i class="trash icon"></i></button>';
+            $row[]='<button type="button" data-content="Ubah Data" data-id="'.$data["id_jabatan_dokter"].'" class="ui mini orange icon edit button" onclick="form_edit(\''.$data["id_jabatan_dokter"].'\')"><i class="edit icon"></i></button>
+            <button type="button" data-content="Hapus Data" data-id="'.$data["id_jabatan_dokter"].'" class="ui mini red icon delete button"  onclick="form_hapus(\''.$data["id_jabatan_dokter"].'\')" ><i class="trash icon"></i></button>';
             $dataarray[] = $row;
         }
         $output = array(
             "data" => $dataarray,
         );
         echo json_encode($output);
+       
     }
+    
 
- // proses tambah data
+    // proses tambah data
     public function add_process() {
         $data = array(
-            'nama_dokter' => $this->input->post('nama_dokter'),
-            'id_spesialisasi' => $this->input->post('id_spesialisasi'),
-            'id_jabatan' => $this->input->post('id_jabatan'),
+            'nama_jabatan_dokter' => $this->input->post('nm_jabatan'),
+            'deskripsi' => $this->input->post('deskripsi'),
             'created_by' => $this->session->userdata('nama_lengkap'),
-            'created_at' => date('Y-m-d H:i:s'),
+            'created_at' => date('Y-m-d H:i:s')
         );
-        
-         // run fungsi update
-        if($this->m_data_dokter->get_add($data)){ //jika update berhasil
+        // run fungsi update
+        if($this->m_jabatan_dokter->get_add($data)){ //jika update berhasil
             $response['status']="sukses";
             $response['pesan']="Data berhasil disimpan";
         }else{ //jika  gagal
@@ -82,7 +84,7 @@ class data_dokter extends CI_Controller {
         $data_id = $this->input->post('data_id');
         // parameter
         //$params = array($noagenda, $noba, $no_tiket);
-        $data = $this->m_data_dokter->get_detail_data($data_id);
+        $data = $this->m_jabatan_dokter->get_detail_data($data_id);
         // get data
         if (empty($data)) {
             $output = array(
@@ -100,25 +102,24 @@ class data_dokter extends CI_Controller {
 
     // proses edit setelah di entry
     public function edit_process() {
-        $data['id_dokter'] = $this->input->post('id_dokter');
+        $data['id_jabatan_dokter'] = $this->input->post('id_jabatan_dokter');
         // validate
-        if (empty($data['id_dokter'])) {
+        if (empty($data['id_jabatan_dokter'])) {
             $response['status']="gagal";
-            $response['pesan']="Data tidak ditemukan!";
+            $response['pesan']="Data id_jabatan_doktertidak ditemukan!";
             echo json_encode($response);
         }
         // insert db
         $params = array(
-            'nama_dokter' => $this->input->post('nama_dokter'),
-            'id_spesialisasi' => $this->input->post('id_spesialisasi'),
-            'id_jabatan' => $this->input->post('id_jabatan'),
+            'nama_jabatan_dokter' => $this->input->post('nm_jabatan'),
+            'deskripsi' => $this->input->post('deskripsi'),
             'updated_by' => $this->session->userdata('username'),
             'updated_at' => date('Y-m-d H:i:s'),
         );
         $where = array(
-            'id_dokter' => $this->input->post('id_dokter'),
+            'id_jabatan_dokter' => $this->input->post('id_jabatan_dokter'),
         );
-        if ($this->m_data_dokter->get_edit($params, $where)) {
+        if ($this->m_jabatan_dokter->get_edit($params, $where)) {
             $response['status']="sukses";
             $response['pesan']="Data berhasil disimpan";
         }else{ //jika  gagal
@@ -128,11 +129,12 @@ class data_dokter extends CI_Controller {
         echo json_encode($response);
     }
 
+    // proses delete
     public function delete_process() {
-        $where = array(
-            'id_dokter' => $this->input->post('id_hapus')
+         $where = array(
+            'id_jabatan_dokter' => $this->input->post('id_hapus')
         );
-        if ($this->m_data_dokter->get_delete($where)) {
+        if ($this->m_jabatan_dokter->get_delete($where)) {
             $response['status']="sukses";
             $response['pesan']="Data berhasil dihapus";
         }else{ //jika  gagal
@@ -141,4 +143,5 @@ class data_dokter extends CI_Controller {
         }
         echo json_encode($response);
     }
+
 }

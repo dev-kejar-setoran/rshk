@@ -15,14 +15,13 @@ class m_data_dokter extends CI_Model {
 
         // print_r($params[0]); die();
     $this->db->select('a.*, b.nama_spesialisasi, c.nama_jabatan_dokter');
-    $this->db->from($this->_table1 . ' a');
-    $this->db->join($this->_table2 . ' b', 'b.id_spesialisasi = a.id_spesialisasi', 'right');    
-    $this->db->join($this->_table3 . ' c', 'c.id_jabatan_dokter = a.id_jabatan', 'right');  
+    $this->db->join($this->_table2 . ' b', 'b.id_spesialisasi = a.id_spesialisasi', 'left');    
+    $this->db->join($this->_table3 . ' c', 'c.id_jabatan_dokter = a.id_jabatan', 'left');  
     $this->db->like('a.nama_dokter',$params1);
     $this->db->or_where('a.id_spesialisasi',$params2);
     $this->db->or_where('a.id_jabatan',$params3);
     
-    $query = $this->db->get($this->_table1);
+    $query = $this->db->get($this->_table1 . ' a');
 
     if ($query->num_rows() > 0) {
             $result = $query->result_array();
