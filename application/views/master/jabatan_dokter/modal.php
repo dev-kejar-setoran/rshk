@@ -1,36 +1,38 @@
-<div class="ui tiny modal">
+<div class="ui tiny modal formUtama">
   <!-- <i class="close icon"></i> -->
   <div class="header">
     Form Jabatan Dokter
   </div>
   <div class="content">
-    <form>
-      <div class="ui form">
-        <div class="field">
+    <form class="ui data form" id="dataForm" action="" method="POST" style="padding-top: 1rem;"> 
+      <input type="hidden" id="id_jabatan_dokter" value="">
+      <input type="hidden" id="form" value="">
+        <!-- <div class="field">
           <label>Spesialisasi</label>
-          <select name="spesialisasi" class="ui selection dropdown">
+          <select name="spesialisasi" class="ui selection dropdown" id="id_spesialisasi">
             <option value="">Pilih spesialisasi</option>
-            <option value=1>Spesialisasi 1</option>
-            <option value=2>Spesialisasi 2</option>
-            <option value=3>Spesialisasi 3</option>
-          </select>
-        </div>
+                      <?php foreach($spesialisasi->result() as $rows){
+                          echo "<option value='$rows->id_spesialisasi'>$rows->nama_spesialisasi</option>;";
+                        }
+                      ?>
+            </select>
+        </div> -->
         <div class="field">
           <label>Jabatan Dokter</label>
-          <input type="text" name="first-name" placeholder="Nama Jabatan Dokter">
+          <input type="text" id="nm_jabatan" name="nm_jabatan" placeholder="Nama Jabatan Dokter">
         </div>
         <div class="field">
           <label>Deskripsi</label>
-          <textarea name="deskripsi" id="" cols="100%" rows="5"></textarea>
+          <textarea id="deskripsi" name="deskripsi" cols="100%" rows="5"></textarea>
         </div>
-      </div>
+     
     </form>
   </div>
   <div class="actions">
-    <div class="ui black deny button">
+    <div class="ui black deny button" id="btn_batal">
       Batal
     </div>
-    <div class="ui positive right labeled icon button">
+    <div class="ui positive right labeled icon button" id="btn_simpan">
       Simpan
       <i class="save icon"></i>
     </div>
