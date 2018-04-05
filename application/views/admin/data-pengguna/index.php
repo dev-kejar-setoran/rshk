@@ -1,42 +1,13 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <meta charset="utf-8">
-  <title>PJNHK | Backend</title>
-  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-
-  <link rel="shortcut icon" type="image/x-icon" href="<?php echo base_url();?>assets/img/favicon.ico">
-  <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>assets/semantic/semantic.min.css">
-  <link rel="stylesheet" href="<?php echo base_url();?>assets/plugins/sweetalert/sweetalert2.min.css">
-
-  <link rel="stylesheet" href="<?php echo base_url();?>assets/css/app.css">
-  <style type="text/css">
-  .ui.file.input input[type="file"] {
-    display: none;
-  }
-  .ui.button>.ui.floated.label {
-    position: absolute;
-    top: 15px;
-    right: -10px;
-  }
-  .table tr th{
-    white-space: nowrap;
-  }
-</style>
-<!-- @yield('css') -->
-<!-- @yield('styles') -->
-</head>
-
+  <?php $this->load->view('templete/head.php'); ?>
 <body id="app">
-
   <header>
-    <?php include('../../../partials/header.php'); ?>
+    <?php $this->load->view('templete/header.php'); ?>
   </header>
-
   <div class="ui sidebar inverted visible vertical menu">
-    <?php include('../../../partials/sidebar.php'); ?>
+    <?php $this->load->view('templete/sidebar.php'); ?>
   </div>
-
   <div id="cover">
     <div class="ui active inverted dimmer">
       <div class="ui text loader">Loading</div>
@@ -70,16 +41,16 @@
               <form class="ui filter form">
                 <div class="inline fields">
                   <div class="field">
-                    <input name="filter[cara_bayar]" placeholder="Data Pengguna" type="text">
+                    <input id="filter_pengguna" placeholder="Data Pengguna" type="text">
                   </div>
-                  <button type="button" class="ui teal icon filter button" data-content="Cari Data">
+                  <button type="button" id="btn_cari" class="ui teal icon filter button" data-content="Cari Data">
                     <i class="search icon"></i>
                   </button>
-                  <button type="reset" class="ui icon reset button" data-content="Bersihkan Pencarian">
+                  <button type="reset" id="btn_reset" class="ui icon reset button" data-content="Bersihkan Pencarian">
                     <i class="refresh icon"></i>
                   </button>
                   <div style="margin-left: auto; margin-right: 1px;">
-                    <button type="button" class="ui blue add button" onclick="openModal()">
+                    <button type="button" class="ui blue add button" onclick="form_add()">
                       <i class="plus icon"></i>
                       Tambah Data
                     </button>
@@ -88,7 +59,7 @@
                 </div>
               </form>
 
-              <table class="ui celled table">
+              <table id="tb_data" class="display ui celled tabl" style="width:100%">
                 <thead class="center aligned">
                   <tr>
                     <th>No</th>
@@ -101,47 +72,6 @@
                     <th>Aksi</th>
                   </tr>
                 </thead>
-                <tbody>
-                  <tr>
-                    <td class="center aligned">1</td>
-                    <td class="center aligned">Jane Doe</td>
-                    <td class="center aligned">janedoe@gmail.com</td>
-                    <td class="center aligned">0812312312312</td>
-                    <td class="center aligned"><span class="ui blue fluid label">Admin</span></td>
-                    <td class="center aligned">25 Februari 2018</td>
-                    <td class="center aligned">admin</td>
-                    <td class="center aligned">
-                      <button type="button" data-content="Ubah Data" data-id="" class="ui mini orange icon edit button" onclick="openModal()"><i class="edit icon"></i></button>
-                      <button type="button" data-content="Hapus Data" data-id="" class="ui mini red icon delete button"><i class="trash icon"></i></button>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td class="center aligned">2</td>
-                    <td class="center aligned">Alek Patel</td>
-                    <td class="center aligned">apatel@gmail.com</td>
-                    <td class="center aligned">0812312312312</td>
-                    <td class="center aligned"><span class="ui teal fluid label">Dokter</span></td>
-                    <td class="center aligned">25 Februari 2018</td>
-                    <td class="center aligned">admin</td>
-                    <td class="center aligned">
-                      <button type="button" data-content="Ubah Data" data-id="" class="ui mini orange icon edit button" onclick="openModal()"><i class="edit icon"></i></button>
-                      <button type="button" data-content="Hapus Data" data-id="" class="ui mini red icon delete button"><i class="trash icon"></i></button>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td class="center aligned">3</td>
-                    <td class="center aligned">Dudu Lala</td>
-                    <td class="center aligned">laladudu@gmail.com</td>
-                    <td class="center aligned">0812312312312</td>
-                    <td class="center aligned"><span class="ui orange fluid label">Pasien</span></td>
-                    <td class="center aligned">25 Februari 2018</td>
-                    <td class="center aligned">admin</td>
-                    <td class="center aligned">
-                      <button type="button" data-content="Ubah Data" data-id="" class="ui mini orange icon edit button" onclick="openModal()"><i class="edit icon"></i></button>
-                      <button type="button" data-content="Hapus Data" data-id="" class="ui mini red icon delete button"><i class="trash icon"></i></button>
-                    </td>
-                  </tr>
-                </tbody>
               </table>
             </div>
           </div>
@@ -150,30 +80,14 @@
       </div>
     </div>
 
-    <?php include('../../../partials/footer.php'); ?>
+    <?php $this->load->view('templete/footer.php'); ?>
 
     <div v-cloak>
       <!-- @yield('additional') -->
     </div>
   </div>
-
   <?php include('modal.php') ?>
-
-  <script>
-  </script>
-  <!-- <script src="../../../js/es6-promise.auto.min.js"></script> -->
-
-  <script src="../../../plugins/jQuery/jquery-2.2.3.min.js"></script>
-  <script src="../../../plugins/jQuery/jquery.form.min.js"></script>
-  <script src="../../../plugins/jQueryUI/jquery-ui.min.js"></script>
-  <script src="../../../plugins/slimScroll/jquery.slimscroll.min.js"></script>
-  <script src="../../../plugins/fastclick/fastclick.js"></script>
-  <script src="../../../plugins/sweetalert/sweetalert2.min.js"></script>
-  <script src="../../../semantic/semantic.min.js"></script>
-
-  <script src="../../../js/mfs-script.js"></script>
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.5/Chart.min.js">></script>
-  <script src="../../../js/dummy.js"></script>
+  <?php $this->load->view('templete/headerjs.php'); ?>
+  <?php include('js.php') ?>
 </body>
 </html>
