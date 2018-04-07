@@ -14,7 +14,6 @@ class m_slider extends CI_Model {
     $this->db->like('judul', $params1);
     $this->db->or_like('status', $params2);
 
-
     $query = $this->db->get($this->_table1);
     if ($query->num_rows() > 0) {
             $result = $query->result_array();
@@ -34,11 +33,11 @@ class m_slider extends CI_Model {
 
     // detail data
     public function get_detail_data($params) {
-        $sql = "SELECT *
-                FROM t_website_slider 
-                WHERE id_slider = ?";
-        $query = $this->db->query($sql, $params);
-        if ($query->num_rows() > 0) {
+    $this->db->select('*');
+    $this->db->where('id_slider', $params);
+
+    $query = $this->db->get($this->_table1);
+    if ($query->num_rows() > 0) {
             $result = $query->row_array();
             $query->free_result();
             return $result;

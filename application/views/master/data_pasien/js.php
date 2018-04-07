@@ -45,15 +45,15 @@
         } );
        // t_table.destroy();
     } 
+    // tampil form tambah
     function form_add(){
         $("#form").val('add_process'); // set untuk form add
         clearContent();
         openModal();
     }
-
+    // tampil form edit
     function form_edit(data_id=""){
         $("#form").val('edit_process'); // set untuk form edit
-        //alert(data_id);
         $.ajax({// menggunakan ajax form
             url: "<?php echo base_url('master/data_pasien/get_detail_data'); ?>",
             type: "POST",
@@ -80,8 +80,7 @@
             },
         });
     }
-
-    // proses tambah data
+    // proses tambah data / edit data
     function simpan() {        
         var form=$('#form').val(); // cek form edit / form add
 
@@ -95,7 +94,6 @@
             },
             success: function(msg) {
                 var msg=$.parseJSON(msg);
-
                 $('#msg_validation').html('');
                 // jika form tidak valid
                 if(msg.type=='success'){
@@ -115,8 +113,7 @@
             },
         }); 
     }
-
-
+    // klik hapus event
     function form_hapus(data_id=""){
         swal({
               title: 'Hapus Data',
@@ -152,8 +149,8 @@
             });
         }).catch(swal.noop)
     }
+    // untuk membersihkan form tambah / edit
     function clearContent(){
-
         $('#msg_validation').html('');
         $('#dataForm')[0].reset();
         $('#dataForm').removeClass('error');

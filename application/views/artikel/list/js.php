@@ -4,38 +4,73 @@
         load(); // load tb
         // click simpan 
         $("#btn_cari").click(function(){  
-            var nama_pengguna=$('#filter_pengguna').val();
-            load(nama_pengguna); 
+            var judul=$('#judul_filter').val();
+            var deskripsi=$('#deskripsi_filter').val();
+            load(judul, deskripsi); 
         });
         // click simpan 
         $("#btn_reset").click(function(){  
             load();
         });
         // click simpan 
-        $("#btn_simpan").click(function(){      
-            simpan();
+        $("#btn_publish").click(function(){      
+            simpan('publish');
         });
-        // click batal 
-        $("#btn_batal").click(function(){      
-            clearContent();
+
+        $("#btn_draft").click(function(){      
+            simpan('draft');
         });
         // click hapus 
         $("#btn_hapus").click(function(){      
             hapus();
         });
 
+         function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                
+                reader.onload = function (e) {
+                    $('#image-preview').attr('src', e.target.result);
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+        $("#input_gambar").change(function(){
+            readURL(this);
+        });
+
+        
+
     });
 </script>
+
 <script type="text/javascript">
-	 // load data table
-    function load(nama_pengguna='') {
+	function openPage(){
+      var url = "<?php echo base_url('artikel/artikel_list/tambah') ?>";
+      window.location.assign(url);
+    }
+
+    function redirect(){
+      var url = "<?php echo base_url('artikel/artikel_list') ?>";
+      setTimeout(function () {
+        window.location.href = url; }, 1000);
+    }
+
+    function form_add(){
+        //$('#dataForm')[0].reset();
+        $("#form").val('add_process'); // set untuk form add
+        openPage();
+    }
+
+	// load data table
+    function load(judul='', deskripsi='') {
         var t_table = $('#tb_data').DataTable();
         t_table.destroy();
         t_table = $('#tb_data').DataTable( {
             "ajax": {
-                "url": "<?php echo base_url('setting/data_pengguna/load_json') ?>",
+                "url": "<?php echo base_url('artikel/Artikel_list/load_json') ?>",
                 "type": "POST",
-                "data": {"nama_pengguna": nama_pengguna},
+                "data": {"judul": judul, "deskripsi": deskripsi},
             },
             "language": {
               "emptyTable": "No data available in table",
@@ -46,20 +81,29 @@
        // t_table.destroy();
     } 
 
-	function form_add(){
-        $("#form").val('add_process'); // set untuk form add
-        clearContent();
-        openModal();
-    }
-
     // proses tambah data
-    function simpan() {        
+    function simpan(btn) {      
         var form=$('#form').val(); // cek form edit / form add
-        var data_fields = $("#dataForm").serialize();
+        var status = btn;
+        if (form == '') {
+            form = 'add_process';
+        }else{
+            form = 'edit_process';
+        }
+        var id_artikel_list=$('#id_artikel_list').val();
+        // var id_artikel_kategori=$('#id_artikel_kategori').val();
+        // var judul_artikel=$('#judul_artikel').val();
+        // var isi=$('#isi').val();
+        // var deskripsi_singkat=$('#deskripsi_singkat').val();
+        //form add
+        var dataForm=$('form#dataForm')[0];
+        var data = new FormData(dataForm); 
         $.ajax({
-            url: "<?php echo base_url('setting/data_pengguna/'); ?>" + form,
+            url: "<?php echo base_url('artikel/artikel_list/'); ?>" + form,
             type: "POST",
-            data: data_fields,
+             data:data,
+            processData: false,
+            contentType: false,
             beforeSubmit: function() {
                 //loading
             },
@@ -71,7 +115,7 @@
                 if(msg.type=='success'){
                     swal(msg.title, msg.pesan, msg.type);
                     load();
-                    closeModal();
+                    redirect();
                 }
                 else if(msg.type=='invalid'){
                     var str ="";
@@ -87,15 +131,17 @@
         }); 
     }
 
-    //proses edit data
+    // proses edit
     function form_edit(data_id=""){
-        $("#form").val('edit_process'); // set untuk form edit
-        //alert(data_id);
+        var url = "<?php echo base_url('artikel/artikel_list/show_detail') ?>";
+      window.location.assign(url,data_id)
+        //$("#form").val('edit_process'); // set untuk form edit
         $.ajax({// menggunakan ajax form
-            url: "<?php echo base_url('setting/data_pengguna/get_detail_data'); ?>",
+            url: "<?php echo base_url('artikel/Artikel_list/show_detail'); ?>",
             type: "POST",
-            data: {"id_user": data_id},
+            data: {"data_id": data_id},
             beforeSend: function () {
+                
                 // non removable loading
                 // $('#loading_modal').modal({
                 //     backdrop: 'static', keyboard: false
@@ -103,17 +149,16 @@
             },
             success: function (output) {
                 var output = $.parseJSON(output);
-                //alert(JSON.stringify(output));
-                $("#id_user").val(output.data.id_user);
-                $("#nama_pengguna").val(output.data.nama_lengkap);
-                $("#email").val(output.data.email);
-                var role = $("#role").val(output.data.role);
-                openModal();
+                $("#id_artikel_kategori").val(output.data.id_artikel_kategori);
+                $("#judul_artikel").val(output.data.judul_artikel);
+                $("#isi").val(output.data.isi);
+                $("#slug").val(output.data.slug);
+                $("#id_artikel_kategori").val(output.data.id_artikel_kategori);
+
             },
         });
     }
 
-    //proses hapus data
     function form_hapus(data_id=""){
         swal({
               title: 'Hapus Data',
@@ -126,10 +171,10 @@
               cancelButtonText: 'Batal'
           }).then(value => {
              $.ajax({// menggunakan ajax form
-                url: "<?php echo base_url('setting/data_pengguna/delete_process'); ?>",
+                url: "<?php echo base_url('artikel/Artikel_list/delete_process'); ?>",
                 type: "POST",
                 data: {
-                    "id_user":data_id
+                    "id_hapus":data_id
                 },
                 beforeSend: function () {
                     // non removable loading
@@ -150,11 +195,10 @@
         }).catch(swal.noop)
     }
 
-    function clearContent(){
+     function clearContent(){
 
         $('#msg_validation').html('');
         $('#dataForm')[0].reset();
         $('#dataForm').removeClass('error');
     }
 </script>
-

@@ -1,21 +1,17 @@
 <?php
+defined('BASEPATH') OR exit('No direct script access allowed');
 
-if (!defined('BASEPATH'))
-    exit('No direct script access allowed');
+class M_spesialisasi extends CI_Model {
 
-class m_tautan extends CI_Model {
-
-    function __construct() {
+ public function __construct() {
         parent::__construct();
     }
-    // variabel untuk nama tabel
-    // public $db_tabel = 'guru';
 
     // fungsi tampil semua
     public function get_all($params) {
-        $sql = "SELECT *
-                FROM m_tautan 
-                WHERE nama_tautan LIKE ?";
+        $sql = "SELECT id_spesialisasi, nama_spesialisasi, deskripsi, created_at, created_by 
+                FROM m_spesialisasi 
+                WHERE nama_spesialisasi LIKE ?";
         $query = $this->db->query($sql,$params);
         if ($query->num_rows() > 0) {
             $result = $query->result_array();
@@ -26,16 +22,16 @@ class m_tautan extends CI_Model {
         return $result;
     }
 
-    // tambah
+   	// tambah
     public function get_add($params) {
-        return $this->db->insert('m_tautan', $params);
+        return $this->db->insert('m_spesialisasi', $params);
     }
 
     // detail data
     public function get_detail_data($params) {
         $sql = "SELECT *
-                FROM m_tautan 
-                WHERE id_tautan = ?";
+                FROM m_spesialisasi 
+                WHERE id_spesialisasi = ?";
         $query = $this->db->query($sql, $params);
         if ($query->num_rows() > 0) {
             $result = $query->row_array();
@@ -48,16 +44,13 @@ class m_tautan extends CI_Model {
 
     // ubah
     public function get_edit($params, $where) {
-        return $this->db->update('m_tautan', $params, $where);
+        return $this->db->update('m_spesialisasi', $params, $where);
     }
     
 
     // delete
     public function get_delete($where){
-        return $this->db->delete('m_tautan', $where);
+        return $this->db->delete('m_spesialisasi', $where);
     }
 
-
 }
-
-?>
