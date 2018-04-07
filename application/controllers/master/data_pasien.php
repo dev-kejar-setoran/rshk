@@ -7,7 +7,7 @@ class data_pasien extends MY_Controller {
     {
         parent::__construct();
         //$this->auth->validation();
-        $this->load->library('form_validation');
+        //$this->load->library('form_validation');
         $this->load->model('m_data_pasien');
     }
 
@@ -57,8 +57,27 @@ class data_pasien extends MY_Controller {
         echo json_encode($output);
     }
 
-    // proses tambah data
-    public function add_process() {
+    function add_process() {
+
+        $this->form_validation->set_error_delimiters('', '');
+        $this->form_validation->set_rules('nama_pasien','Nama Pasien', 'required');
+        $this->form_validation->set_rules('nomor_kartu','Nomor Kartu', 'required');
+        $this->form_validation->set_rules('jenis_kelamin','Jenis Kelamin','required');
+        $this->form_validation->set_rules('tempat_lahir','Tempat Lahir','required');
+        $this->form_validation->set_rules('tgl_lahir','Tanggal Lahir','required');
+        $this->form_validation->set_rules('id_kewarganegaraan','kewarganegaraan','required');
+        $this->form_validation->set_rules('asuransi','asuransi','required');
+        if ($this->form_validation->run() == FALSE) {
+            //$err_msg = validation_errors();
+            $err_msg = $this->form_validation->error_array();
+            $response['type']="invalid";
+            $response['title']="Gagal Tersimpan!";
+            $response['pesan']="Data gagal disimpan";
+            $response['data'] = $err_msg;
+            echo json_encode($response); 
+            return;
+        } 
+        
         $data = array(
             'nama_pasien' => $this->input->post('nama_pasien'),
             'nomor_kartu' => $this->input->post('nomor_kartu'),
@@ -72,10 +91,56 @@ class data_pasien extends MY_Controller {
         );
          // run fungsi update
         if($this->m_data_pasien->get_add($data)){ //jika update berhasil
-            $response['status']="sukses";
+            $response['type']="success";
+            $response['title']="Tersimpan!";
             $response['pesan']="Data berhasil disimpan";
         }else{ //jika  gagal
-            $response['status']="gagal";
+            $response['type']="warning";
+            $response['title']="Gagal Tersimpan!";
+            $response['pesan']="Data gagal disimpan";
+        }
+        echo json_encode($response);
+
+    }
+
+
+    // proses tambah data
+    public function add_process_asli() {
+        // validation
+        $response['type']="invalid";
+        $response['title']="Gagal Tersimpan!";
+        $response['pesan']="Data gagal disimpan";
+        // validation
+        $response['data'][]=empty($this->input->post('nama_pasien')) ? "Silahkan isi Data Pasien" : NULL;
+        $response['data'][]=empty($this->input->post('nomor_kartu')) ? "Silahkan isi Nomor Kartu" : NULL;
+        $response['data'][]=empty($this->input->post('jenis_kelamin')) ? "Silahkan isi Jenis Kelamin" : NULL;
+        $response['data'][]=empty($this->input->post('tempat_lahir')) ? "Silahkan isi Tempat Lahir" : NULL;
+        $response['data'][]=empty($this->input->post('tgl_lahir')) ? "Silahkan isi Tanggal Lahir" : NULL;
+        $response['data'][]=empty($this->input->post('id_kewarganegaraan')) ? "Silahkan isi kewarganegaraan" : NULL;
+        $response['data'][]=empty($this->input->post('asuransi')) ? "Silahkan isi asuransi" : NULL;
+        if(count($response['data']) > 0){
+            echo json_encode($response); exit();
+        }
+
+        $data = array(
+            'nama_pasien' => $this->input->post('nama_pasien'),
+            'nomor_kartu' => $this->input->post('nomor_kartu'),
+            'jenis_kelamin' => $this->input->post('jenis_kelamin'),
+            'tempat_lahir' => $this->input->post('tempat_lahir'),
+            'tgl_lahir' => ($this->input->post('tgl_lahir') == '' ? NULL : $this->input->post('tgl_lahir')),
+            'id_kewarganegaraan' => $this->input->post('id_kewarganegaraan'),
+            'asuransi' => $this->input->post('asuransi'),
+            'created_by' => $this->session->userdata('username'),
+            'created_at' => date('Y-m-d H:i:s'),
+        );
+         // run fungsi update
+        if($this->m_data_pasien->get_add($data)){ //jika update berhasil
+            $response['type']="success";
+            $response['title']="Tersimpan!";
+            $response['pesan']="Data berhasil disimpan";
+        }else{ //jika  gagal
+            $response['type']="warning";
+            $response['title']="Gagal Tersimpan!";
             $response['pesan']="Data gagal disimpan";
         }
         echo json_encode($response);
