@@ -20,6 +20,11 @@
       .modal('show')
       .modal("refresh");
     }
+    function closeModal(){
+      $('.ui.modal.formUtama')
+        .modal('hide')
+        .modal("refresh");
+    }
   </script>
   <script src="<?php echo base_url();?>assets/plugins/datatables/jquery.dataTables.min.js"></script>
   <script src="<?php echo base_url();?>assets/js/dummy.js"></script>

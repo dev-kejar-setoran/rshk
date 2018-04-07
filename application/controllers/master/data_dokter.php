@@ -62,7 +62,7 @@ class data_dokter extends CI_Controller {
                 // $new_name = str_replace(".","",$data['KD_KONTRAK_TRANS']).'_'.date("YmdHis");
                 $new_name = $_FILES['input_gambar']['name'];
                 $config['file_name'] = $new_name;
-                $config['upload_path'] = 'assets/img/data_dokter/';
+                $config['upload_path'] = 'assets/img/upload/';
                 $config['allowed_types'] = 'gif|jpg|jpeg|png';
                 $config['max_size'] = 1024 * 10;
 
@@ -72,7 +72,7 @@ class data_dokter extends CI_Controller {
             $data = array(
                 'nama_dokter' => $this->input->post('nama_dokter'),
                 'id_spesialisasi' => $this->input->post('id_spesialisasi'),
-                'id_jabatan' => $this->input->post('id_jabatan'),
+                'id_jabatan_dokter' => $this->input->post('id_jabatan'),
                 'created_by' => $this->session->userdata('nama_lengkap'),
                 'created_at' => date('Y-m-d H:i:s'),
                 'foto' => $_FILES['input_gambar']['name']

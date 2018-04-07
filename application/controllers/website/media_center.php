@@ -57,16 +57,29 @@ class media_center extends MY_Controller {
 
  // proses tambah data
     public function add_process() {
+        if (!empty($_FILES['attachment']['name'])){
+                // $new_name = str_replace(".","",$data['KD_KONTRAK_TRANS']).'_'.date("YmdHis");
+                $new_name = $_FILES['attachment']['name'];
+                $config['file_name'] = $new_name;
+                $config['upload_path'] = 'assets/img/upload/';
+                $config['allowed_types'] = 'gif|jpg|jpeg|png';
+                $config['max_size'] = 1024 * 10;
+
+                $this->load->library('upload', $config);
+                // $this->form_validation->set_rules('FILE_UPLOAD', 'Upload Dokumen', 'required');
+            } 
+
         $data = array(
             'nama_media_center' => $this->input->post('nama_media_center'),
             'deskripsi' => $this->input->post('deskripsi'),
-            // 'gambar' => $this->input->post('gambars'),
             'id_tipe_media' => $this->input->post('id_tipe_media'),
             'created_by' => $this->session->userdata('nama_lengkap'),
             'created_at' => date('Y-m-d H:i:s'),
+            'gambar' => $_FILES['attachment']['name'],
         );
          // run fungsi update
-        if($this->M_media_center->get_add($data)){ //jika update berhasil
+        if($this->upload->do_upload('attachment')){ //jika upload berhasil
+            $this->M_media_center->get_add($data); //jika update berhasil
             $response['status']="sukses";
             $response['pesan']="Data berhasil disimpan";
         }else{ //jika  gagal

@@ -6,16 +6,16 @@
   <div class="content">
     <form class="ui data form" id="dataForm" method="post">
       <input type="hidden" name="action" value="create" enctype="multipart/dataForm">
-      <input type="hidden" id="id_media_center" value="">
+      <input type="hidden" id="id_media_center" name="id_media_center" value="">
       <input type="hidden" id="form" value="">
       
       <div class="ui grid">
         <div class="six wide column">
           <div class="field image-container">
-            <span class="image-preview" style="height: 20rem">Pilih Gambar</span>
+            <span class="image-preview" style="height: 20rem"><img src="" id="image-preview" style="width: 300px; height: 230px" /></span>
             <div class="ui fluid file input action">
-              <input type="text" readonly="">
-              <input type="file" class="ten wide column" id="attachment" name="attachment[]" autocomplete="off" multiple="">
+              <input type="text" id="nama_foto" readonly="">
+              <input type="file" class="ten wide column" id="attachment" name="attachment" autocomplete="off" multiple="">
               <div class="ui blue button file">
                 Cari...
               </div>

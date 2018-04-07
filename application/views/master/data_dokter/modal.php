@@ -6,7 +6,7 @@
   <div class="content">
     <form class="ui data form" id="dataForm" method="post"  enctype="multipart/dataForm">
       <!-- <input type="hidden" name="action" value="create"> -->
-      <input type="hidden" id="id_dokter" value="">
+      <input type="hidden" id="id_dokter" name="id_dokter" value="">
       <input type="hidden" id="form" value="">
       <div class="ui grid">
         <div class="five wide column">
