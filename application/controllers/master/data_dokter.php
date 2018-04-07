@@ -72,7 +72,7 @@ class data_dokter extends CI_Controller {
             $data = array(
                 'nama_dokter' => $this->input->post('nama_dokter'),
                 'id_spesialisasi' => $this->input->post('id_spesialisasi'),
-                'id_jabatan' => $this->input->post('id_jabatan'),
+                'id_jabatan_dokter' => $this->input->post('id_jabatan'),
                 'created_by' => $this->session->userdata('nama_lengkap'),
                 'created_at' => date('Y-m-d H:i:s'),
                 'foto' => $_FILES['input_gambar']['name']
