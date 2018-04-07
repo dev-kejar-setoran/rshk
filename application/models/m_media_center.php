@@ -32,8 +32,9 @@ class m_media_center extends CI_Model {
     }
 
     function getTipe() {
-        $query = "SELECT id_tipe_media, nama_tipe_media FROM m_tipe_media";
-        $q = $this->db->query($query);
+        $this->db->select('id_tipe_media, nama_tipe_media');
+        $q = $this->db->get($this->_table2);
+
         if ($q->num_rows() > 0) {
             foreach ($q->result() as $row){
                     $data[] = $row;
@@ -51,7 +52,10 @@ class m_media_center extends CI_Model {
         $sql = "SELECT *
                 FROM t_website_media_center 
                 WHERE id_media_center = ?";
-        $query = $this->db->query($sql, $params);
+        $this->db->select('*');
+        $this->db->where('id_media_center', $params);
+
+        $query = $this->db->get($this->_table1);
         if ($query->num_rows() > 0) {
             $result = $query->row_array();
             $query->free_result();

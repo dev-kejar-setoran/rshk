@@ -87,7 +87,8 @@
                 $("#id_media_center").val(output.data.id_media_center);
                 $("#nama_media_center").val(output.data.nama_media_center);
                 $("#deskripsi").val(output.data.deskripsi);
-                $("#nama_tipe_media").val(output.data.nama_tipe_media);
+                $("#id_tipe_media").val(output.data.id_tipe_media);
+                document.getElementById("image-preview").src = "../assets/img/upload/" + output.data.gambar;
                 openModal();
             },
         });

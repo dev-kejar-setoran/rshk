@@ -21,8 +21,8 @@ class slider extends CI_Controller {
     public function load_json(){
         $judul = $this->input->post('judul');
         $status = $this->input->post('status');
-        $params1 = empty($judul) ? '^^^^^' : $judul;
-        $params2 = empty($status) ? '^^^^^' : $status;
+        $params1 = empty($judul) ? ' ' : $judul;
+        $params2 = empty($status) ? '' : $status;
         // get data dari model dengan param
         $res = $this->M_slider->get_all($params1, $params2);
         // periksa jika data kosong
@@ -34,7 +34,7 @@ class slider extends CI_Controller {
         $no = 1;
         foreach ($res as $data) {
             $row=array();
-            $row[]=$data['id_slider'];
+            $row[]=$no++;
             $row[]=$data['judul'];
             $row[]=$data['gambar'];
             $row[]=$data['posisi'];
