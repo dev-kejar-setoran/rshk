@@ -15,9 +15,6 @@ class data_pasien extends MY_Controller {
     public function index()
     {
         $data['title_page']='Data Pasien';
-        //$data['tabel_data'] = $this->m_data_pasien->get_all();
-        //echo json_encode($data['tabel_data']);
-        //print_r($data); exit();
         $this->load->view('master/data_pasien/index', $data);
     }
 
@@ -58,7 +55,7 @@ class data_pasien extends MY_Controller {
     }
 
     function add_process() {
-
+        // parameter validation
         $this->form_validation->set_error_delimiters('', '');
         $this->form_validation->set_rules('nama_pasien','Nama Pasien', 'required');
         $this->form_validation->set_rules('nomor_kartu','Nomor Kartu', 'required');
@@ -67,6 +64,7 @@ class data_pasien extends MY_Controller {
         $this->form_validation->set_rules('tgl_lahir','Tanggal Lahir','required');
         $this->form_validation->set_rules('id_kewarganegaraan','kewarganegaraan','required');
         $this->form_validation->set_rules('asuransi','asuransi','required');
+        // run validation
         if ($this->form_validation->run() == FALSE) {
             //$err_msg = validation_errors();
             $err_msg = $this->form_validation->error_array();
@@ -77,8 +75,8 @@ class data_pasien extends MY_Controller {
             echo json_encode($response); 
             return;
         } 
-        
-        $data = array(
+        // parameter input
+        $params = array(
             'nama_pasien' => $this->input->post('nama_pasien'),
             'nomor_kartu' => $this->input->post('nomor_kartu'),
             'jenis_kelamin' => $this->input->post('jenis_kelamin'),
@@ -90,51 +88,7 @@ class data_pasien extends MY_Controller {
             'created_at' => date('Y-m-d H:i:s'),
         );
          // run fungsi update
-        if($this->m_data_pasien->get_add($data)){ //jika update berhasil
-            $response['type']="success";
-            $response['title']="Tersimpan!";
-            $response['pesan']="Data berhasil disimpan";
-        }else{ //jika  gagal
-            $response['type']="warning";
-            $response['title']="Gagal Tersimpan!";
-            $response['pesan']="Data gagal disimpan";
-        }
-        echo json_encode($response);
-
-    }
-
-
-    // proses tambah data
-    public function add_process_asli() {
-        // validation
-        $response['type']="invalid";
-        $response['title']="Gagal Tersimpan!";
-        $response['pesan']="Data gagal disimpan";
-        // validation
-        $response['data'][]=empty($this->input->post('nama_pasien')) ? "Silahkan isi Data Pasien" : NULL;
-        $response['data'][]=empty($this->input->post('nomor_kartu')) ? "Silahkan isi Nomor Kartu" : NULL;
-        $response['data'][]=empty($this->input->post('jenis_kelamin')) ? "Silahkan isi Jenis Kelamin" : NULL;
-        $response['data'][]=empty($this->input->post('tempat_lahir')) ? "Silahkan isi Tempat Lahir" : NULL;
-        $response['data'][]=empty($this->input->post('tgl_lahir')) ? "Silahkan isi Tanggal Lahir" : NULL;
-        $response['data'][]=empty($this->input->post('id_kewarganegaraan')) ? "Silahkan isi kewarganegaraan" : NULL;
-        $response['data'][]=empty($this->input->post('asuransi')) ? "Silahkan isi asuransi" : NULL;
-        if(count($response['data']) > 0){
-            echo json_encode($response); exit();
-        }
-
-        $data = array(
-            'nama_pasien' => $this->input->post('nama_pasien'),
-            'nomor_kartu' => $this->input->post('nomor_kartu'),
-            'jenis_kelamin' => $this->input->post('jenis_kelamin'),
-            'tempat_lahir' => $this->input->post('tempat_lahir'),
-            'tgl_lahir' => ($this->input->post('tgl_lahir') == '' ? NULL : $this->input->post('tgl_lahir')),
-            'id_kewarganegaraan' => $this->input->post('id_kewarganegaraan'),
-            'asuransi' => $this->input->post('asuransi'),
-            'created_by' => $this->session->userdata('username'),
-            'created_at' => date('Y-m-d H:i:s'),
-        );
-         // run fungsi update
-        if($this->m_data_pasien->get_add($data)){ //jika update berhasil
+        if($this->m_data_pasien->get_add($params)){ //jika update berhasil
             $response['type']="success";
             $response['title']="Tersimpan!";
             $response['pesan']="Data berhasil disimpan";
@@ -145,6 +99,7 @@ class data_pasien extends MY_Controller {
         }
         echo json_encode($response);
     }
+
 
     // mengirim detail data untuk edit, dsb
     public function get_detail_data() {
@@ -169,14 +124,28 @@ class data_pasien extends MY_Controller {
 
     // proses edit setelah di entry
     public function edit_process() {
-        $data['id_pasien'] = $this->input->post('id_pasien');
-        // validate
-        if (empty($data['id_pasien'])) {
-            $response['status']="gagal";
-            $response['pesan']="Data tidak ditemukan!";
-            echo json_encode($response);
-        }
-        // insert db
+        // parameter validation
+        $this->form_validation->set_error_delimiters('', '');
+        $this->form_validation->set_rules('id_pasien','ID Pasien', 'required');
+        $this->form_validation->set_rules('nama_pasien','Nama Pasien', 'required');
+        $this->form_validation->set_rules('nomor_kartu','Nomor Kartu', 'required');
+        $this->form_validation->set_rules('jenis_kelamin','Jenis Kelamin','required');
+        $this->form_validation->set_rules('tempat_lahir','Tempat Lahir','required');
+        $this->form_validation->set_rules('tgl_lahir','Tanggal Lahir','required');
+        $this->form_validation->set_rules('id_kewarganegaraan','kewarganegaraan','required');
+        $this->form_validation->set_rules('asuransi','asuransi','required');
+        // run validation
+        if ($this->form_validation->run() == FALSE) {
+            //$err_msg = validation_errors();
+            $err_msg = $this->form_validation->error_array();
+            $response['type']="invalid";
+            $response['title']="Gagal Tersimpan!";
+            $response['pesan']="Data gagal disimpan";
+            $response['data'] = $err_msg;
+            echo json_encode($response); 
+            return;
+        } 
+        // iparameter input
         $params = array(
             'nama_pasien' => $this->input->post('nama_pasien'),
             'nomor_kartu' => $this->input->post('nomor_kartu'),
@@ -192,10 +161,12 @@ class data_pasien extends MY_Controller {
             'id_pasien' => $this->input->post('id_pasien'),
         );
         if ($this->m_data_pasien->get_edit($params, $where)) {
-            $response['status']="sukses";
+            $response['type']="success";
+            $response['title']="Tersimpan!";
             $response['pesan']="Data berhasil disimpan";
         }else{ //jika  gagal
-            $response['status']="gagal";
+            $response['type']="warning";
+            $response['title']="Gagal Tersimpan!";
             $response['pesan']="Data gagal disimpan";
         }
         echo json_encode($response);
@@ -206,11 +177,13 @@ class data_pasien extends MY_Controller {
             'id_pasien' => $this->input->post('id_hapus')
         );
         if ($this->m_data_pasien->get_delete($where)) {
-            $response['status']="sukses";
-            $response['pesan']="Data berhasil dihapus";
+            $response['type']="success";
+            $response['title']="Tersimpan!";
+            $response['pesan']="Data berhasil disimpan";
         }else{ //jika  gagal
-            $response['status']="gagal";
-            $response['pesan']="Data gagal dihapus";
+            $response['type']="warning";
+            $response['title']="Gagal Tersimpan!";
+            $response['pesan']="Data gagal disimpan";
         }
         echo json_encode($response);
     }

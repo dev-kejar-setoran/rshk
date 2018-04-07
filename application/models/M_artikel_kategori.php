@@ -3,19 +3,17 @@
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
-class m_tautan extends CI_Model {
+class M_artikel_kategori extends CI_Model {
 
     function __construct() {
         parent::__construct();
     }
-    // variabel untuk nama tabel
-    // public $db_tabel = 'guru';
 
     // fungsi tampil semua
     public function get_all($params) {
-        $sql = "SELECT *
-                FROM m_tautan 
-                WHERE nama_tautan LIKE ?";
+        $sql = "SELECT id_artikel_kategori, nama_kategori, deskripsi, cover, created_at, created_by 
+                FROM t_artikel_kategori 
+                WHERE nama_kategori LIKE ? ";
         $query = $this->db->query($sql,$params);
         if ($query->num_rows() > 0) {
             $result = $query->result_array();
@@ -28,14 +26,14 @@ class m_tautan extends CI_Model {
 
     // tambah
     public function get_add($params) {
-        return $this->db->insert('m_tautan', $params);
+        return $this->db->insert('t_artikel_kategori', $params);
     }
 
     // detail data
     public function get_detail_data($params) {
         $sql = "SELECT *
-                FROM m_tautan 
-                WHERE id_tautan = ?";
+                FROM t_artikel_kategori 
+                WHERE id_artikel_kategori = ?";
         $query = $this->db->query($sql, $params);
         if ($query->num_rows() > 0) {
             $result = $query->row_array();
@@ -48,13 +46,12 @@ class m_tautan extends CI_Model {
 
     // ubah
     public function get_edit($params, $where) {
-        return $this->db->update('m_tautan', $params, $where);
+        return $this->db->update('t_artikel_kategori', $params, $where);
     }
     
-
     // delete
     public function get_delete($where){
-        return $this->db->delete('m_tautan', $where);
+        return $this->db->delete('t_artikel_kategori', $where);
     }
 
 

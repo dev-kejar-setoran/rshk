@@ -4,17 +4,16 @@
         load(); // load tb
         // click simpan 
         $("#btn_cari").click(function(){  
-            var nama_media_center=$('#filter_nama_media_center').val();
-            var deskripsi=$('#filter_deskripsi').val();
-            var id_tipe_media=$('#filter_id_tipe_media').val();
-            load(nama_media_center, deskripsi, id_tipe_media); 
+            var nama_tautan=$('#filter_nama_tautan').val();
+            load(nama_tautan); 
         });
         // click simpan 
         $("#btn_reset").click(function(){  
             load();
         });
         // click simpan 
-        $("#btn_simpan").click(function(){      
+        $("#btn_simpan").click(function(){   
+            //closeModal();
             simpan();
         });
         // click hapus 
@@ -26,18 +25,16 @@
 </script>
 <!-- Function detail :  -->
 <script type="text/javascript">
-    function test(){
-        alert("The paragraph was clicked.");
-    }
     // load data table
-    function load(nama_media_center='', deskripsi='', id_tipe_media='') {
+    function load(nama_tautan='') {
+        closeModal();
         var t_table = $('#tb_data').DataTable();
         t_table.destroy();
         t_table = $('#tb_data').DataTable( {
             "ajax": {
-                "url": "<?php echo base_url('website/media_center/load_json') ?>",
+                "url": "<?php echo base_url('master/tautan/load_json') ?>",
                 "type": "POST",
-                "data": {"nama_media_center": nama_media_center, "deskripsi": deskripsi, "id_tipe_media": id_tipe_media},
+                "data": {"nama_tautan": nama_tautan},
             },
             "language": {
               "emptyTable": "No data available in table",
@@ -47,24 +44,9 @@
         } );
        // t_table.destroy();
     } 
-
-    function readURL(input) {
-        if (input.files && input.files[0]) {
-            var reader = new FileReader();
-            
-            reader.onload = function (e) {
-                $('#image-preview').attr('src', e.target.result);
-            }
-            reader.readAsDataURL(input.files[0]);
-        }
-    }
-    $("#attachment").change(function(){
-        readURL(this);
-    });
-
     function form_add(){
-        $('#dataForm')[0].reset();
         $("#form").val('add_process'); // set untuk form add
+        clearContent();
         openModal();
     }
 
@@ -72,7 +54,7 @@
         $("#form").val('edit_process'); // set untuk form edit
         //alert(data_id);
         $.ajax({// menggunakan ajax form
-            url: "<?php echo base_url('website/media_center/get_detail_data'); ?>",
+            url: "<?php echo base_url('master/tautan/get_detail_data'); ?>",
             type: "POST",
             data: {"data_id": data_id},
             beforeSend: function () {
@@ -84,11 +66,10 @@
             success: function (output) {
                 var output = $.parseJSON(output);
                 //alert(JSON.stringify(output));
-                $("#id_media_center").val(output.data.id_media_center);
-                $("#nama_media_center").val(output.data.nama_media_center);
+                $("#id_tautan").val(output.data.id_tautan);
+                $("#nama_tautan").val(output.data.nama_tautan);
+                $("#tautan").val(output.data.tautan);
                 $("#deskripsi").val(output.data.deskripsi);
-                $("#id_tipe_media").val(output.data.id_tipe_media);
-                document.getElementById("image-preview").src = "../assets/img/upload/" + output.data.gambar;
                 openModal();
             },
         });
@@ -96,31 +77,35 @@
 
     // proses tambah data
     function simpan() {        
-         var form=$('#form').val(); // cek form edit / form add
-        var dataForm=$('form#dataForm')[0];
-        var data = new FormData(dataForm);   
-        
+        var form=$('#form').val(); // cek form edit / form add
+
+        var data_fields = $("#dataForm").serialize();
         $.ajax({
-            url: "<?php echo base_url('website/media_center/'); ?>" + form,
+            url: "<?php echo base_url('master/tautan/'); ?>" + form,
             type: "POST",
-            data:data,
-            processData: false,
-            contentType: false,
+            data : data_fields,
             beforeSubmit: function() {
                 //loading
             },
             success: function(msg) {
                 var msg=$.parseJSON(msg);
-                if (msg.status=='sukses') {
-                    title_msg = 'Tersimpan!',
-                    type_msg = 'success'
+
+                $('#msg_validation').html('');
+                // jika form tidak valid
+                if(msg.type=='success'){
+                    swal(msg.title, msg.pesan, msg.type);
+                    load();
                 }
-                else if (msg.status=='gagal') {
-                    title_msg = 'Gagal Tersimpan!',
-                    type_msg = 'warning'
+                else if(msg.type=='invalid'){
+                    var str ="";
+                    $('#dataForm').addClass('error');
+                    $.each( msg.data, function( i, val ) {
+                        str = "<li>" + val + "</li>";
+                        $("#msg_validation").append(str);
+                    });
+                }else{
+                    swal(msg.title, msg.pesan, msg.type);
                 }
-                load();
-                swal(title_msg, msg.pesan, type_msg);
             },
         }); 
     }
@@ -138,7 +123,7 @@
               cancelButtonText: 'Batal'
           }).then(value => {
              $.ajax({// menggunakan ajax form
-                url: "<?php echo base_url('website/media_center/delete_process'); ?>",
+                url: "<?php echo base_url('master/tautan/delete_process'); ?>",
                 type: "POST",
                 data: {
                     "id_hapus":data_id
@@ -152,13 +137,15 @@
                 success: function (msg) {
                     var msg=$.parseJSON(msg);
                     load();
-                    swal(
-                      'Deleted!',
-                      msg.pesan,
-                      'success'
-                      );
+                    swal(msg.title, msg.pesan, msg.type);
                 },
             });
         }).catch(swal.noop)
+    }
+    function clearContent(){
+
+        $('#msg_validation').html('');
+        $('#dataForm')[0].reset();
+        $('#dataForm').removeClass('error');
     }
 </script>

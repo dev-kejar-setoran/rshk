@@ -134,7 +134,7 @@ class data_dokter extends CI_Controller {
         $params = array(
             'nama_dokter' => $this->input->post('nama_dokter'),
             'id_spesialisasi' => $this->input->post('id_spesialisasi'),
-            'id_jabatan' => $this->input->post('id_jabatan'),
+            'id_jabatan_dokter' => $this->input->post('id_jabatan'),
             'updated_by' => $this->session->userdata('username'),
             'updated_at' => date('Y-m-d H:i:s'),
         );

@@ -41,7 +41,7 @@ class media_center extends MY_Controller {
             $row[]=$no++;
             $row[]=$data['nama_media_center'];
             $row[]=$data['deskripsi'];
-            $row[]=$data['gambar'];
+            $row[]='<img style="width:150px; height:100px" src="../assets/img/upload/'.$data['gambar'].'"/>';
             $row[]='<span class="ui fluid label">'.$data['nama_tipe_media'].'<span>';
             $row[]=$data['created_at'];
             $row[]=$data['created_by'];

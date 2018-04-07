@@ -84,43 +84,6 @@
   </div>
   <?php $this->load->view('templete/headerjs.php'); ?>
   <?php include('modal.php') ?>
-  
-<script type="text/javascript">
-$('.ui.form')
-  .form({
-    on: 'blur',
-    fields: {
-      empty: {
-        identifier  : 'nama_tautan',
-        rules: [
-          {
-            type   : 'empty',
-            prompt : 'Silahkan isi Nama'
-          }
-        ]
-      },
-      fields: {
-        identifier  : 'tautan',
-        rules: [
-          {
-            type   : 'empty',
-            prompt : 'Silahkan isi Tautan'
-          }
-        ]
-      },
-      fields: {
-        identifier  : 'deskripsi',
-        rules: [
-          {
-            type   : 'empty',
-            prompt : 'Silahkan isi Deskripsi'
-          }
-        ]
-      }
-    }
-  })
-;
-</script>
   <?php include('js.php') ?>
 
 </body>
