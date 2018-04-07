@@ -9,14 +9,14 @@ class data_dokter extends CI_Controller {
          //$this->auth->validation();
         $this->load->helper(array('form', 'url'));
         $this->load->library('form_validation');
-        $this->load->model('m_data_dokter');
+        $this->load->model('M_data_dokter');
     }
 
     function index()
     {
         $data['title_page']='Data Dokter';
-        $data['combo_spesialisasi'] = $this->m_data_dokter->getSpesialisasi(); 
-        $data['combo_jabatan'] = $this->m_data_dokter->getJabatan(); 
+        $data['combo_spesialisasi'] = $this->M_data_dokter->getSpesialisasi(); 
+        $data['combo_jabatan'] = $this->M_data_dokter->getJabatan(); 
 
 		$this->load->view('master/data_dokter/index', $data);
 	}
@@ -30,7 +30,7 @@ class data_dokter extends CI_Controller {
         $params2 = empty($id_spesialisasi) ? '' : $id_spesialisasi;
         $params3 = empty($id_jabatan) ? '' : $id_jabatan;
         // get data dari model dengan param
-        $res = $this->m_data_dokter->get_all($params1, $params2, $params3);
+        $res = $this->M_data_dokter->get_all($params1, $params2, $params3);
         // periksa jika data kosong
         if (empty($res)) {
             echo json_encode(""); 
@@ -58,22 +58,45 @@ class data_dokter extends CI_Controller {
 
  // proses tambah data
     public function add_process() {
-        $data = array(
-            'nama_dokter' => $this->input->post('nama_dokter'),
-            'id_spesialisasi' => $this->input->post('id_spesialisasi'),
-            'id_jabatan' => $this->input->post('id_jabatan'),
-            'created_by' => $this->session->userdata('nama_lengkap'),
-            'created_at' => date('Y-m-d H:i:s'),
-        );
+         if (!empty($_FILES['input_gambar']['name'])){
+                // $new_name = str_replace(".","",$data['KD_KONTRAK_TRANS']).'_'.date("YmdHis");
+                $new_name = $_FILES['input_gambar']['name'];
+                $config['file_name'] = $new_name;
+                $config['upload_path'] = 'assets/img/data_dokter/';
+                $config['allowed_types'] = 'gif|jpg|jpeg|png';
+                $config['max_size'] = 1024 * 10;
+
+                $this->load->library('upload', $config);
+                // $this->form_validation->set_rules('FILE_UPLOAD', 'Upload Dokumen', 'required');
+            } 
+            $data = array(
+                'nama_dokter' => $this->input->post('nama_dokter'),
+                'id_spesialisasi' => $this->input->post('id_spesialisasi'),
+                'id_jabatan' => $this->input->post('id_jabatan'),
+                'created_by' => $this->session->userdata('nama_lengkap'),
+                'created_at' => date('Y-m-d H:i:s'),
+                'foto' => $_FILES['input_gambar']['name']
+            );
+            if ($this->upload->do_upload('input_gambar')) {
+                $this->M_data_dokter->get_add($data);
+                $response['status']="sukses";
+                $response['pesan']="Data berhasil disimpan";
+            //     // $err = $this->upload->display_errors('', '');
+            } else {
+                $response['status']="gagal";
+                $response['pesan']="Data gagal disimpan";
+                // $res = $this->upload->data();
+            }
         
-         // run fungsi update
-        if($this->m_data_dokter->get_add($data)){ //jika update berhasil
-            $response['status']="sukses";
-            $response['pesan']="Data berhasil disimpan";
-        }else{ //jika  gagal
-            $response['status']="gagal";
-            $response['pesan']="Data gagal disimpan";
-        }
+        //  // run fungsi update
+        // if($this->M_data_dokter->get_add($data)){ //jika update berhasil
+        //     $response['status']="sukses";
+        //     $response['pesan']="Data berhasil disimpan";
+        // }else{ //jika  gagal
+        //     $response['status']="gagal";
+        //     $response['pesan']="Data gagal disimpan";
+        // }
+        // $response['ini gambar']=$_FILES['input_gambar'];
         echo json_encode($response);
     }
 
@@ -82,7 +105,7 @@ class data_dokter extends CI_Controller {
         $data_id = $this->input->post('data_id');
         // parameter
         //$params = array($noagenda, $noba, $no_tiket);
-        $data = $this->m_data_dokter->get_detail_data($data_id);
+        $data = $this->M_data_dokter->get_detail_data($data_id);
         // get data
         if (empty($data)) {
             $output = array(
@@ -118,7 +141,7 @@ class data_dokter extends CI_Controller {
         $where = array(
             'id_dokter' => $this->input->post('id_dokter'),
         );
-        if ($this->m_data_dokter->get_edit($params, $where)) {
+        if ($this->M_data_dokter->get_edit($params, $where)) {
             $response['status']="sukses";
             $response['pesan']="Data berhasil disimpan";
         }else{ //jika  gagal
@@ -132,7 +155,7 @@ class data_dokter extends CI_Controller {
         $where = array(
             'id_dokter' => $this->input->post('id_hapus')
         );
-        if ($this->m_data_dokter->get_delete($where)) {
+        if ($this->M_data_dokter->get_delete($where)) {
             $response['status']="sukses";
             $response['pesan']="Data berhasil dihapus";
         }else{ //jika  gagal

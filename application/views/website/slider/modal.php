@@ -6,6 +6,8 @@
   <div class="content">
     <form class="ui data form" id="dataForm" method="post">
       <input type="hidden" name="action" value="create" enctype="multipart/dataForm">
+      <input type="hidden" id="id_slider" value="">
+      <input type="hidden" id="form" value="">
       
       <div class="ui grid">
         <div class="six wide column">
@@ -30,13 +32,13 @@
             <label class="six wide column">Posisi</label>
             <div class="five wide column">
               <div class="ui radio checkbox">
-                <input type="radio" name="posisi" checked="checked">
+                <input type="radio" class="position" name="posisi" checked="checked" value="Kiri">
                 <label>Kiri</label>
               </div>
             </div>
             <div class="five wide column">
               <div class="ui radio checkbox">
-                <input type="radio" name="posisi">
+                <input type="radio" class="position" name="posisi" value="Kanan">
                 <label>Kanan</label>
               </div>
             </div>
@@ -45,19 +47,19 @@
         <div class="ten wide column">
           <div class="field">
             <label for="nama">Judul</label>
-            <input type="text" name="nama" placeholder="Judul media">
+            <input type="text" name="judul" id="judul" placeholder="Judul media">
           </div>
           <div class="field">
             <label for="nama">Subjudul</label>
-            <input type="text" name="subjudul" placeholder="Judul media">
+            <input type="text" name="sub_judul" id="sub_judul" placeholder="Subjudul media">
           </div>
           <div class="field">
             <label for="">Deskripsi</label>
-            <textarea name="deskripsi" id="" rows="5"></textarea>
+            <textarea name="deskripsi" id="deskripsi" rows="5"></textarea>
           </div>
           <div class="field">
             <label for="nama">Link</label>
-            <input type="text" name="link" placeholder="Judul media">
+            <input type="text" name="link" id="link" placeholder="Link media">
           </div>
         </div>
       </div>
@@ -68,9 +70,9 @@
       Batal
     </div>
     <div class="ui buttons">
-      <button type="button" class="ui button save as drafting positive">Draft</button>
+      <button type="button" id="btn_draft" class="ui button save as drafting positive">Draft</button>
       <div class="or"></div>
-      <button type="button" class="ui button save as publicity teal">Publish</button>
+      <button type="button" style="background-color: #00b5ad !important;" id="btn_publish" class="ui button save as publicity positive teal">Publish</button>
     </div>
   </div>
 </div>

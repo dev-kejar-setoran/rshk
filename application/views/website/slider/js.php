@@ -3,8 +3,22 @@
     $(document).ready(function(){
         load(); // load tb
         // click simpan 
-        $("#btn_simpan").click(function(){      
-            simpan();
+        $("#btn_cari").click(function(){  
+            var judul=$('#filter_judul').val();
+            var status=$('#filter_status').val();
+            load(judul, status); 
+        });
+        // click simpan 
+        $("#btn_reset").click(function(){  
+            load();
+        });
+        // click simpan 
+        $("#btn_draft").click(function(){
+            simpan('Draft');
+        });
+
+        $("#btn_publish").click(function(){
+            simpan('Published');
         });
         // click hapus 
         $("#btn_hapus").click(function(){      
@@ -19,11 +33,20 @@
         alert("The paragraph was clicked.");
     }
     // load data table
-    function load(nama_dokter='', spesialisasi='', jabatan='') {
+    function load(judul='', status='') {
         var t_table = $('#tb_data').DataTable();
         t_table.destroy();
         t_table = $('#tb_data').DataTable( {
-            "ajax": "<?php echo base_url('website/slider/load_json') ?>"
+            "ajax": {
+                "url": "<?php echo base_url('website/slider/load_json') ?>",
+                "type": "POST",
+                "data": {"judul": judul, "status": status},
+            },
+            "language": {
+              "emptyTable": "No dssata available in table",
+              "zeroRecords": "No records to display"
+            },
+            searching: false,
         } );
        // t_table.destroy();
     } 
@@ -49,31 +72,40 @@
             success: function (output) {
                 var output = $.parseJSON(output);
                 //alert(JSON.stringify(output));
-                $("#id_dokter").val(output.data.id_dokter);
-                $("#nama_dokter").val(output.data.nama_dokter);
-                $("#id_spesialisasi").val(output.data.id_spesialisasi);
-                $("#id_jabatan").val(output.data.id_jabatan);
-
+                $("#id_slider").val(output.data.id_slider);
+                $("#judul").val(output.data.judul);
+                $("#sub_judul").val(output.data.sub_judul);
+                $("#deskripsi").val(output.data.deskripsi);
+                $('input:radio[name="posisi"]').filter('[value='+output.data.posisi+']').attr('checked', true);
+                $("#link").val(output.data.link);
                 openModal();
             },
         });
     }
 
     // proses tambah data
-    function simpan() {        
+    function simpan(btn) {  
         var form=$('#form').val(); // cek form edit / form add
-        var id_dokter=$('#id_dokter').val();
-        var nama_dokter=$('#nama_dokter').val();
-        var id_spesialisasi=$('#id_spesialisasi').val();
-        var id_jabatan=$('#id_jabatan').val();
+        var id_slider=$('#id_slider').val();
+        var judul=$('#judul').val();
+        var sub_judul=$('#sub_judul').val();
+        var deskripsi=$('#deskripsi').val();
+        var posisi=$("input[name='posisi']:checked").val();
+        var link=$('#link').val();
+        var status = btn;
+        // var gambar=$('#gambar').val();
         $.ajax({
             url: "<?php echo base_url('website/slider/'); ?>" + form,
             type: "POST",
             data: {
-                "id_dokter":id_dokter, 
-                "nama_dokter":nama_dokter, 
-                "id_spesialisasi":id_spesialisasi,
-                "id_jabatan":id_jabatan
+                "id_slider":id_slider, 
+                "judul":judul, 
+                "sub_judul":sub_judul, 
+                "deskripsi":deskripsi, 
+                "posisi":posisi, 
+                "link":link, 
+                "status": status
+                // "gambar":gambar,
             },
             beforeSubmit: function() {
                 //loading
@@ -81,64 +113,53 @@
             success: function(msg) {
                 var msg=$.parseJSON(msg);
                 if (msg.status=='sukses') {
-                    alert(msg.pesan);
+                    title_msg = 'Tersimpan!',
+                    type_msg = 'success'
                 }
                 else if (msg.status=='gagal') {
-                    alert(msg.pesan);
+                    title_msg = 'Gagal Tersimpan!',
+                    type_msg = 'warning'
                 }
                 load();
+                swal(title_msg, msg.pesan, type_msg);
             },
         }); 
     }
 
 
     function form_hapus(data_id=""){
-        $("#form").val('edit_process'); // set untuk form edit
-        //alert(data_id);
-        $.ajax({// menggunakan ajax form
-            url: "<?php echo base_url('website/slider/get_detail_data'); ?>",
-            type: "POST",
-            data: {"data_id": data_id},
-            beforeSend: function () {
-                // non removable loading
-                // $('#loading_modal').modal({
-                //     backdrop: 'static', keyboard: false
-                // });
-            },
-            success: function (output) {
-                var output = $.parseJSON(output);
-                //alert(JSON.stringify(output));
-                $("#data_hapus").text(output.data.nama_dokter);
-                $("#id_hapus").val(output.data.id_dokter);
-                modal_hapus();
-            },
-        });
+        swal({
+              title: 'Hapus Data',
+              text: "Apakah Anda ingin menghapus data ini? #" + data_id,
+              type: 'warning',
+              showCancelButton: true,
+              confirmButtonColor: '#3085d6',
+              cancelButtonColor: '#999',
+              confirmButtonText: 'Hapus',
+              cancelButtonText: 'Batal'
+          }).then(value => {
+             $.ajax({// menggunakan ajax form
+                url: "<?php echo base_url('website/slider/delete_process'); ?>",
+                type: "POST",
+                data: {
+                    "id_hapus":data_id
+                },
+                beforeSend: function () {
+                    // non removable loading
+                    // $('#loading_modal').modal({
+                    //     backdrop: 'static', keyboard: false
+                    // });
+                },
+                success: function (msg) {
+                    var msg=$.parseJSON(msg);
+                    load();
+                    swal(
+                      'Deleted!',
+                      msg.pesan,
+                      'success'
+                      );
+                },
+            });
+        }).catch(swal.noop)
     }
-
-
-    // proses tambah data
-    function hapus() {        
-        var id_hapus=$('#id_hapus').val();
-        $.ajax({
-            url: "<?php echo base_url('website/slider/delete_process'); ?>",
-            type: "POST",
-            data: {
-                "id_hapus":id_hapus
-            },
-            beforeSubmit: function() {
-                //loading
-            },
-            success: function(msg) {
-                var msg=$.parseJSON(msg);
-                if (msg.status=='sukses') {
-                    alert(msg.pesan);
-                }
-                else if (msg.status=='gagal') {
-                    alert(msg.pesan);
-                }
-                load();
-            },
-        }); 
-    }
-
 </script>

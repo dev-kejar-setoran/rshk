@@ -44,23 +44,22 @@
               <form class="ui filter form">
                 <div class="inline fields">
                   <div class="field">
-                    <input name="filter[judul]" placeholder="Judul" type="text">
+                    <input name="filter_judul" id="filter_judul" placeholder="Judul" type="text">
                   </div>
-                  <div class="field">
+                 <!--  <div class="field">
                     <input name="filter[deskripsi]" placeholder="Deskripsi" type="text">
-                  </div>
+                  </div> -->
                   <div class="field">
-                    <select name="filter[tipe]" class="ui dropdown selection">
-                      <option value="">Pilih Tipe</option>
-                      <option value="1">Event</option>
-                      <option value="2">Pengumuman</option>
-                      <option value="2">Misc</option>
+                    <select name="filter_status" id="filter_status" class="ui dropdown selection">
+                      <option value="">Pilih Status</option>
+                      <option value="Draft">Draft</option>
+                      <option value="Published">Published</option>
                     </select>
                   </div>
-                  <button type="button" class="ui teal icon filter button" data-content="Cari Data">
+                  <button type="button" id="btn_cari" class="ui teal icon filter button" data-content="Cari Data">
                     <i class="search icon"></i>
                   </button>
-                  <button type="reset" class="ui icon reset button" data-content="Bersihkan Pencarian">
+                  <button type="reset" id="btn_reset" class="ui icon reset button" data-content="Bersihkan Pencarian">
                     <i class="refresh icon"></i>
                   </button>
                   <div style="margin-left: auto; margin-right: 1px;">
@@ -73,20 +72,21 @@
                 </div>
               </form>
 
-              <table class="ui celled table">
+               <table id="tb_data" class="display ui celled tabl" style="width:100%">
+              <!-- <table class="ui celled table"> -->
                 <thead class="center aligned">
                   <tr>
                     <th>No</th>
                     <th>Judul</th>
                     <th>Gambar</th>
                     <th>Posisi</th>
-                    <th>Status</th>
+                    <th center aligned>Status</th>
                     <th>Tanggal Entry</th>
                     <th>Oleh</th>
                     <th class="two wide column">Aksi</th>
                   </tr>
                 </thead>
-                <tbody>
+                <!-- <tbody>
                   <tr>
                     <td class="center aligned">1</td>
                     <td class="center aligned">Consequatur nesciunt sunt.</td>
@@ -113,7 +113,7 @@
                       <button type="button" data-content="Hapus Data" data-id="" class="ui mini red icon delete button"><i class="trash icon"></i></button>
                     </td>
                   </tr>
-                </tbody>
+                </tbody> -->
               </table>
             </div>
           </div>

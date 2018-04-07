@@ -9,9 +9,13 @@ class m_slider extends CI_Model {
 
     private $_table1 = "t_website_slider"; //nama table
 
-    public function get_all(){
-    $query = $this->db->get($this->_table1);
+    public function get_all($params1, $params2){
+    $this->db->select('*');
+    $this->db->like('judul', $params1);
+    $this->db->or_like('status', $params2);
 
+
+    $query = $this->db->get($this->_table1);
     if ($query->num_rows() > 0) {
             $result = $query->result_array();
             $query->free_result();
@@ -22,41 +26,17 @@ class m_slider extends CI_Model {
 
    	}
 
-    // combo spesialisasi
-    function getSpesialisasi() {
-        $query = "SELECT id_spesialisasi, nama_spesialisasi FROM m_spesialisasi";
-        $q = $this->db->query($query);
-        if ($q->num_rows() > 0) {
-            foreach ($q->result() as $row){
-                    $data[] = $row;
-                }
-        }
-        return $data;
-    }
-
-    // combo Jabatan
-    function getJabatan() {
-        $query = "SELECT id_jabatan_dokter, nama_jabatan_dokter FROM m_jabatan_dokter";
-        $q = $this->db->query($query);
-        if ($q->num_rows() > 0) {
-            foreach ($q->result() as $row){
-                    $data[] = $row;
-                }
-        }
-        return $data;
-    }
-
    	
     // tambah
     public function get_add($params) {
-        return $this->db->insert('m_data_dokter', $params);
+        return $this->db->insert($this->_table1, $params);
     }
 
     // detail data
     public function get_detail_data($params) {
         $sql = "SELECT *
-                FROM m_data_dokter 
-                WHERE id_dokter = ?";
+                FROM t_website_slider 
+                WHERE id_slider = ?";
         $query = $this->db->query($sql, $params);
         if ($query->num_rows() > 0) {
             $result = $query->row_array();
@@ -69,13 +49,13 @@ class m_slider extends CI_Model {
 
     // ubah
     public function get_edit($params, $where) {
-        return $this->db->update('m_data_dokter', $params, $where);
+        return $this->db->update($this->_table1, $params, $where);
     }
     
 
     // delete
     public function get_delete($where){
-        return $this->db->delete('m_data_dokter', $where);
+        return $this->db->delete($this->_table1, $where);
     }
 
 }

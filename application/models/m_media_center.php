@@ -30,6 +30,17 @@ class m_media_center extends CI_Model {
         return $result;
 
     }
+
+    function getTipe() {
+        $query = "SELECT id_tipe_media, nama_tipe_media FROM m_tipe_media";
+        $q = $this->db->query($query);
+        if ($q->num_rows() > 0) {
+            foreach ($q->result() as $row){
+                    $data[] = $row;
+                }
+        }
+        return $data;
+    }
     // tambah
     public function get_add($params) {
         return $this->db->insert($this->_table1, $params);

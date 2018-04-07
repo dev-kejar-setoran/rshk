@@ -47,6 +47,21 @@
         } );
        // t_table.destroy();
     } 
+
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            
+            reader.onload = function (e) {
+                $('#image-preview').attr('src', e.target.result);
+            }
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+    $("#input_gambar").change(function(){
+        readURL(this);
+    });
+
     function form_add(){
         $('#dataForm')[0].reset();
         $("#form").val('add_process'); // set untuk form add
@@ -73,7 +88,8 @@
                 $("#nama_dokter").val(output.data.nama_dokter);
                 $("#id_spesialisasi").val(output.data.id_spesialisasi);
                 $("#id_jabatan").val(output.data.id_jabatan);
-
+                $("#nama_foto").val(output.data.foto);
+                document.getElementById("image-preview").src = "../assets/img/data_dokter/" + output.data.foto;
                 openModal();
             },
         });
@@ -82,19 +98,16 @@
     // proses tambah data
     function simpan() {        
         var form=$('#form').val(); // cek form edit / form add
-        var id_dokter=$('#id_dokter').val();
-        var nama_dokter=$('#nama_dokter').val();
-        var id_spesialisasi=$('#id_spesialisasi').val();
-        var id_jabatan=$('#id_jabatan').val();
+        var dataForm=$('form#dataForm')[0];
+        var data = new FormData(dataForm);   
+        
+        console.log(data);
         $.ajax({
             url: "<?php echo base_url('master/data_dokter/'); ?>" + form,
             type: "POST",
-            data: {
-                "id_dokter":id_dokter, 
-                "nama_dokter":nama_dokter, 
-                "id_spesialisasi":id_spesialisasi,
-                "id_jabatan":id_jabatan
-            },
+            data:data,
+            processData: false,
+            contentType: false,
             beforeSubmit: function() {
                 //loading
             },
@@ -152,29 +165,29 @@
     }
 
 
-    // proses hapus data
-    function hapus() {        
-        var id_hapus=$('#id_hapus').val();
-        $.ajax({
-            url: "<?php echo base_url('master/data_dokter/delete_process'); ?>",
-            type: "POST",
-            data: {
-                "id_hapus":id_hapus
-            },
-            beforeSubmit: function() {
-                //loading
-            },
-            success: function(msg) {
-                var msg=$.parseJSON(msg);
-                if (msg.status=='sukses') {
-                    alert(msg.pesan);
-                }
-                else if (msg.status=='gagal') {
-                    alert(msg.pesan);
-                }
-                load();
-            },
-        }); 
-    }
+    // // proses hapus data
+    // function hapus() {        
+    //     var id_hapus=$('#id_hapus').val();
+    //     $.ajax({
+    //         url: "<?php echo base_url('master/data_dokter/delete_process'); ?>",
+    //         type: "POST",
+    //         data: {
+    //             "id_hapus":id_hapus
+    //         },
+    //         beforeSubmit: function() {
+    //             //loading
+    //         },
+    //         success: function(msg) {
+    //             var msg=$.parseJSON(msg);
+    //             if (msg.status=='sukses') {
+    //                 alert(msg.pesan);
+    //             }
+    //             else if (msg.status=='gagal') {
+    //                 alert(msg.pesan);
+    //             }
+    //             load();
+    //         },
+    //     }); 
+    // }
 
 </script>

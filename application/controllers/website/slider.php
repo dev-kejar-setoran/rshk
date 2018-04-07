@@ -8,27 +8,37 @@ class slider extends CI_Controller {
         parent::__construct();
          //$this->auth->validation();
         $this->load->library('form_validation');
-        $this->load->model('m_slider');
+        $this->load->model('M_slider');
     }
 
     function index()
     {
         $data['title_page']='Data Slider';
-        $data['data_slider'] = $this->m_slider->get_all();
-        // print_r($data['data_slider']); die();
 		$this->load->view('website/slider/index', $data);
 	}
 
    // untuk load data table
     public function load_json(){
-        $res = $this->m_slider->get_all();
+        $judul = $this->input->post('judul');
+        $status = $this->input->post('status');
+        $params1 = empty($judul) ? '^^^^^' : $judul;
+        $params2 = empty($status) ? '^^^^^' : $status;
+        // get data dari model dengan param
+        $res = $this->M_slider->get_all($params1, $params2);
+        // periksa jika data kosong
+        if (empty($res)) {
+            echo json_encode(""); 
+            return;
+        }
+        // 
+        $no = 1;
         foreach ($res as $data) {
             $row=array();
             $row[]=$data['id_slider'];
             $row[]=$data['judul'];
             $row[]=$data['gambar'];
             $row[]=$data['posisi'];
-            $row[]=$data['status'];
+            $row[]=($data['status'] == 'Draft' ? '<span class="ui fluid orange label" style="text-align:center">'.$data['status'].'<span>':'<span class="ui fluid green label" style="text-align:center">'.$data['status'].'<span>');
             $row[]=$data['created_at'];
             $row[]=$data['created_by'];
             $row[]='<button type="button" data-content="Ubah Data" data-id="'.$data["id_slider"].'" class="ui mini orange icon edit button" onclick="form_edit(\''.$data["id_slider"].'\')"><i class="edit icon"></i></button>
@@ -44,14 +54,17 @@ class slider extends CI_Controller {
  // proses tambah data
     public function add_process() {
         $data = array(
-            'nama_slider' => $this->input->post('nama_slider'),
-            'id_spesialisasi' => $this->input->post('id_spesialisasi'),
-            'id_jabatan' => $this->input->post('id_jabatan'),
-            'created_by' => $this->session->userdata('username'),
+            'judul' => $this->input->post('judul'),
+            'sub_judul' => $this->input->post('sub_judul'),
+            'deskripsi' => $this->input->post('deskripsi'),
+            'posisi' => $this->input->post('posisi'),
+            'link' => $this->input->post('link'),
+            'status' => $this->input->post('status'),
+            'created_by' => $this->session->userdata('nama_lengkap'),
             'created_at' => date('Y-m-d H:i:s'),
         );
          // run fungsi update
-        if($this->m_data_slider->get_add($data)){ //jika update berhasil
+        if($this->M_slider->get_add($data)){ //jika update berhasil
             $response['status']="sukses";
             $response['pesan']="Data berhasil disimpan";
         }else{ //jika  gagal
@@ -66,7 +79,7 @@ class slider extends CI_Controller {
         $data_id = $this->input->post('data_id');
         // parameter
         //$params = array($noagenda, $noba, $no_tiket);
-        $data = $this->m_data_slider->get_detail_data($data_id);
+        $data = $this->M_slider->get_detail_data($data_id);
         // get data
         if (empty($data)) {
             $output = array(
@@ -93,16 +106,19 @@ class slider extends CI_Controller {
         }
         // insert db
         $params = array(
-            'nama_slider' => $this->input->post('nama_slider'),
-            'id_spesialisasi' => $this->input->post('id_spesialisasi'),
-            'id_jabatan' => $this->input->post('id_jabatan'),
-            'updated_by' => $this->session->userdata('username'),
+            'judul' => $this->input->post('judul'),
+            'sub_judul' => $this->input->post('sub_judul'),
+            'deskripsi' => $this->input->post('deskripsi'),
+            'posisi' => $this->input->post('posisi'),
+            'link' => $this->input->post('link'),
+            'status' => $this->input->post('status'),
+            'updated_by' => $this->session->userdata('nama_lengkap'),
             'updated_at' => date('Y-m-d H:i:s'),
         );
         $where = array(
             'id_slider' => $this->input->post('id_slider'),
         );
-        if ($this->m_data_slider->get_edit($params, $where)) {
+        if ($this->M_slider->get_edit($params, $where)) {
             $response['status']="sukses";
             $response['pesan']="Data berhasil disimpan";
         }else{ //jika  gagal
@@ -116,7 +132,7 @@ class slider extends CI_Controller {
         $where = array(
             'id_slider' => $this->input->post('id_hapus')
         );
-        if ($this->m_data_slider->get_delete($where)) {
+        if ($this->M_slider->get_delete($where)) {
             $response['status']="sukses";
             $response['pesan']="Data berhasil dihapus";
         }else{ //jika  gagal

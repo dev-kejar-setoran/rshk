@@ -52,9 +52,10 @@
                   <div class="field">
                     <select name="filter[tipe]" id="filter_id_tipe_media" class="ui dropdown selection">
                       <option value="">Pilih Tipe</option>
-                      <option value="1">Event</option>
-                      <option value="2">Pengumuman</option>
-                      <option value="2">Misc</option>
+                      <?php foreach($combo_tipe as $rows){
+                          echo "<option value='$rows->id_tipe_media'>$rows->nama_tipe_media</option>;";
+                        }
+                      ?>
                     </select>
                   </div>
                   <button type="button" class="ui teal icon filter button" id="btn_cari" data-content="Cari Data">

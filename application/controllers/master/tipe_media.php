@@ -8,7 +8,7 @@ class tipe_media extends MY_Controller {
         parent::__construct();
          //$this->auth->validation();
         $this->load->library('form_validation');
-        $this->load->model('m_tipe_media');
+        $this->load->model('M_tipe_media');
     }
 
     function index()
@@ -24,7 +24,7 @@ class tipe_media extends MY_Controller {
         $filter['nama_tipe_media'] = empty($nama_tipe_media) ? '' : $nama_tipe_media;
         $params = $filter['nama_tipe_media'];
 
-        $res = $this->m_tipe_media->get_all($params);
+        $res = $this->M_tipe_media->get_all($params);
 
         if (empty($res)) {
             echo json_encode(""); 
@@ -58,7 +58,7 @@ class tipe_media extends MY_Controller {
             'created_at' => date('Y-m-d H:i:s'),
         );
          // run fungsi update
-        if($this->m_tipe_media->get_add($data)){ //jika update berhasil
+        if($this->M_tipe_media->get_add($data)){ //jika update berhasil
             $response['status']="sukses";
             $response['pesan']="Data berhasil disimpan";
         }else{ //jika  gagal
@@ -73,7 +73,7 @@ class tipe_media extends MY_Controller {
         $data_id = $this->input->post('data_id');
         // parameter
         //$params = array($noagenda, $noba, $no_tiket);
-        $data = $this->m_tipe_media->get_detail_data($data_id);
+        $data = $this->M_tipe_media->get_detail_data($data_id);
         // get data
         if (empty($data)) {
             $output = array(
@@ -109,7 +109,7 @@ class tipe_media extends MY_Controller {
         $where = array(
             'id_tipe_media' => $this->input->post('id_tipe_media'),
         );
-        if ($this->m_tipe_media->get_edit($params, $where)) {
+        if ($this->M_tipe_media->get_edit($params, $where)) {
             $response['status']="sukses";
             $response['pesan']="Data berhasil disimpan";
         }else{ //jika  gagal
@@ -123,7 +123,7 @@ class tipe_media extends MY_Controller {
         $where = array(
             'id_tipe_media' => $this->input->post('id_hapus')
         );
-        if ($this->m_tipe_media->get_delete($where)) {
+        if ($this->M_tipe_media->get_delete($where)) {
             $response['status']="sukses";
             $response['pesan']="Data berhasil dihapus";
         }else{ //jika  gagal

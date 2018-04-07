@@ -72,12 +72,7 @@
                 $("#id_media_center").val(output.data.id_media_center);
                 $("#nama_media_center").val(output.data.nama_media_center);
                 $("#deskripsi").val(output.data.deskripsi);
-                $('input:radio[name="jenis_kelamin"]').filter('[value='+output.data.jenis_kelamin+']').attr('checked', true);
-                $("#tempat_lahir").val(output.data.tempat_lahir);
-                $("#tgl_lahir").val(output.data.tgl_lahir);
-                $("#id_kewarganegaraan").val(output.data.id_kewarganegaraan);
-                if (output.data.asuransi=='ada') { $('#asuransi').prop('checked', true);} 
-                else { $('#asuransi').prop('checked', false); }
+                $("#nama_tipe_media").val(output.data.nama_tipe_media);
                 openModal();
             },
         });
@@ -86,21 +81,22 @@
     // proses tambah data
     function simpan() {        
         var form=$('#form').val(); // cek form edit / form add
-        var id_media_center=$('#id_media_center').val();
-        var nama_media_center=$('#nama_media_center').val();
-        var deskripsi=$('#deskripsi').val();
+        // var id_media_center=$('#id_media_center').val();
+        // var nama_media_center=$('#nama_media_center').val();
+        // var deskripsi=$('#deskripsi').val();
         // var gambar=$('#gambar').val();
-        var id_tipe_media=$('#id_tipe_media').val();
+        // var id_tipe_media=$('#id_tipe_media').val();
         $.ajax({
             url: "<?php echo base_url('website/media_center/'); ?>" + form,
             type: "POST",
-            data: {
-                "id_media_center":id_media_center, 
-                "nama_media_center":nama_media_center, 
-                "deskripsi":deskripsi, 
-                // "gambar":gambar,
-                "id_tipe_media":id_tipe_media 
-            },
+            data: $('#dataForm').serialize(),
+            // data: {
+            //     "id_media_center":id_media_center, 
+            //     "nama_media_center":nama_media_center, 
+            //     "deskripsi":deskripsi, 
+            //     // "gambar":gambar,
+            //     "id_tipe_media":id_tipe_media 
+            // },
             beforeSubmit: function() {
                 //loading
             },
