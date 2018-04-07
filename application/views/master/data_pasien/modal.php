@@ -62,12 +62,9 @@
               </div>
             </div>
           </div>
-
+          <!-- tampil error -->
           <div class="ui error message">
-            <ul class="list" id="msg_validation">
-              <!-- <li>Silahkan isi Nama</li>
-              <li>Silahkan isi Deskripsi</li> -->
-            </ul>
+            <ul class="list" id="msg_validation"></ul>
           </div>
 
 
@@ -85,43 +82,4 @@
     </div>
   </div>
 </div>
-<!-- Validasi Form -->
-<script type="text/javascript">
-  $(document).ready(function(){
-
-    $('.ui .data .form')
-    .form({
-      //on: 'blur',
-      fields: { // untuk type : text
-        empty: {
-          identifier  : 'nama_pasien',
-          rules: [
-            {
-              type   : 'empty',
-              prompt : 'Silahkan isi Nama Pasien'
-            }
-          ]
-        },
-        dropdown: { // untuk type : dropdown
-          identifier  : 'id_kewarganegaraan',
-          rules: [
-            {
-              type   : 'empty',
-              prompt : 'Silahkan pilih Kewarganegaraan'
-            }
-          ]
-        },
-        checkbox: {  // untuk type : checkbox
-          identifier  : 'asuransi',
-          rules: [
-            {
-              type   : 'checked',
-              prompt : 'Please check the checkbox'
-            }
-          ]
-        }
-      }
-    });
-  });
-</script>
 

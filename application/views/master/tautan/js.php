@@ -4,9 +4,8 @@
         load(); // load tb
         // click simpan 
         $("#btn_cari").click(function(){  
-            var nama_pasien=$('#filter_nama_pasien').val();
-            var no_kartu=$('#filter_no_kartu').val();
-            load(nama_pasien, no_kartu); 
+            var nama_tautan=$('#filter_nama_tautan').val();
+            load(nama_tautan); 
         });
         // click simpan 
         $("#btn_reset").click(function(){  
@@ -27,15 +26,15 @@
 <!-- Function detail :  -->
 <script type="text/javascript">
     // load data table
-    function load(nama_pasien='', nomor_kartu='') {
+    function load(nama_tautan='') {
         closeModal();
         var t_table = $('#tb_data').DataTable();
         t_table.destroy();
         t_table = $('#tb_data').DataTable( {
             "ajax": {
-                "url": "<?php echo base_url('master/data_pasien/load_json') ?>",
+                "url": "<?php echo base_url('master/tautan/load_json') ?>",
                 "type": "POST",
-                "data": {"nama_pasien": nama_pasien, "nomor_kartu": nomor_kartu},
+                "data": {"nama_tautan": nama_tautan},
             },
             "language": {
               "emptyTable": "No data available in table",
@@ -45,17 +44,17 @@
         } );
        // t_table.destroy();
     } 
-    // tampil form tambah
     function form_add(){
         $("#form").val('add_process'); // set untuk form add
         clearContent();
         openModal();
     }
-    // tampil form edit
+
     function form_edit(data_id=""){
         $("#form").val('edit_process'); // set untuk form edit
+        //alert(data_id);
         $.ajax({// menggunakan ajax form
-            url: "<?php echo base_url('master/data_pasien/get_detail_data'); ?>",
+            url: "<?php echo base_url('master/tautan/get_detail_data'); ?>",
             type: "POST",
             data: {"data_id": data_id},
             beforeSend: function () {
@@ -67,26 +66,22 @@
             success: function (output) {
                 var output = $.parseJSON(output);
                 //alert(JSON.stringify(output));
-                $("#id_pasien").val(output.data.id_pasien);
-                $("#nama_pasien").val(output.data.nama_pasien);
-                $("#nomor_kartu").val(output.data.nomor_kartu);
-                $('input:radio[name="jenis_kelamin"]').filter('[value='+output.data.jenis_kelamin+']').attr('checked', true);
-                $("#tempat_lahir").val(output.data.tempat_lahir);
-                $("#tgl_lahir").val(output.data.tgl_lahir);
-                $("#id_kewarganegaraan").val(output.data.id_kewarganegaraan);
-                if (output.data.asuransi=='ada') { $('#asuransi').prop('checked', true);} 
-                else { $('#asuransi').prop('checked', false); }
+                $("#id_tautan").val(output.data.id_tautan);
+                $("#nama_tautan").val(output.data.nama_tautan);
+                $("#tautan").val(output.data.tautan);
+                $("#deskripsi").val(output.data.deskripsi);
                 openModal();
             },
         });
     }
-    // proses tambah data / edit data
+
+    // proses tambah data
     function simpan() {        
         var form=$('#form').val(); // cek form edit / form add
 
         var data_fields = $("#dataForm").serialize();
         $.ajax({
-            url: "<?php echo base_url('master/data_pasien/'); ?>" + form,
+            url: "<?php echo base_url('master/tautan/'); ?>" + form,
             type: "POST",
             data : data_fields,
             beforeSubmit: function() {
@@ -94,6 +89,7 @@
             },
             success: function(msg) {
                 var msg=$.parseJSON(msg);
+
                 $('#msg_validation').html('');
                 // jika form tidak valid
                 if(msg.type=='success'){
@@ -113,7 +109,8 @@
             },
         }); 
     }
-    // klik hapus event
+
+
     function form_hapus(data_id=""){
         swal({
               title: 'Hapus Data',
@@ -126,7 +123,7 @@
               cancelButtonText: 'Batal'
           }).then(value => {
              $.ajax({// menggunakan ajax form
-                url: "<?php echo base_url('master/data_pasien/delete_process'); ?>",
+                url: "<?php echo base_url('master/tautan/delete_process'); ?>",
                 type: "POST",
                 data: {
                     "id_hapus":data_id
@@ -140,17 +137,13 @@
                 success: function (msg) {
                     var msg=$.parseJSON(msg);
                     load();
-                    swal(
-                      'Deleted!',
-                      msg.pesan,
-                      'success'
-                      );
+                    swal(msg.title, msg.pesan, msg.type);
                 },
             });
         }).catch(swal.noop)
     }
-    // untuk membersihkan form tambah / edit
     function clearContent(){
+
         $('#msg_validation').html('');
         $('#dataForm')[0].reset();
         $('#dataForm').removeClass('error');
