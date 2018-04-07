@@ -62,7 +62,7 @@ class data_dokter extends CI_Controller {
                 // $new_name = str_replace(".","",$data['KD_KONTRAK_TRANS']).'_'.date("YmdHis");
                 $new_name = $_FILES['input_gambar']['name'];
                 $config['file_name'] = $new_name;
-                $config['upload_path'] = 'assets/img/data_dokter/';
+                $config['upload_path'] = 'assets/img/upload/';
                 $config['allowed_types'] = 'gif|jpg|jpeg|png';
                 $config['max_size'] = 1024 * 10;
 

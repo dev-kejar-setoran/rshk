@@ -47,6 +47,21 @@
         } );
        // t_table.destroy();
     } 
+
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            
+            reader.onload = function (e) {
+                $('#image-preview').attr('src', e.target.result);
+            }
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+    $("#attachment").change(function(){
+        readURL(this);
+    });
+
     function form_add(){
         $('#dataForm')[0].reset();
         $("#form").val('add_process'); // set untuk form add
@@ -80,23 +95,16 @@
 
     // proses tambah data
     function simpan() {        
-        var form=$('#form').val(); // cek form edit / form add
-        // var id_media_center=$('#id_media_center').val();
-        // var nama_media_center=$('#nama_media_center').val();
-        // var deskripsi=$('#deskripsi').val();
-        // var gambar=$('#gambar').val();
-        // var id_tipe_media=$('#id_tipe_media').val();
+         var form=$('#form').val(); // cek form edit / form add
+        var dataForm=$('form#dataForm')[0];
+        var data = new FormData(dataForm);   
+        
         $.ajax({
             url: "<?php echo base_url('website/media_center/'); ?>" + form,
             type: "POST",
-            data: $('#dataForm').serialize(),
-            // data: {
-            //     "id_media_center":id_media_center, 
-            //     "nama_media_center":nama_media_center, 
-            //     "deskripsi":deskripsi, 
-            //     // "gambar":gambar,
-            //     "id_tipe_media":id_tipe_media 
-            // },
+            data:data,
+            processData: false,
+            contentType: false,
             beforeSubmit: function() {
                 //loading
             },
