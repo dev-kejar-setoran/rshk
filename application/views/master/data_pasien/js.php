@@ -13,7 +13,8 @@
             load();
         });
         // click simpan 
-        $("#btn_simpan").click(function(){      
+        $("#btn_simpan").click(function(){   
+            //closeModal();
             simpan();
         });
         // click hapus 
@@ -25,11 +26,9 @@
 </script>
 <!-- Function detail :  -->
 <script type="text/javascript">
-    function test(){
-        alert("The paragraph was clicked.");
-    }
     // load data table
     function load(nama_pasien='', nomor_kartu='') {
+        closeModal();
         var t_table = $('#tb_data').DataTable();
         t_table.destroy();
         t_table = $('#tb_data').DataTable( {
@@ -47,8 +46,8 @@
        // t_table.destroy();
     } 
     function form_add(){
-        $('#dataForm')[0].reset();
         $("#form").val('add_process'); // set untuk form add
+        clearContent();
         openModal();
     }
 
@@ -85,42 +84,34 @@
     // proses tambah data
     function simpan() {        
         var form=$('#form').val(); // cek form edit / form add
-        var id_pasien=$('#id_pasien').val();
-        var nama_pasien=$('#nama_pasien').val();
-        var nomor_kartu=$('#nomor_kartu').val();
-        var jenis_kelamin=$('#jenis_kelamin').val();
-        var tempat_lahir=$('#tempat_lahir').val();
-        var tgl_lahir=$('#tgl_lahir').val();
-        var id_kewarganegaraan=$('#id_kewarganegaraan').val();
-        var asuransi=$('#asuransi').val();
+
+        var data_fields = $("#dataForm").serialize();
         $.ajax({
             url: "<?php echo base_url('master/data_pasien/'); ?>" + form,
             type: "POST",
-            data: {
-                "id_pasien":id_pasien, 
-                "nama_pasien":nama_pasien, 
-                "nomor_kartu":nomor_kartu, 
-                "jenis_kelamin":jenis_kelamin, 
-                "tempat_lahir":tempat_lahir, 
-                "tgl_lahir":tgl_lahir, 
-                "id_kewarganegaraan":id_kewarganegaraan, 
-                "asuransi":asuransi
-            },
+            data : data_fields,
             beforeSubmit: function() {
                 //loading
             },
             success: function(msg) {
                 var msg=$.parseJSON(msg);
-                if (msg.status=='sukses') {
-                    title_msg = 'Tersimpan!',
-                    type_msg = 'success'
+
+                $('#msg_validation').html('');
+                // jika form tidak valid
+                if(msg.type=='success'){
+                    swal(msg.title, msg.pesan, msg.type);
+                    load();
                 }
-                else if (msg.status=='gagal') {
-                    title_msg = 'Gagal Tersimpan!',
-                    type_msg = 'warning'
+                else if(msg.type=='invalid'){
+                    var str ="";
+                    $('#dataForm').addClass('error');
+                    $.each( msg.data, function( i, val ) {
+                        str = "<li>" + val + "</li>";
+                        $("#msg_validation").append(str);
+                    });
+                }else{
+                    swal(msg.title, msg.pesan, msg.type);
                 }
-                load();
-                swal(title_msg, msg.pesan, type_msg);
             },
         }); 
     }
@@ -160,5 +151,11 @@
                 },
             });
         }).catch(swal.noop)
+    }
+    function clearContent(){
+
+        $('#msg_validation').html('');
+        $('#dataForm')[0].reset();
+        $('#dataForm').removeClass('error');
     }
 </script>

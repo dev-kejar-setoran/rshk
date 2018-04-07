@@ -1,5 +1,5 @@
 
-<form class="ui form" action="<?php echo site_url('master/tautan/add_process'); ?>" method="POST">
+<form class="ui form" action="return simpan();" method="POST">
   <div class="ui tiny modal">
     <!-- <i class="close icon"></i> -->
     <div class="header">
@@ -37,3 +37,8 @@
     </div>
   </div>
 </form>
+<script type="text/javascript">
+  function simpan()() {
+    alert('sdfgh');
+  }
+</script>
