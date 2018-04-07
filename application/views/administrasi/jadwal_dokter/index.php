@@ -1,44 +1,13 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <meta charset="utf-8">
-  <title>PJNHK | Backend</title>
-  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-
-  <link rel="shortcut icon" type="image/x-icon" href="../../../favicon.ico">
-
-  <link rel="stylesheet" type="text/css" href="../../../semantic/semantic.min.css">
-  <link rel="stylesheet" href="../../../plugins/sweetalert/sweetalert2.min.css">
-  <link rel="stylesheet" href="../../../plugins/semanticui-calendar/calendar.min.css">
-
-  <link rel="stylesheet" href="../../../css/app.css">
-  <style type="text/css">
-  .ui.file.input input[type="file"] {
-    display: none;
-  }
-  .ui.button>.ui.floated.label {
-    position: absolute;
-    top: 15px;
-    right: -10px;
-  }
-  .table tr th{
-    white-space: nowrap;
-  }
-</style>
-<!-- @yield('css') -->
-<!-- @yield('styles') -->
-</head>
-
-<body id="app">
-
+ <?php $this->load->view('templete/head.php'); ?>
+  <body id="app">
   <header>
-    <?php include('../../../partials/header.php'); ?>
+    <?php $this->load->view('templete/header.php'); ?>
   </header>
-
   <div class="ui sidebar inverted visible vertical menu">
-    <?php include('../../../partials/sidebar.php'); ?>
+    <?php $this->load->view('templete/sidebar.php'); ?>
   </div>
-
   <div id="cover">
     <div class="ui active inverted dimmer">
       <div class="ui text loader">Loading</div>
@@ -72,10 +41,10 @@
               <form class="ui filter form">
                 <div class="inline fields">
                   <div class="field">
-                    <input name="filter[nama]" placeholder="Nama Dokter" type="text">
+                    <input name="filter_nama" placeholder="Nama Dokter" type="text">
                   </div>
                   <div class="field">
-                    <select name="field[hari]" id="" class="ui dropdown selection">
+                    <select name="filter_hari" id="" class="ui dropdown selection">
                       <option value="">Pilih Hari</option>
                       <option value="1">Senin</option>
                       <option value="2">Selasa</option>
@@ -93,7 +62,7 @@
                     <i class="refresh icon"></i>
                   </button>
                   <div style="margin-left: auto; margin-right: 1px;">
-                    <button type="button" class="ui blue add button" onclick="openModal()">
+                    <button type="button" class="ui blue add button" onclick="form_add()">
                       <i class="plus icon"></i>
                       Tambah Data
                     </button>
@@ -102,24 +71,26 @@
                 </div>
               </form>
 
-              <table class="ui celled table">
+              <table id="tb_data" class="ui celled table">
                 <thead class="center aligned">
                   <tr>
                     <th>No</th>
                     <th>Nama Dokter</th>
                     <th>Hari Praktek</th>
                     <th>Jam Praktek</th>
+                    <th>Maksimal Kuota</th>
                     <th>Tanggal Entry</th>
                     <th>Oleh</th>
                     <th>Aksi</th>
                   </tr>
                 </thead>
-                <tbody>
+               <!--  <tbody>
                   <tr>
                     <td class="center aligned">1</td>
                     <td class="center aligned">dr. AMIN TJUBANDI , Sp.BTKV</td>
                     <td class="center aligned">Senin</td>
                     <td class="center aligned">17:00 - 19:00</td>
+                    <td class="center aligned">3</td>
                     <td class="center aligned">24 Februari 2018</td>
                     <td class="center aligned">admin</td>
                     <td class="center aligned">
@@ -132,6 +103,7 @@
                     <td class="center aligned">dr. AMIN TJUBANDI , Sp.BTKV</td>
                     <td class="center aligned">Rabu</td>
                     <td class="center aligned">12:00 - 14:00</td>
+                    <td class="center aligned">4</td>
                     <td class="center aligned">24 Februari 2018</td>
                     <td class="center aligned">admin</td>
                     <td class="center aligned">
@@ -144,6 +116,7 @@
                     <td class="center aligned">dr. AMIN TJUBANDI , Sp.BTKV</td>
                     <td class="center aligned">Kamis</td>
                     <td class="center aligned">17:00 - 19:00</td>
+                    <td class="center aligned">1</td>
                     <td class="center aligned">24 Februari 2018</td>
                     <td class="center aligned">admin</td>
                     <td class="center aligned">
@@ -151,7 +124,7 @@
                       <button type="button" data-content="Hapus Data" data-id="" class="ui mini red icon delete button"><i class="trash icon"></i></button>
                     </td>
                   </tr>
-                </tbody>
+                </tbody> -->
               </table>
             </div>
           </div>
@@ -160,7 +133,7 @@
       </div>
     </div>
 
-    <?php include('../../../partials/footer.php'); ?>
+    <?php $this->load->view('templete/footer.php'); ?>
 
     <div v-cloak>
       <!-- @yield('additional') -->
@@ -169,23 +142,8 @@
 
   <?php include('modal.php') ?>
 
-  <script>
-  </script>
-  <!-- <script src="../../../js/es6-promise.auto.min.js"></script> -->
-
-  <script src="../../../plugins/jQuery/jquery-2.2.3.min.js"></script>
-  <script src="../../../plugins/jQuery/jquery.form.min.js"></script>
-  <script src="../../../plugins/jQueryUI/jquery-ui.min.js"></script>
-  <script src="../../../plugins/slimScroll/jquery.slimscroll.min.js"></script>
-  <script src="../../../plugins/fastclick/fastclick.js"></script>
-  <script src="../../../plugins/sweetalert/sweetalert2.min.js"></script>
-  <script src="../../../plugins/semanticui-calendar/calendar.min.js"></script>
-  <script src="../../../semantic/semantic.min.js"></script>
-
-  <script src="../../../js/mfs-script.js"></script>
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.5/Chart.min.js">></script>
-  <script src="../../../js/dummy.js"></script>
+  <?php $this->load->view('templete/headerjs.php'); ?>
+    <?php include('js.php') ?>
 
   <script>
     $(document).ready(function () {

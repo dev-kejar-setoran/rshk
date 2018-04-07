@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="<?php echo base_url();?>assets/plugins/sweetalert/sweetalert2.min.css">
   <link rel="stylesheet" href="<?php echo base_url();?>assets/css/app.css">
   <link rel="stylesheet" href="<?php echo base_url();?>assets/plugins/datatables/jquery.dataTables.min.css">
+  <link rel="stylesheet" href="<?php echo base_url();?>assets/plugins/semanticui-calendar/calendar.min.css">
   <!-- <link rel="stylesheet" href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css"> -->
   <style type="text/css">
   .ui.file.input input[type="file"] {

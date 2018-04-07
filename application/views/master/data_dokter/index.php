@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <?php $this->load->view('templete/head.php'); ?>
-<body id="app">
+  <body id="app">
   <header>
     <?php $this->load->view('templete/header.php'); ?>
   </header>
