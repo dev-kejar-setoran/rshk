@@ -33,11 +33,12 @@
           </div>
           <div class="field">
             <label for="">Tipe</label>
-            <select name="filter[tipe]" id="id_tipe_media" class="ui dropdown selection">
+            <select name="id_tipe_media" id="id_tipe_media" class="ui dropdown selection">
               <option value="">Pilih tipe media</option>
-              <option value="1">Event</option>
-              <option value="2">Pengumuman</option>
-              <option value="3">Misc</option>
+              <?php foreach($combo_tipe as $rows){
+                    echo "<option value='$rows->id_tipe_media'>$rows->nama_tipe_media</option>;";
+                  }
+                ?>
             </select>
           </div>
         </div>

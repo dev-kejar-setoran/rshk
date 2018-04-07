@@ -8,12 +8,13 @@ class media_center extends MY_Controller {
         parent::__construct();
          //$this->auth->validation();
         $this->load->library('form_validation');
-        $this->load->model('m_media_center');
+        $this->load->model('M_media_center');
     }
 
     function index()
     {
         $data['title_page']='Media Center';
+        $data['combo_tipe'] = $this->M_media_center->getTipe(); 
 		$this->load->view('website/media-center/index', $data);
 	}
 
@@ -23,11 +24,11 @@ class media_center extends MY_Controller {
         $deskripsi = $this->input->post('deskripsi');
         $id_tipe_media = $this->input->post('id_tipe_media');
         $params1 = empty($nama_media_center) ? '' : $nama_media_center;
-        $params2 = empty($deskripsi) == 0 ? '' : $deskripsi;
+        $params2 = empty($deskripsi) ? '' : $deskripsi;
         // $params3 = $id_tipe_media == 0 ? '' : $id_tipe_media;
         $params3 = $id_tipe_media;
         // get data dari model dengan param
-        $res = $this->m_media_center->get_all($params1, $params2, $params3);
+        $res = $this->M_media_center->get_all($params1, $params2, $params3);
         // periksa jika data kosong
         if (empty($res)) {
             echo json_encode(""); 
@@ -65,7 +66,7 @@ class media_center extends MY_Controller {
             'created_at' => date('Y-m-d H:i:s'),
         );
          // run fungsi update
-        if($this->m_media_center->get_add($data)){ //jika update berhasil
+        if($this->M_media_center->get_add($data)){ //jika update berhasil
             $response['status']="sukses";
             $response['pesan']="Data berhasil disimpan";
         }else{ //jika  gagal
@@ -80,7 +81,7 @@ class media_center extends MY_Controller {
         $data_id = $this->input->post('data_id');
         // parameter
         //$params = array($noagenda, $noba, $no_tiket);
-        $data = $this->m_media_center->get_detail_data($data_id);
+        $data = $this->M_media_center->get_detail_data($data_id);
         // get data
         if (empty($data)) {
             $output = array(
@@ -115,7 +116,7 @@ class media_center extends MY_Controller {
         $where = array(
             'id_media_center' => $this->input->post('id_media_center'),
         );
-        if ($this->m_media_center->get_edit($params, $where)) {
+        if ($this->M_media_center->get_edit($params, $where)) {
             $response['status']="sukses";
             $response['pesan']="Data berhasil disimpan";
         }else{ //jika  gagal
@@ -129,7 +130,7 @@ class media_center extends MY_Controller {
         $where = array(
             'id_media_center' => $this->input->post('id_hapus')
         );
-        if ($this->m_media_center->get_delete($where)) {
+        if ($this->M_media_center->get_delete($where)) {
             $response['status']="sukses";
             $response['pesan']="Data berhasil dihapus";
         }else{ //jika  gagal
