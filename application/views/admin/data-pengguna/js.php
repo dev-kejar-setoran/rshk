@@ -15,6 +15,10 @@
         $("#btn_simpan").click(function(){      
             simpan();
         });
+        // click batal 
+        $("#btn_batal").click(function(){      
+            clearContent();
+        });
         // click hapus 
         $("#btn_hapus").click(function(){      
             hapus();
@@ -43,44 +47,42 @@
     } 
 
 	function form_add(){
-        $('#dataForm')[0].reset();
         $("#form").val('add_process'); // set untuk form add
+        clearContent();
         openModal();
     }
 
     // proses tambah data
     function simpan() {        
         var form=$('#form').val(); // cek form edit / form add
-        var id_user=$('#id_user').val();
-        var nama=$('#nama_pengguna').val();
-        var email=$('#email').val();
-        var tlp=$('#tlp').val();
-        var hak_akses=$('#role').val();
+        var data_fields = $("#dataForm").serialize();
         $.ajax({
             url: "<?php echo base_url('setting/data_pengguna/'); ?>" + form,
             type: "POST",
-            data: {
-                "id_user":id_user, 
-                "nama_pengguna":nama, 
-                "email":email, 
-                "tlp":tlp, 
-                "role":hak_akses
-            },
+            data: data_fields,
             beforeSubmit: function() {
                 //loading
             },
             success: function(msg) {
                 var msg=$.parseJSON(msg);
-                if (msg.status=='sukses') {
-                    title_msg = 'Tersimpan!',
-                    type_msg = 'success'
+
+                $('#msg_validation').html('');
+                // jika form tidak valid
+                if(msg.type=='success'){
+                    swal(msg.title, msg.pesan, msg.type);
+                    load();
+                    closeModal();
                 }
-                else if (msg.status=='gagal') {
-                    title_msg = 'Gagal Tersimpan!',
-                    type_msg = 'warning'
+                else if(msg.type=='invalid'){
+                    var str ="";
+                    $('#dataForm').addClass('error');
+                    $.each( msg.data, function( i, val ) {
+                        str = "<li>" + val + "</li>";
+                        $("#msg_validation").append(str);
+                    });
+                }else{
+                    swal(msg.title, msg.pesan, msg.type);
                 }
-                load();
-                swal(title_msg, msg.pesan, type_msg);
             },
         }); 
     }
@@ -146,6 +148,13 @@
                 },
             });
         }).catch(swal.noop)
+    }
+
+    function clearContent(){
+
+        $('#msg_validation').html('');
+        $('#dataForm')[0].reset();
+        $('#dataForm').removeClass('error');
     }
 </script>
 
