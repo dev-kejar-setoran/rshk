@@ -6,7 +6,7 @@ class Rumah_Sakit extends MY_Controller {
     {
         parent::__construct();
         $this->load->library('form_validation');
-        $this->load->model('m_rumah_sakit');
+        $this->load->model('M_rumah_sakit');
         //$this->auth->validation();
     }
     
@@ -24,7 +24,7 @@ class Rumah_Sakit extends MY_Controller {
         $filter['nama_rumah_sakit'] = empty($nama_rumah_sakit) ? '%' :  $nama_rumah_sakit;
         $params = $filter['nama_rumah_sakit'];
         // get data dari model dengan param
-        $res = $this->m_rumah_sakit->get_all($params);
+        $res = $this->M_rumah_sakit->get_all($params);
         // periksa jika data kosong
         if (empty($res)) {
             echo json_encode(""); 
@@ -59,7 +59,7 @@ class Rumah_Sakit extends MY_Controller {
             'created_at' => date('Y-m-d H:i:s'),
         );
          // run fungsi update
-         if($this->m_rumah_sakit->get_add($data)){ //jika update berhasil
+         if($this->M_rumah_sakit->get_add($data)){ //jika update berhasil
             $response['status']="sukses";
             $response['pesan']="Data berhasil disimpan";
         }else{ //jika  gagal
@@ -74,7 +74,7 @@ class Rumah_Sakit extends MY_Controller {
         $data_id = $this->input->post('data_id');
         // parameter
         //$params = array($noagenda, $noba, $no_tiket);
-        $data = $this->m_rumah_sakit->get_detail_data($data_id);
+        $data = $this->M_rumah_sakit->get_detail_data($data_id);
         // get data
         if (empty($data)) {
             $output = array(
@@ -110,7 +110,7 @@ class Rumah_Sakit extends MY_Controller {
         $where = array(
             'id_rumah_sakit' => $this->input->post('id_rumah_sakit'),
         );
-        if ($this->m_rumah_sakit->get_edit($params, $where)) {
+        if ($this->M_rumah_sakit->get_edit($params, $where)) {
             $response['status']="sukses";
             $response['pesan']="Data berhasil disimpan";
         }else{ //jika  gagal
@@ -124,7 +124,7 @@ class Rumah_Sakit extends MY_Controller {
         $where = array(
             'id_rumah_sakit' => $this->input->post('id_hapus')
         );
-        if ($this->m_rumah_sakit->get_delete($where)) {
+        if ($this->M_rumah_sakit->get_delete($where)) {
             $response['status']="sukses";
             $response['pesan']="Data berhasil dihapus";
         }else{ //jika  gagal

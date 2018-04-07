@@ -74,7 +74,7 @@
         <a href="<?php echo base_url();?>master/data_pasien" class=" item">
             <i class=" icon"></i> Data Pasien
         </a>
-        <a href="<?php echo base_url();?>master/kontrak" class=" item">
+        <a href="<?php echo base_url();?>master/kontak" class=" item">
             <i class=" icon"></i> Kontak
         </a>
         <a href="<?php echo base_url();?>master/tautan" class=" item">

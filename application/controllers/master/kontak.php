@@ -6,7 +6,7 @@ class Kontak extends MY_Controller {
     {
         parent::__construct();
         $this->load->library('form_validation');
-        $this->load->model('m_kontak');
+        $this->load->model('M_kontak');
         //$this->auth->validation();
     }
     
@@ -28,7 +28,7 @@ class Kontak extends MY_Controller {
         $filter['email'] = empty($email) ? '%' :  $nomor_kartu;
         $params = array($filter['nama_kontak'], $filter['alamat'], $filter['email']);
         // get data dari model dengan param
-        $res = $this->m_kontak->get_all($params);
+        $res = $this->M_kontak->get_all($params);
         // periksa jika data kosong
         if (empty($res)) {
             echo json_encode(""); 
@@ -69,7 +69,7 @@ class Kontak extends MY_Controller {
             'created_at' => date('Y-m-d H:i:s'),
         );
          // run fungsi update
-         if($this->m_kontak->get_add($data)){ //jika update berhasil
+         if($this->M_kontak->get_add($data)){ //jika update berhasil
             $response['status']="sukses";
             $response['pesan']="Data berhasil disimpan";
         }else{ //jika  gagal
@@ -84,7 +84,7 @@ class Kontak extends MY_Controller {
         $data_id = $this->input->post('data_id');
         // parameter
         //$params = array($noagenda, $noba, $no_tiket);
-        $data = $this->m_kontak->get_detail_data($data_id);
+        $data = $this->M_kontak->get_detail_data($data_id);
         // get data
         if (empty($data)) {
             $output = array(
@@ -123,7 +123,7 @@ class Kontak extends MY_Controller {
         $where = array(
             'id_kontak' => $this->input->post('id_kontak'),
         );
-        if ($this->m_kontak->get_edit($params, $where)) {
+        if ($this->M_kontak->get_edit($params, $where)) {
             $response['status']="sukses";
             $response['pesan']="Data berhasil disimpan";
         }else{ //jika  gagal
@@ -137,7 +137,7 @@ class Kontak extends MY_Controller {
         $where = array(
             'id_kontak' => $this->input->post('id_hapus')
         );
-        if ($this->m_kontak->get_delete($where)) {
+        if ($this->M_kontak->get_delete($where)) {
             $response['status']="sukses";
             $response['pesan']="Data berhasil dihapus";
         }else{ //jika  gagal
