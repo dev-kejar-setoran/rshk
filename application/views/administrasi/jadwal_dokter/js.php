@@ -25,11 +25,9 @@
 </script>
 <!-- Function detail :  -->
 <script type="text/javascript">
-    function test(){
-        alert("The paragraph was clicked.");
-    }
     // load data table
     function load(nama_dokter='', hari_praktek='') {
+        closeModal();
         var t_table = $('#tb_data').DataTable();
         t_table.destroy();
         t_table = $('#tb_data').DataTable( {
@@ -48,13 +46,14 @@
     } 
 
     function form_add(){
-        $('#dataForm')[0].reset();
         $("#form").val('add_process'); // set untuk form add
+        clearContent();
         openModal();
     }
-
+    // t
     function form_edit(data_id=""){
         $("#form").val('edit_process'); // set untuk form edit
+        $('#dataForm').removeClass('error');
         //alert(data_id);
         $.ajax({// menggunakan ajax form
             url: "<?php echo base_url('administrasi/jadwal_dokter/get_detail_data'); ?>",
@@ -92,16 +91,22 @@
             },
             success: function(msg) {
                 var msg=$.parseJSON(msg);
-                if (msg.status =='sukses') {
-                    title_msg = 'Tersimpan!',
-                    type_msg = 'success'
+                $('#msg_validation').html('');
+                // jika form tidak valid
+                if(msg.type=='success'){
+                    swal(msg.title, msg.pesan, msg.type);
+                    load();
                 }
-                else if (msg.status =='gagal') {
-                    title_msg = 'Gagal Tersimpan!',
-                    type_msg = 'warning'
+                else if(msg.type=='invalid'){
+                    var str ="";
+                    $('#dataForm').addClass('error');
+                    $.each( msg.data, function( i, val ) {
+                        str = "<li>" + val + "</li>";
+                        $("#msg_validation").append(str);
+                    });
+                }else{
+                    swal(msg.title, msg.pesan, msg.type);
                 }
-                swal(title_msg, msg.pesan, type_msg);
-                load();
             },
         }); 
     }
@@ -141,6 +146,13 @@
                 },
             });
         }).catch(swal.noop)
+    }
+
+    // untuk membersihkan form tambah / edit
+    function clearContent(){
+        $('#msg_validation').html('');
+        $('#dataForm')[0].reset();
+        $('#dataForm').removeClass('error');
     }
 
 </script>

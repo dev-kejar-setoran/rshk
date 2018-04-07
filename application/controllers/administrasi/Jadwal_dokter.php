@@ -56,6 +56,24 @@ class jadwal_dokter extends MY_Controller {
     }
 
      public function add_process() {
+        $this->form_validation->set_error_delimiters('', '');
+        $this->form_validation->set_rules('nama_dokter','Nama Dokter', 'required');
+        $this->form_validation->set_rules('hari_praktek','Hari Praktek', 'required');
+        $this->form_validation->set_rules('kuota','Maksimal Kuota', 'required');
+        $this->form_validation->set_rules('jam_mulai','Jam Mulai', 'required');
+        $this->form_validation->set_rules('jam_akhir','Jam Akhir', 'required');
+        // run validation
+        if ($this->form_validation->run() == FALSE) {
+            //$err_msg = validation_errors();
+            $err_msg = $this->form_validation->error_array();
+            $response['type']="invalid";
+            $response['title']="Gagal Tersimpan!";
+            $response['pesan']="Data gagal disimpan";
+            $response['data'] = $err_msg;
+            echo json_encode($response); 
+            return;
+        }
+
         $data = array(
             'id_dokter' => $this->input->post('nama_dokter'),
             'hari_praktek' => $this->input->post('hari_praktek'),
@@ -68,10 +86,12 @@ class jadwal_dokter extends MY_Controller {
 
          // run fungsi update
         if($this->M_jadwal_dokter->get_add($data)){ //jika update berhasil
-            $response['status']="sukses";
+            $response['type']="success";
+            $response['title']="Tersimpan!";
             $response['pesan']="Data berhasil disimpan";
         }else{ //jika  gagal
-            $response['status']="gagal";
+            $response['type']="warning";
+            $response['title']="Gagal Tersimpan!";
             $response['pesan']="Data gagal disimpan";
         }
         echo json_encode($response);
@@ -98,12 +118,23 @@ class jadwal_dokter extends MY_Controller {
     }
 
      public function edit_process() {
-        $data['id_jadwal_dokter'] = $this->input->post('id_jadwal_dokter');
-        // validate
-        if (empty($data['id_jadwal_dokter'])) {
-            $response['status']="gagal";
-            $response['pesan']="Data tidak ditemukan!";
-            echo json_encode($response);
+        $this->form_validation->set_error_delimiters('', '');
+        $this->form_validation->set_rules('id_jadwal_dokter','ID Jadwal Dokter', 'required');
+        $this->form_validation->set_rules('nama_dokter','ID Dokter', 'required');
+        $this->form_validation->set_rules('hari_praktek','Hari Praktek', 'required');
+        $this->form_validation->set_rules('kuota','Maksimal Kuota', 'required');
+        $this->form_validation->set_rules('jam_mulai','Jam Mulai', 'required');
+        $this->form_validation->set_rules('jam_akhir','Jam Akhir', 'required');
+        // run validation
+        if ($this->form_validation->run() == FALSE) {
+            //$err_msg = validation_errors();
+            $err_msg = $this->form_validation->error_array();
+            $response['type']="invalid";
+            $response['title']="Gagal Tersimpan!";
+            $response['pesan']="Data gagal disimpan";
+            $response['data'] = $err_msg;
+            echo json_encode($response); 
+            return;
         }
         // insert db
         $params = array(
@@ -119,10 +150,12 @@ class jadwal_dokter extends MY_Controller {
             'id_jadwal_dokter' => $this->input->post('id_jadwal_dokter'),
         );
         if ($this->M_jadwal_dokter->get_edit($params, $where)) {
-            $response['status']="sukses";
+            $response['type']="success";
+            $response['title']="Tersimpan!";
             $response['pesan']="Data berhasil disimpan";
         }else{ //jika  gagal
-            $response['status']="gagal";
+            $response['type']="warning";
+            $response['title']="Gagal Tersimpan!";
             $response['pesan']="Data gagal disimpan";
         }
         echo json_encode($response);

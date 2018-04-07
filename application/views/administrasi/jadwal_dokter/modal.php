@@ -13,17 +13,15 @@
             <label class="six wide column">Nama Dokter</label>
             <div class="ten wide column" style="padding: 0">
               <div class="ui fluid selection dropdown">
-                <input type="hidden" name="nama_dokter" id="nama_dokter">
+                <input type="hidden" name="nama_dokter" id="nama_dokter" value="">
                 <i class="dropdown icon"></i>
                 <div class="default text">Pilih Dokter...</div>
                 <div class="menu">
                   <?php foreach($dokter as $rows){
-
-                  echo "<div class='item' data-value='$rows->id_dokter'>
+                    echo "<div class='item' data-value='$rows->id_dokter'>
                       <img class='ui mini avatar image' src='../assets/img/upload/$rows->foto'>
                       $rows->nama_dokter
                     </div>;";
-                    
                   } ?>
                 </div>
               </div>
@@ -83,13 +81,17 @@
           </div>
         </div>
       </div>
+      <!-- error message -->
+      <div class="ui error message">
+        <ul class="list" id="msg_validation"></ul>
+      </div>
     </form>
   </div>
   <div class="actions">
     <div class="ui black deny button" id="btn_batal">
       Batal
     </div>
-    <div class="ui positive right labeled icon button" id="btn_simpan">
+    <div class="ui primary right labeled icon button" id="btn_simpan">
       Simpan
       <i class="save icon"></i>
     </div>

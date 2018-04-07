@@ -15,6 +15,8 @@ class m_jadwal_dokter extends CI_Model {
         $this->db->join($this->_table2 . ' b', 'b.id_dokter = a.id_dokter', 'left');    
         $this->db->like('b.nama_dokter',$param1);
         $this->db->or_where('a.hari_praktek',$param2);
+        $this->db->order_by('jam_mulai', 'ASC');
+
     
         $query = $this->db->get($this->_table1 . ' a');
 
