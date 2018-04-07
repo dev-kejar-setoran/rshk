@@ -16,12 +16,7 @@ class jabatan_dokter extends MY_Controller {
     public function index()
     {
         $data['spesialisasi'] = $this->m_jabatan_dokter->get_spesialsisasi();
-         //echo json_encode($data['spesialisasi']);
-        // $this->load->view('master/jabatan_dokter/index',$data);
-         $data['title_page']='Jabatan Dokter';
-        // $data['tabel_data'] = $this->m_jabatan_dokter->get_all();
-           //echo json_encode($data['tabel_data']);
-        //print_r($data); exit();
+        $data['title_page']='Jabatan Dokter';
         $this->load->view('master/jabatan_dokter/index',$data);
         
     }
@@ -62,6 +57,21 @@ class jabatan_dokter extends MY_Controller {
 
     // proses tambah data
     public function add_process() {
+        // parameter validation
+        $this->form_validation->set_error_delimiters('', '');
+        $this->form_validation->set_rules('nm_jabatan','Nama Jabatan', 'required');
+        $this->form_validation->set_rules('deskripsi','Deskripsi', 'required');
+        // run validation
+        if ($this->form_validation->run() == FALSE) {
+            //$err_msg = validation_errors();
+            $err_msg = $this->form_validation->error_array();
+            $response['type']="invalid";
+            $response['title']="Gagal Tersimpan!";
+            $response['pesan']="Data gagal disimpan";
+            $response['data'] = $err_msg;
+            echo json_encode($response); 
+            return;
+        } 
         $data = array(
             'nama_jabatan_dokter' => $this->input->post('nm_jabatan'),
             'deskripsi' => $this->input->post('deskripsi'),
@@ -70,10 +80,12 @@ class jabatan_dokter extends MY_Controller {
         );
         // run fungsi update
         if($this->m_jabatan_dokter->get_add($data)){ //jika update berhasil
-            $response['status']="sukses";
+            $response['type']="success";
+            $response['title']="Tersimpan!";
             $response['pesan']="Data berhasil disimpan";
         }else{ //jika  gagal
-            $response['status']="gagal";
+            $response['type']="warning";
+            $response['title']="Gagal Tersimpan!";
             $response['pesan']="Data gagal disimpan";
         }
         echo json_encode($response);
@@ -102,6 +114,21 @@ class jabatan_dokter extends MY_Controller {
 
     // proses edit setelah di entry
     public function edit_process() {
+        // parameter validation
+        $this->form_validation->set_error_delimiters('', '');
+        $this->form_validation->set_rules('nm_jabatan','Nama Jabatan', 'required');
+        $this->form_validation->set_rules('deskripsi','Deskripsi', 'required');
+        // run validation
+        if ($this->form_validation->run() == FALSE) {
+            //$err_msg = validation_errors();
+            $err_msg = $this->form_validation->error_array();
+            $response['type']="invalid";
+            $response['title']="Gagal Tersimpan!";
+            $response['pesan']="Data gagal disimpan";
+            $response['data'] = $err_msg;
+            echo json_encode($response); 
+            return;
+        } 
         $data['id_jabatan_dokter'] = $this->input->post('id_jabatan_dokter');
         // validate
         if (empty($data['id_jabatan_dokter'])) {
@@ -120,10 +147,12 @@ class jabatan_dokter extends MY_Controller {
             'id_jabatan_dokter' => $this->input->post('id_jabatan_dokter'),
         );
         if ($this->m_jabatan_dokter->get_edit($params, $where)) {
-            $response['status']="sukses";
+            $response['type']="success";
+            $response['title']="Tersimpan!";
             $response['pesan']="Data berhasil disimpan";
         }else{ //jika  gagal
-            $response['status']="gagal";
+            $response['type']="warning";
+            $response['title']="Gagal Tersimpan!";
             $response['pesan']="Data gagal disimpan";
         }
         echo json_encode($response);
