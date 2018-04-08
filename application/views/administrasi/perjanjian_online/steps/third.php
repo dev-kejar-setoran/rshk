@@ -85,7 +85,7 @@
 			<div class="ui top attached segment">
 				<div class="ui grid">
 					<div class="six wide column">
-						<img class="ui image" src="../../../img/avatar04.png" style="height: 100%; object-fit: cover">
+						<!-- <img class="ui image" src="../../../img/avatar04.png" style="height: 100%; object-fit: cover"> -->
 					</div>
 					<div class="ten wide column">
 						<h3>dr. AMIN TJUBANDI

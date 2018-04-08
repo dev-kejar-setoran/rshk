@@ -1,49 +1,13 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <meta charset="utf-8">
-  <title>PJNHK | Backend</title>
-  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-
-  <link rel="shortcut icon" type="image/x-icon" href="../../../favicon.ico">
-
-  <link rel="stylesheet" type="text/css" href="../../../semantic/semantic.min.css">
-  <link rel="stylesheet" href="../../../plugins/sweetalert/sweetalert2.min.css">
-  <link rel="stylesheet" href="../../../css/app.css">
-
-  <!-- <link rel="stylesheet" href="../../../plugins/tinymce/summernote.css"> -->
-  <style type="text/css">
-  .ui.file.input input[type="file"] {
-    display: none;
-  }
-  .ui.button>.ui.floated.label {
-    position: absolute;
-    top: 15px;
-    right: -10px;
-  }
-  .table tr th{
-    white-space: nowrap;
-  }
-  .mce-tinymce {
-    border: 1px solid rgba(34,36,38,.15)!important;
-    box-shadow: none!important; 
-    border-radius: 4px;
-  }
-</style>
-<!-- @yield('css') -->
-<!-- @yield('styles') -->
-</head>
-
+  <?php $this->load->view('templete/head.php'); ?>
 <body id="app">
-
   <header>
-    <?php include('../../../partials/header.php'); ?>
+    <?php $this->load->view('templete/header.php'); ?>
   </header>
-
   <div class="ui sidebar inverted visible vertical menu">
-    <?php include('../../../partials/sidebar.php'); ?>
+    <?php $this->load->view('templete/sidebar.php'); ?>
   </div>
-
   <div id="cover">
     <div class="ui active inverted dimmer">
       <div class="ui text loader">Loading</div>
@@ -73,30 +37,36 @@
       <div class="ui grid">
         <div class="sixteen wide column main-content">
           <div class="ui attached top segment">
-
-            <form class="ui data form" id="dataForm" action="#" method="POST"">
+            
+            <form class="ui data form" id="dataForm" action="#" method="POST" enctype="multipart/dataForm">
+              <input type="hidden" id="id_pelayanan" name="id_pelayanan" value="<?php echo $detail['id_pelayanan'] ?>">
+              <input type="hidden" id="form" name="form" value="<?php echo $form ?>">
               <div class="ui grid">
                 <div class="ten wide column">
                   <div class="field">
-                    <input type="text" name="judul" placeholder="Judul Pelayanan">
+                    <input type="text" id="judul" name="judul" value="<?php echo $detail['judul'] ?>" placeholder="Judul Pelayanan">
                   </div>
                   <div class="field">
-                    <textarea name="isi" id="" class="editor" style="min-height: 24rem"></textarea>
+                    <textarea name="isi" id="isi" class="editor" style="min-height: 24rem"><?php echo $detail['isi']?></textarea>
+                  </div>
+                  <!-- show message error -->
+                  <div class="ui error message">
+                    <ul class="list" id="msg_validation"></ul>
                   </div>
                 </div>
                 <div class="six wide column">
                   <div class="field image-container">
-                    <span class="image-preview" style="height: 180px">Pilih Gambar</span>
+                    <span class="image-preview" style="height: 180px"><img src="" id="image-preview" style=" height: 170px" /></span>
                     <div class="ui fluid file input action">
-                      <input type="text" readonly="">
-                      <input type="file" class="ten wide column" id="attachment" name="attachment[]" autocomplete="off" multiple="">
+                      <input type="text" id="nama_foto" readonly="" value="<?php echo $detail['icon'] ?>">
+                      <input type="file" class="ten wide column" id="input_gambar" name="input_gambar" autocomplete="off" multiple="">
                       <div class="ui blue button file">
                         Cari...
                       </div>
                     </div>
                   </div>
                   <div class="field">
-                    <textarea name="short_desc" id="" cols="30" rows="10" class="short-desc" placeholder="Deskripsi Singkat"></textarea>
+                    <textarea name="deskripsi" id="deskripsi" cols="30" rows="10" class="short-desc" placeholder="Deskripsi Singkat"><?php echo $detail['deskripsi']?></textarea>
                   </div>
                 </div>
               </div>
@@ -112,7 +82,7 @@
                 </div>
               </div>
               <div class="right aligned column">
-                <div class="ui right labeled blue icon button">
+                <div class="ui right labeled blue icon button" id="btn_simpan">
                   <i class="save icon"></i>
                   Simpan
                 </div>
@@ -124,44 +94,14 @@
       </div>
     </div>
 
-    <?php include('../../../partials/footer.php'); ?>
+    <?php $this->load->view('templete/footer.php'); ?>
 
     <div v-cloak>
       <!-- @yield('additional') -->
     </div>
   </div>
-
-  <script>
-  </script>
-  <!-- <script src="../../../js/es6-promise.auto.min.js"></script> -->
-
-  <script src="../../../plugins/jQuery/jquery-2.2.3.min.js"></script>
-  <script src="../../../plugins/jQuery/jquery.form.min.js"></script>
-  <script src="../../../plugins/jQueryUI/jquery-ui.min.js"></script>
-  <script src="../../../plugins/slimScroll/jquery.slimscroll.min.js"></script>
-  <script src="../../../plugins/fastclick/fastclick.js"></script>
-  <script src="../../../plugins/sweetalert/sweetalert2.min.js"></script>
-  <script src="../../../semantic/semantic.min.js"></script>
-
-  <script src="../../../js/mfs-script.js"></script>
-  <script src="../../../plugins/tinymce/tinymce.min.js"></script>
-  <script src="../../../plugins/tinymce/jquery.tinymce.min.js"></script>
-  <!-- <script src="https://cloud.tinymce.com/stable/tinymce.min.js"></script> -->
-
-  <script>
-    function openPage(){
-      // var url = 'http://' . $_SERVER['HTTP_HOST'] . '/pjnhk-new-mockup/pages/website/pelayanan/detail.php';
-      // var url = window.location.href;
-      var url = window.location.origin + '/pjnhk-new-mockup/pages/website/pelayanan/detail.php'
-      window.location.assign(url)
-
-    }
-    $(document).ready(function() {
-      tinymce.init({ selector:'.editor', menubar: false});
-    });
-  </script>
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.5/Chart.min.js">></script>
-  <script src="../../../js/dummy.js"></script>
+  <?php $this->load->view('templete/headerjs.php'); ?>
+  
+  <?php include('js.php') ?>
 </body>
 </html>

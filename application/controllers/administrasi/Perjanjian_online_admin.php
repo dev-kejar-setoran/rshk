@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Riwayat_perjanjian extends MY_Controller {
+class Perjanjian_online_admin extends MY_Controller {
 
     public function __construct()
     {
@@ -14,8 +14,8 @@ class Riwayat_perjanjian extends MY_Controller {
     // default
     public function index()
     {
-        $data['title_page']='Data Pasien';
-        $this->load->view('administrasi/perjanjian_online/index', $data);
+        $data['title_page']='Perjanjian Online Admin';
+        $this->load->view('administrasi/perjanjian_online/list', $data);
     }
 
     // untuk load data table
