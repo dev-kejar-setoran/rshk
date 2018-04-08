@@ -11,6 +11,17 @@ class m_data_pasien extends CI_Model {
     // variabel untuk nama tabel
     // public $db_tabel = 'guru';
 
+    // get list kewarganegaraan 
+    public function get_kewarganegaraan() {
+        $query = $this->db->get('m_kewarganegaraan');
+        if ($query->num_rows() > 0) {
+                $result = $query->result_array();
+                $query->free_result();
+            } else {
+                $result = array();
+            }
+        return $result;
+    }
     // fungsi tampil semua
     public function get_all($params) {
         $sql = "SELECT id_pasien, nama_pasien, nomor_kartu, tempat_lahir,tgl_lahir, created_at, created_by 
@@ -50,6 +61,7 @@ class m_data_pasien extends CI_Model {
     public function get_edit($params, $where) {
         return $this->db->update('m_data_pasien', $params, $where);
     }
+
     
 
     // delete

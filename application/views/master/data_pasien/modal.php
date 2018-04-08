@@ -40,7 +40,7 @@
             <label class="six wide column">Tanggal Lahir Pasien</label>
             <div class="date eight wide column" style="padding: 0">
               <div class="ui icon input" style="width: 100%; height: 100%">
-                <input type="text" id="tgl_lahir" name="tgl_lahir" placeholder="Tanggal lahir pasien sesuai akta">
+                <input type="text" id="tgl_lahir" name="tgl_lahir" placeholder="ex : 1990-01-01">
                 <i class="calendar alternate icon"></i>
               </div>
             </div>
@@ -49,8 +49,11 @@
             <label class="six wide column">Kewarganegaraan</label>
             <select id="id_kewarganegaraan" name="id_kewarganegaraan" class="ui dropdown selection">
               <option value="">Pilih</option>
-              <option value="1">WNI</option>
-              <option value="2">WNA</option>
+
+              <?php foreach ($rs_data as $row => $kewarganegaraan): ?>
+              <option value="<?php echo $kewarganegaraan['id_kewarganegaraan']; ?>"><?php echo $kewarganegaraan['nama_kewarganegaraan']; ?></option>
+              <?php endforeach ?>
+
             </select>
           </div>
           <div class="ui inline grid fields">

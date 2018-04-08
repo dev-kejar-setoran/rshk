@@ -7,6 +7,9 @@
   <script src="<?php echo base_url();?>assets/semantic/semantic.min.js"></script>
   <script src="<?php echo base_url();?>assets/js/mfs-script.js"></script>
   <script src="<?php echo base_url();?>assets/plugins/semanticui-calendar/calendar.min.js"></script>
+  <script src="<?php echo base_url();?>assets/plugins/datepicker/bootstrap-datepicker.js"></script>
+  <script src="<?php echo base_url();?>assets/plugins/datatables/jquery.dataTables.min.js"></script>
+  <script src="<?php echo base_url();?>assets/js/dummy.js"></script>
   <script>
     function openModal(){
       $('.ui.modal.formUtama')
@@ -27,5 +30,3 @@
         .modal("refresh");
     }
   </script>
-  <script src="<?php echo base_url();?>assets/plugins/datatables/jquery.dataTables.min.js"></script>
-  <script src="<?php echo base_url();?>assets/js/dummy.js"></script>

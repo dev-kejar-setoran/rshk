@@ -15,6 +15,7 @@ class data_pasien extends MY_Controller {
     public function index()
     {
         $data['title_page']='Data Pasien';
+        $data['rs_data'] = $this->m_data_pasien->get_kewarganegaraan();
         $this->load->view('master/data_pasien/index', $data);
     }
 
@@ -63,7 +64,7 @@ class data_pasien extends MY_Controller {
         $this->form_validation->set_rules('tempat_lahir','Tempat Lahir','required');
         $this->form_validation->set_rules('tgl_lahir','Tanggal Lahir','required');
         $this->form_validation->set_rules('id_kewarganegaraan','kewarganegaraan','required');
-        $this->form_validation->set_rules('asuransi','asuransi','required');
+        $this->form_validation->set_rules('asuransi','asuransi','');
         // run validation
         if ($this->form_validation->run() == FALSE) {
             //$err_msg = validation_errors();
@@ -133,7 +134,7 @@ class data_pasien extends MY_Controller {
         $this->form_validation->set_rules('tempat_lahir','Tempat Lahir','required');
         $this->form_validation->set_rules('tgl_lahir','Tanggal Lahir','required');
         $this->form_validation->set_rules('id_kewarganegaraan','kewarganegaraan','required');
-        $this->form_validation->set_rules('asuransi','asuransi','required');
+        $this->form_validation->set_rules('asuransi','asuransi','');
         // run validation
         if ($this->form_validation->run() == FALSE) {
             //$err_msg = validation_errors();
