@@ -49,7 +49,8 @@ function get_validation()
         'status' => true,
         'email'=>$value['email'],
         'nama_lengkap'=>$value['nama_lengkap'],
-        'id_user'=>$value['id_user']
+        'id_user'=>$value['id_user'],
+        'role'=>$value['role']
       );
     }
     $this->session->set_userdata( $data );
