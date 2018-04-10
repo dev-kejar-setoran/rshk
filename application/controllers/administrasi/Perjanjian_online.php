@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Perjanjian_online_admin extends MY_Controller {
+class Perjanjian_online extends MY_Controller {
 
     public function __construct()
     {

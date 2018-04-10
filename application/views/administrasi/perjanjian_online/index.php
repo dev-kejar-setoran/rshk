@@ -1,53 +1,13 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <meta charset="utf-8">
-  <title>PJNHK | Backend</title>
-  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-
-  <link rel="shortcut icon" type="image/x-icon" href="../../../favicon.ico">
-
-  <link rel="stylesheet" type="text/css" href="../../../semantic/semantic.min.css">
-  <link rel="stylesheet" href="../../../plugins/sweetalert/sweetalert2.min.css">
-  <link rel="stylesheet" href="../../../plugins/semanticui-calendar/calendar.min.css">
-
-  <link rel="stylesheet" href="../../../css/app.css">
-  <style type="text/css">
-  .ui.file.input input[type="file"] {
-    display: none;
-  }
-  .ui.button>.ui.floated.label {
-    position: absolute;
-    top: 15px;
-    right: -10px;
-  }
-  .table tr th{
-    white-space: nowrap;
-  }
-  label.bold {
-    font-weight: bold
-  }
-  .center-label {
-    display: flex!important;
-    align-items: center;
-  }
-  .center-label label {
-    flex: auto
-  }
-</style>
-<!-- @yield('css') -->
-<!-- @yield('styles') -->
-</head>
-
+  <?php $this->load->view('templete/head.php'); ?>
 <body id="app">
-
   <header>
-    <?php include('../../../partials/header.php'); ?>
+    <?php $this->load->view('templete/header.php'); ?>
   </header>
-
-  <!-- <div class="ui sidebar inverted visible vertical menu">
-    <?php include('../../../partials/sidebar.php'); ?>
-  </div> -->
+  <div class="ui sidebar inverted visible vertical menu">
+    <?php $this->load->view('templete/sidebar.php'); ?>
+  </div>
 
   <div id="cover">
     <div class="ui active inverted dimmer">
@@ -116,106 +76,18 @@
       </form>
     </div>
 
-    <?php include('../../../partials/footer.php'); ?>
-
+    <?php $this->load->view('templete/footer.php'); ?>
     <div v-cloak>
       <!-- @yield('additional') -->
     </div>
   </div>
 
+  <?php $this->load->view('templete/headerjs.php'); ?>
+
   <?php include('modal-confirmation.php') ?>
   <?php include('modal-history.php') ?>
+  <?php include('modal.php') ?>
+  <?php include('js.php') ?>
 
-  <script>
-  </script>
-  <!-- <script src="../../../js/es6-promise.auto.min.js"></script> -->
-
-  <script src="../../../plugins/jQuery/jquery-2.2.3.min.js"></script>
-  <script src="../../../plugins/jQuery/jquery.form.min.js"></script>
-  <script src="../../../plugins/jQueryUI/jquery-ui.min.js"></script>
-  <script src="../../../plugins/slimScroll/jquery.slimscroll.min.js"></script>
-  <script src="../../../plugins/fastclick/fastclick.js"></script>
-  <script src="../../../plugins/sweetalert/sweetalert2.min.js"></script>
-  <script src="../../../plugins/semanticui-calendar/calendar.min.js"></script>
-  <script src="../../../semantic/semantic.min.js"></script>
-
-  <script src="../../../js/mfs-script.js"></script>
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.5/Chart.min.js">></script>
-  <script src="../../../js/dummy.js"></script>
-
-  <script>
-    openConfirmationModal = function(){
-      $('.ui.confirmation.modal').modal({
-        observeChanges: true,
-        closable: false,
-        detachable: false,
-        autofocus: false
-      })
-      .modal('show')
-      .modal("refresh");
-    }
-
-    openHistoryModal = function(){
-      $('.ui.history.modal').modal({
-        observeChanges: true,
-        closable: false,
-        detachable: false,
-        autofocus: false
-      })
-      .modal('show')
-      .modal("refresh");
-    }
-    
-    $(document).ready(function () {
-      $('.pusher').removeClass('shown')
-      $('.toggler').hide()
-
-      $('.menu .item').tab()
-      $('.date').calendar({
-        type: 'date',
-        formatter: {
-          date: function (date, settings) {
-            if (!date) return '';
-            var day = date.getDate() + '';
-            if (day.length < 2) {
-              day = '0' + day;
-            }
-            var month = (date.getMonth() + 1) + '';
-            if (month.length < 2) {
-              month = '0' + month;
-            }
-            var year = date.getFullYear();
-            return day + '/' + month + '/' + year;
-          },
-        }
-      })
-      $('.time').calendar({
-        type: 'time',
-        ampm: false
-      })
-
-      $('.first.button').on('click', function() {
-        $.tab('change tab', 'first');
-        $('.step[data-tab="first"]').removeClass('completed').addClass('active')
-        $('.step[data-tab="second"]').addClass('disabled').removeClass('active')
-      });
-      $('.second.button').on('click', function() {
-        $.tab('change tab', 'second');
-        if($('.step[data-tab="first"]').hasClass('active')){
-          $('.step[data-tab="first"]').addClass('completed').removeClass('active')
-          $('.step[data-tab="second"]').addClass('active').removeClass('disabled')
-        }else{
-          $('.step[data-tab="third"]').addClass('disabled').removeClass('active')
-          $('.step[data-tab="second"]').addClass('active').removeClass('completed disabled')
-        }
-      });
-      $('.third.button').on('click', function() {
-        $.tab('change tab', 'third');
-        $('.step[data-tab="second"]').addClass('completed').removeClass('active')
-        $('.step[data-tab="third"]').addClass('active').removeClass('disabled')
-      });
-    });
-  </script>
-</body>
+  </body>
 </html>
