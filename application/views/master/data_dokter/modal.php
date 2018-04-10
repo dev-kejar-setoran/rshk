@@ -7,13 +7,14 @@
     <form class="ui data form" id="dataForm" method="post"  enctype="multipart/dataForm">
       <!-- <input type="hidden" name="action" value="create"> -->
       <input type="hidden" id="id_dokter" name="id_dokter" value="">
-      <input type="hidden" id="form" value="">
+      <input type="hidden" id="form">
       <div class="ui grid">
         <div class="five wide column">
           <div class="field image-container">
             <span class="image-preview" style="height: 180px"><img src="" id="image-preview" style="width: 130px; height: 170px" /></span>
             <div class="ui fluid file input action">
-              <input type="text" id="nama_foto" readonly="">
+              <input type="text" id="" readonly="">
+              <input type="hidden" id="nama_foto" name="nama_foto">
               <input type="file" class="ten wide column" id="input_gambar" name="input_gambar" autocomplete="off" multiple="">
               <div class="ui blue button file">
                 Cari...
@@ -48,13 +49,17 @@
           </div>
         </div>
       </div>
+      <!-- error message -->
+      <div class="ui error message">
+        <ul class="list" id="msg_validation"></ul>
+      </div>
     </form>
   </div>
   <div class="actions">
     <div class="ui black deny button" id="btn_batal">
       Batal
     </div>
-    <div class="ui positive right labeled icon button" id="btn_simpan">
+    <div class="ui primary right labeled icon button" id="btn_simpan">
       Simpan
       <i class="save icon"></i>
     </div>
