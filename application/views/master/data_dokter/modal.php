@@ -14,7 +14,7 @@
             <span class="image-preview" style="height: 180px"><img src="" id="image-preview" style="width: 130px; height: 170px" /></span>
             <div class="ui fluid file input action">
               <input type="text" id="" readonly="">
-              <input type="hidden" id="nama_foto" name="nama_foto">
+              <input type="hidden" id="gambar_edit" name="gambar_edit">
               <input type="file" class="ten wide column" id="input_gambar" name="input_gambar" autocomplete="off" multiple="">
               <div class="ui blue button file">
                 Cari...

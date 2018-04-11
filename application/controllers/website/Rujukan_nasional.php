@@ -15,6 +15,12 @@ class rujukan_nasional extends MY_Controller {
     {
         $data['title_page']='Rujukan Nasional';
 		$this->load->view('website/rujukan-nasional/list', $data);
+	} 
+
+	function detail()
+    {
+        $data['title_page']='Rujukan Nasional';
+		$this->load->view('website/rujukan-nasional/detail', $data);
 	}
 
 } 

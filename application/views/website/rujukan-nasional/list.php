@@ -121,14 +121,14 @@
       <!-- @yield('additional') -->
     </div>
   </div>
-  <?php include('modal.php') ?>
   <?php $this->load->view('templete/headerjs.php'); ?>
-  <?php include('js.php') ?>
+  <!-- <?php include('js.php') ?> -->
 
 
   <script>
     function openPage(){
-      var url = window.location.origin + '/pjnhk-new-mockup/pages/website/rujukan-nasional/detail.php'
+      // var url = window.location.origin + '/pjnhk-new-mockup/pages/website/rujukan-nasional/detail.php'
+      var url = '<?php echo base_url();?>website/rujukan_nasional/detail'
       window.location.assign(url)
 
     }
