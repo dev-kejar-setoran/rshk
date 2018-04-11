@@ -34,15 +34,15 @@
                 <div class="default text">Pilih dokter...</div>
                 <div class="menu">
                   <div class="item active" data-value="dr. AMIN TJUBANDI , Sp.BTKV">
-                   <!--  <img class="ui mini avatar image" src="../../../img/avatar04.png"> -->
+                    <img class="ui mini avatar image" src="../../../img/avatar04.png">
                     dr. AMIN TJUBANDI , Sp.BTKV
                   </div>
                   <div class="item" data-value="dr ADE MEIDIAN AMBARI , SpJp">
-                   <!--  <img class="ui mini avatar image" src="../../../img/avatar04.png"> -->
+                    <img class="ui mini avatar image" src="../../../img/avatar04.png">
                     dr ADE MEIDIAN AMBARI , SpJp
                   </div>
                   <div class="item" data-value="DR.dr. AMILIANA MARDIANI , Sp.JP(K)">
-                    <!-- <img class="ui mini avatar image" src="../../../img/avatar04.png"> -->
+                    <img class="ui mini avatar image" src="../../../img/avatar04.png">
                     DR.dr. AMILIANA MARDIANI , Sp.JP(K)
                   </div>
                 </div>

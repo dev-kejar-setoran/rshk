@@ -66,10 +66,10 @@ class data_dokter extends MY_Controller {
 
         // run validation
          if (!empty($_FILES['input_gambar']['name'])){
-                $new_name = $_FILES['input_gambar']['name'];
+                $new_name = $this->input->post('nama_dokter').'_'.$_FILES['input_gambar']['name'];
                 $config['file_name'] = $new_name;
                 $config['upload_path'] = 'assets/img/upload/';
-                $config['allowed_types'] = 'gif|jpg|jpeg|png';
+                $config['allowed_types'] = 'jpg|jpeg|png';
                 $config['max_size'] = 1024 * 10;
 
                 $target='assets/img/upload/'.$new_name;
@@ -84,23 +84,23 @@ class data_dokter extends MY_Controller {
                 $this->form_validation->set_rules('input_gambar', 'Upload Foto', 'required');
             }
              
-        if ($this->form_validation->run() == FALSE) {
-            //$err_msg = validation_errors();
-            $err_msg = $this->form_validation->error_array();
-            $response['type']="invalid";
-            $response['title']="Gagal Tersimpan!";
-            $response['pesan']="Data gagal disimpan";
-            $response['data'] = $err_msg;
-            echo json_encode($response); 
-            return;
-        } 
+            if ($this->form_validation->run() == FALSE) {
+                //$err_msg = validation_errors();
+                $err_msg = $this->form_validation->error_array();
+                $response['type']="invalid";
+                $response['title']="Gagal Tersimpan!";
+                $response['pesan']="Data gagal disimpan";
+                $response['data'] = $err_msg;
+                echo json_encode($response); 
+                return;
+            } 
             $data = array(
                 'nama_dokter' => $this->input->post('nama_dokter'),
                 'id_spesialisasi' => $this->input->post('id_spesialisasi'),
                 'id_jabatan_dokter' => $this->input->post('id_jabatan'),
                 'created_by' => $this->session->userdata('nama_lengkap'),
                 'created_at' => date('Y-m-d H:i:s'),
-                'foto' => $_FILES['input_gambar']['name']
+                'foto' => $new_name
             );
 
             if ($this->upload->do_upload('input_gambar')) {
@@ -147,13 +147,15 @@ class data_dokter extends MY_Controller {
         $this->form_validation->set_rules('id_jabatan','Jabatan','required');
         // run validation
          if (!empty($_FILES['input_gambar']['name'])){
-                $new_name = $_FILES['input_gambar']['name'];
+                $new_name = $this->input->post('nama_dokter').'_'.$_FILES['input_gambar']['name'];
                 $config['file_name'] = $new_name;
                 $config['upload_path'] = 'assets/img/upload/';
-                $config['allowed_types'] = 'gif|jpg|jpeg|png';
+                $config['allowed_types'] = 'jpg|jpeg|png';
                 $config['max_size'] = 1024 * 10;
 
-                 $target='assets/img/upload/'.$new_name;
+                $gambar_edit = $this->input->post('gambar_edit');
+
+                $target='assets/img/upload/'.$gambar_edit;
 
                 if(file_exists($target)){
                     unlink($target);
@@ -166,7 +168,7 @@ class data_dokter extends MY_Controller {
                 'id_jabatan_dokter' => $this->input->post('id_jabatan'),
                 'updated_by' => $this->session->userdata('nama_lengkap'),
                 'updated_at' => date('Y-m-d H:i:s'),
-                'foto' => $_FILES['input_gambar']['name']
+                'foto' => $new_name
             );
                 
             } else {
@@ -209,6 +211,15 @@ class data_dokter extends MY_Controller {
     }
 
     public function delete_process() {
+        $data_id = $this->input->post('id_hapus');
+        // parameter
+        $data = $this->M_data_dokter->get_detail_data($data_id);
+        $target='assets/img/upload/'.$data['foto'];
+        
+            if(file_exists($target)){
+                unlink($target);
+            }
+
         $where = array(
             'id_dokter' => $this->input->post('id_hapus')
         );

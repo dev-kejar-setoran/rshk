@@ -87,7 +87,7 @@
                 $("#nama_dokter").val(output.data.nama_dokter);
                 $("#id_spesialisasi").val(output.data.id_spesialisasi);
                 $("#id_jabatan").val(output.data.id_jabatan_dokter);
-                $("#nama_foto").val(output.data.foto);
+                $("#gambar_edit").val(output.data.foto);
                 document.getElementById("image-preview").src = "../assets/img/upload/" + output.data.foto;
                 openModal();
             },

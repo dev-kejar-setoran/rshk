@@ -16,9 +16,9 @@
             simpan();
         });
         // click batal 
-        $("#btn_batal").click(function(){      
-            clearContent();
-        });
+        // $("#btn_batal").click(function(){      
+        //     clearContent();
+        // });
         // click hapus 
         $("#btn_hapus").click(function(){      
             hapus();

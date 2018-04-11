@@ -25,6 +25,7 @@
             <label class="six wide column">Hak Akses</label>
             <select name="role" id="role" class="ui selection dropdown">
               <option value="">Pilih kategori artikel</option>
+              <option value="0">Admin</option>
               <option value="Admin">Admin</option>
               <option value="Dokter">Dokter</option>
             </select>

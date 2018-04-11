@@ -15,7 +15,7 @@ class Perjanjian_online_admin extends MY_Controller {
     public function index()
     {
         $data['title_page']='Perjanjian Online Admin';
-        $this->load->view('administrasi/perjanjian_online/list', $data);
+        $this->load->view('administrasi/perjanjian_online/index', $data);
     }
 
     // untuk load data table
