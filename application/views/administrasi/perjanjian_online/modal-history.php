@@ -4,7 +4,7 @@
     Riwayat Perjanjian
   </div>
   <div class="content">
-    <table class="ui celled table">
+    <table id="tb_data_riwayat" class="display ui celled tabl" style="width:100%">
       <thead>
         <tr>
           <th>ID</th>
@@ -14,36 +14,6 @@
           <th>Poli</th>
         </tr>
       </thead>
-      <tbody>
-        <tr>
-          <td>1</td>
-          <td>EKO-12</td>
-          <td>12 Maret 2018</td>
-          <td>dr. AMIN TJUBANDI</td>
-          <td>Poli A</td>
-        </tr>
-        <tr>
-          <td>2</td>
-          <td>EKO-8</td>
-          <td>19 Maret 2018</td>
-          <td>dr. AMIN TJUBANDI</td>
-          <td>Poli C</td>
-        </tr>
-        <tr>
-          <td>3</td>
-          <td>EKO-1</td>
-          <td>24 Maret 2018</td>
-          <td>dr. AMIN TJUBANDI</td>
-          <td>Poli B</td>
-        </tr>
-        <tr>
-          <td>4</td>
-          <td>EKO-12</td>
-          <td>2 April 2018</td>
-          <td>dr. AMIN TJUBANDI</td>
-          <td>Poli A</td>
-        </tr>
-      </tbody>
     </table>
   </div>
   <div class="actions">

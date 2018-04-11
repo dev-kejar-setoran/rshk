@@ -78,6 +78,26 @@
 </script>
 
 <script type="text/javascript">
+    // load data riwayat
+    function load_riwayat() {
+        var data_id = $('#data_id').val();
+        var t_table = $('#tb_data_riwayat').DataTable();
+        t_table.destroy();
+        t_table = $('#tb_data_riwayat').DataTable( {
+            "ajax": {
+                "url": "<?php echo base_url('administrasi/perjanjian_online/load_json_riwayat') ?>",
+                "type": "POST",
+                "data": data_id,
+            },
+            "language": {
+              "emptyTable": "No data available in table",
+              "zeroRecords": "No records to display"
+            },
+            searching: false,
+        } );
+       // t_table.destroy();
+    } 
+
     openConfirmationModal = function(){
       $('.ui.confirmation.modal').modal({
         observeChanges: true,
