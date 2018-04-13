@@ -1,10 +1,10 @@
+    <form class="ui data form" id="dataForm" method="post">
 <div class="ui medium modal formUtama">
   <!-- <i class="close icon"></i> -->
   <div class="header">
     Form Slider
   </div>
   <div class="content">
-    <form class="ui data form" id="dataForm" method="post">
       <input type="hidden" name="action" value="create" enctype="multipart/dataForm">
       <input type="hidden" id="id_slider" value="">
       <input type="hidden" id="form" value="">
@@ -63,16 +63,16 @@
           </div>
         </div>
       </div>
-    </form>
   </div>
   <div class="actions">
     <div class="ui black deny button">
       Batal
     </div>
     <div class="ui buttons">
-      <button type="button" id="btn_draft" class="ui button save as drafting positive">Draft</button>
+      <button type="button" name="btn_draft" style="background-color: #21ba45 !important;color: #fff" id="btn_draft" class="ui button save as drafting" value="Draft">Draft</button>
       <div class="or"></div>
-      <button type="button" style="background-color: #00b5ad !important;" id="btn_publish" class="ui button save as publicity positive teal">Publish</button>
+      <button type="button" name="btn_publish" style="background-color: #00b5ad !important;color: #fff" id="btn_publish" class="ui button save as publicity" value="Published">Publish</button>
     </div>
   </div>
 </div>
+    </form>

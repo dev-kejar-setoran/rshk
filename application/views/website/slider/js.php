@@ -86,27 +86,32 @@
     // proses tambah data
     function simpan(btn) {  
         var form=$('#form').val(); // cek form edit / form add
-        var id_slider=$('#id_slider').val();
-        var judul=$('#judul').val();
-        var sub_judul=$('#sub_judul').val();
-        var deskripsi=$('#deskripsi').val();
-        var posisi=$("input[name='posisi']:checked").val();
-        var link=$('#link').val();
-        var status = btn;
+        var dataForm=$('form#dataForm')[0];
+        var data = new FormData(dataForm);   
+        // var id_slider=$('#id_slider').val();
+        // var judul=$('#judul').val();
+        // var sub_judul=$('#sub_judul').val();
+        // var deskripsi=$('#deskripsi').val();
+        // var posisi=$("input[name='posisi']:checked").val();
+        // var link=$('#link').val();
+        // var status = btn;
         // var gambar=$('#gambar').val();
         $.ajax({
             url: "<?php echo base_url('website/slider/'); ?>" + form,
             type: "POST",
-            data: {
-                "id_slider":id_slider, 
-                "judul":judul, 
-                "sub_judul":sub_judul, 
-                "deskripsi":deskripsi, 
-                "posisi":posisi, 
-                "link":link, 
-                "status": status
-                // "gambar":gambar,
-            },
+            data: data,
+            processData: false,
+            contentType: false,
+            // data: {
+            //     "id_slider":id_slider, 
+            //     "judul":judul, 
+            //     "sub_judul":sub_judul, 
+            //     "deskripsi":deskripsi, 
+            //     "posisi":posisi, 
+            //     "link":link, 
+            //     "status": status
+            //     // "gambar":gambar,
+            // },
             beforeSubmit: function() {
                 //loading
             },

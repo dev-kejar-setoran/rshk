@@ -64,8 +64,8 @@ class media_center extends MY_Controller {
         $this->form_validation->set_rules('id_tipe_media','Tipe', 'required');
 
         if (!empty($_FILES['attachment']['name'])){
-                // $new_name = str_replace(".","",$data['KD_KONTRAK_TRANS']).'_'.date("YmdHis");
-                $new_name = 'MC'.$_FILES['attachment']['name'];
+                $name_image = str_replace(" ","",$_FILES['attachment']['name']);
+                $new_name = 'MC_'.$name_image;
                 $config['file_name'] = $new_name;
                 $config['upload_path'] = 'assets/img/upload/';
                 $config['allowed_types'] = 'gif|jpg|jpeg|png';
@@ -144,7 +144,8 @@ class media_center extends MY_Controller {
         $this->form_validation->set_rules('id_tipe_media','Tipe', 'required');
 
         if (!empty($_FILES['attachment']['name'])){
-            $new_name = 'MC'.$_FILES['attachment']['name'];
+            $name_image = str_replace(" ","",$_FILES['attachment']['name']);
+            $new_name = 'MC_'.$name_image;
             $config['file_name'] = $new_name;
             $config['upload_path'] = 'assets/img/upload/';
             $config['allowed_types'] = 'gif|jpg|jpeg|png';

@@ -66,7 +66,8 @@ class data_dokter extends MY_Controller {
 
         // run validation
          if (!empty($_FILES['input_gambar']['name'])){
-                $new_name = $this->input->post('nama_dokter').'_'.$_FILES['input_gambar']['name'];
+                $name_image = str_replace(" ","",$_FILES['input_gambar']['name']);
+                $new_name = $this->input->post('nama_dokter').'_'.$name_image;
                 $config['file_name'] = $new_name;
                 $config['upload_path'] = 'assets/img/upload/';
                 $config['allowed_types'] = 'jpg|jpeg|png';
@@ -147,7 +148,8 @@ class data_dokter extends MY_Controller {
         $this->form_validation->set_rules('id_jabatan','Jabatan','required');
         // run validation
          if (!empty($_FILES['input_gambar']['name'])){
-                $new_name = $this->input->post('nama_dokter').'_'.$_FILES['input_gambar']['name'];
+                $name_image = str_replace(" ","",$_FILES['input_gambar']['name']);
+                $new_name = $this->input->post('nama_dokter').'_'.$name_image;
                 $config['file_name'] = $new_name;
                 $config['upload_path'] = 'assets/img/upload/';
                 $config['allowed_types'] = 'jpg|jpeg|png';
