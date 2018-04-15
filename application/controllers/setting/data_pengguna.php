@@ -15,17 +15,17 @@ class data_pengguna extends MY_Controller {
     public function index()
     {
         $data['title_page']='Data Pengguna';
-        $this->load->view('admin/data-pengguna/index', $data);
+        $data['rs_data'] = $this->m_data_pengguna->get_role_master();
+        $this->load->view('setting/data-pengguna/index', $data);
     }
 
     // untuk load data table
     public function load_json(){
         // parameter search 
         $nama_pengguna = $this->input->post('nama_pengguna');
-        $filter['nama_pengguna'] = empty($nama_pengguna) ? '%' : '%' . $nama_pengguna . '%';
-        $params = array($filter['nama_pengguna']);
+        $filter['nama_pengguna'] = empty($nama_pengguna) ? '' :   $nama_pengguna;
         // get data dari model dengan param
-        $res = $this->m_data_pengguna->get_all($params);
+        $res = $this->m_data_pengguna->get_all($filter['nama_pengguna']);
         // periksa jika data kosong
         if (empty($res)) {
             echo json_encode(""); 
@@ -60,6 +60,7 @@ class data_pengguna extends MY_Controller {
         $this->form_validation->set_rules('email','Email', 'required');
         $this->form_validation->set_rules('tlp','Telepon','required');
         $this->form_validation->set_rules('role','Hak Akses','required');
+        $this->form_validation->set_rules('status','Status','required');
         // run validation
         if ($this->form_validation->run() == FALSE) {
             //$err_msg = validation_errors();
@@ -77,6 +78,8 @@ class data_pengguna extends MY_Controller {
             'email' => $this->input->post('email'),
             'tlp' => $this->input->post('tlp'),
             'role' => $this->input->post('role'),
+            'status' => $this->input->post('status'),
+            'password' => md5($this->input->post('email')),
             'created_by' => $this->session->userdata('nama_lengkap'),
             'created_at' => date('Y-m-d H:i:s'),
         );
@@ -84,7 +87,7 @@ class data_pengguna extends MY_Controller {
         if($this->m_data_pengguna->get_add($data)){ //jika update berhasil
             $response['type']="success";
             $response['title']="Tersimpan!";
-            $response['pesan']="Data berhasil disimpan";
+            $response['pesan']="Data berhasil disimpan. Password saat ini  Password = Email (".$this->input->post('email').").";
         }else{ //jika  gagal
             $response['type']="warning";
             $response['title']="Gagal Tersimpan!";
@@ -121,6 +124,7 @@ class data_pengguna extends MY_Controller {
         $this->form_validation->set_rules('email','Email', 'required');
         $this->form_validation->set_rules('tlp','Telepon','required');
         $this->form_validation->set_rules('role','Hak Akses','required');
+        $this->form_validation->set_rules('status','Status','required');
         // run validation
         if ($this->form_validation->run() == FALSE) {
             //$err_msg = validation_errors();
@@ -145,6 +149,7 @@ class data_pengguna extends MY_Controller {
             'email' => $this->input->post('email'),
             'tlp' => $this->input->post('tlp'),
             'role' => $this->input->post('role'),
+            'status' => $this->input->post('status'),
             'updated_by' => $this->session->userdata('nama_lengkap'),
             'updated_at' => date('Y-m-d H:i:s'),
         );
