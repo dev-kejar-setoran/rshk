@@ -94,7 +94,6 @@
   
   <script>
   </script>
-  <!-- <script src="../../../js/es6-promise.auto.min.js"></script> -->
 
   <?php $this->load->view('templete/headerjs.php'); ?>
     

@@ -85,15 +85,9 @@
             </div>
           </div>
         </div>
-
       </div>
     </div>
-
     <?php $this->load->view('templete/footer.php'); ?>
-
-    <div v-cloak>
-      <!-- @yield('additional') -->
-    </div>
   </div>
 
   <?php include('modal.php'); ?>
