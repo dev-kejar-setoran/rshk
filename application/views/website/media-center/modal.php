@@ -12,8 +12,9 @@
       <div class="ui grid">
         <div class="six wide column">
           <div class="field image-container">
-            <span class="image-preview" style="height: 20rem"><img src="" id="image-preview" style="width: 300px; height: 230px" /></span>
+            <span class="image-preview" style="height: 20rem"><img src="" name="image-preview" id="image-preview" style="width: 300px; height: 230px" /></span>
             <div class="ui fluid file input action">
+              <input type="hidden" name="gambar_edit" id="gambar_edit">
               <input type="text" id="nama_gambar" readonly="">
               <input type="file" class="ten wide column" id="attachment" name="attachment" autocomplete="off" multiple="">
               <div class="ui blue button file">
@@ -43,13 +44,18 @@
           </div>
         </div>
       </div>
+
+      <!-- error message -->
+      <div class="ui error message">
+        <ul class="list" id="msg_validation"></ul>
+      </div>
     </form>
   </div>
   <div class="actions">
     <div class="ui black deny button" id="btn_batal">
       Batal
     </div>
-    <div class="ui positive right labeled icon button" id="btn_simpan">
+    <div class="ui primary right labeled icon button" id="btn_simpan">
       Simpan
       <i class="save icon"></i>
     </div>

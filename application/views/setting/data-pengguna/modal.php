@@ -23,10 +23,21 @@
           </div>
           <div class="ui inline grid field">
             <label class="six wide column">Hak Akses</label>
-            <select name="role" id="role" class="ui selection dropdown">
-              <option value="">Pilih kategori artikel</option>
-              <option value="Admin">Admin</option>
-              <option value="Dokter">Dokter</option>
+            <select name="role" id="role" class="ui dropdown selection">
+              <option value="">Pilih Hak Akses</option>
+
+              <?php foreach ($rs_data as $row => $role_master): ?>
+              <option value="<?php echo $role_master['role']; ?>"><?php echo $role_master['role']; ?></option>
+              <?php endforeach ?>
+
+            </select>
+          </div>
+          <div class="ui inline grid field">
+          <label class="six wide column">Status</label>
+            <select name="status" id="status" class="ui selection dropdown">
+              <option value="">Pilih Status Pengguna</option>
+              <option value="1">Active</option>
+              <option value="0">Disable</option>
             </select>
           </div>
           <!-- show message error -->

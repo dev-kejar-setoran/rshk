@@ -31,9 +31,7 @@
           </div>
         </h2>
       </div>
-
       <div class="ui clearing divider" style="border-top: none !important; margin:10px"></div>
-
       <div class="ui grid">
         <div class="sixteen wide column main-content">
           <div class="ui segments">
@@ -41,88 +39,47 @@
               <form class="ui filter form">
                 <div class="inline fields">
                   <div class="field">
-                    <input name="filter[cara_bayar]" placeholder="Cara Bayar" type="text">
+                    <input id="filter_nama_cara_bayar" placeholder="Nama Cara Bayar" type="text">
                   </div>
-                  <button type="button" class="ui teal icon filter button" data-content="Cari Data">
+                  <button type="button" id="btn_cari" class="ui teal icon filter button" data-content="Cari Data">
                     <i class="search icon"></i>
                   </button>
-                  <button type="reset" class="ui icon reset button" data-content="Bersihkan Pencarian">
+                  <button type="reset"  id="btn_reset" class="ui icon reset button" data-content="Bersihkan Pencarian">
                     <i class="refresh icon"></i>
                   </button>
                   <div style="margin-left: auto; margin-right: 1px;">
-                    <button type="button" class="ui blue add button" onclick="openModal()">
+                    <button type="button" class="ui blue add button" onclick="form_add()">
                       <i class="plus icon"></i>
                       Tambah Data
                     </button>
-
                   </div>
                 </div>
               </form>
-
-              <table class="ui celled table">
-                <thead class="center aligned">
+              <table id="tb_data" class="display ui celled tabl" style="width:100%">
+                <thead>
                   <tr>
                     <th>No</th>
                     <th>Nama</th>
                     <th>Deskripsi</th>
-                    <th>Tanggal Entry</th>
                     <th>Oleh</th>
+                    <th>Tanggal Entry</th>
                     <th>Aksi</th>
                   </tr>
                 </thead>
-                <tbody>
-                  <tr>
-                    <td class="center aligned">1</td>
-                    <td class="center aligned">Utama</td>
-                    <td>A voluptatem eveniet consectetur assumenda, magni odit odio.</td>
-                    <td class="center aligned">24 Februari 2018</td>
-                    <td class="center aligned">admin</td>
-                    <td class="center aligned">
-                      <button type="button" data-content="Ubah Data" data-id="" class="ui mini orange icon edit button" onclick="openModal()"><i class="edit icon"></i></button>
-                      <button type="button" data-content="Hapus Data" data-id="" class="ui mini red icon delete button"><i class="trash icon"></i></button>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td class="center aligned">2</td>
-                    <td class="center aligned">Utama</td>
-                    <td>Nam eaque quam eveniet aut magnam atque ratione architecto.</td>
-                    <td class="center aligned">24 Februari 2018</td>
-                    <td class="center aligned">admin</td>
-                    <td class="center aligned">
-                      <button type="button" data-content="Ubah Data" data-id="" class="ui mini orange icon edit button" onclick="openModal()"><i class="edit icon"></i></button>
-                      <button type="button" data-content="Hapus Data" data-id="" class="ui mini red icon delete button"><i class="trash icon"></i></button>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td class="center aligned">3</td>
-                    <td class="center aligned">Utama</td>
-                    <td>Quod quasi, porro.</td>
-                    <td class="center aligned">24 Februari 2018</td>
-                    <td class="center aligned">admin</td>
-                    <td class="center aligned">
-                      <button type="button" data-content="Ubah Data" data-id="" class="ui mini orange icon edit button" onclick="openModal()"><i class="edit icon"></i></button>
-                      <button type="button" data-content="Hapus Data" data-id="" class="ui mini red icon delete button"><i class="trash icon"></i></button>
-                    </td>
-                  </tr>
-                </tbody>
               </table>
             </div>
           </div>
         </div>
-
       </div>
     </div>
-
-    <?php include('../../../partials/footer.php'); ?>
-
+    <?php $this->load->view('templete/footer.php'); ?>
     <div v-cloak>
       <!-- @yield('additional') -->
     </div>
   </div>
-
-  <?php include('modal.php') ?>
-
-
   <?php $this->load->view('templete/headerjs.php'); ?>
+  <?php include('modal.php') ?>
+  <?php include('js.php') ?>
+
 </body>
 </html>

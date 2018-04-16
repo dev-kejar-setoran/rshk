@@ -4,20 +4,16 @@
         load(); // load tb
         // click simpan 
         $("#btn_cari").click(function(){  
-            var nama_pengguna=$('#filter_pengguna').val();
-            load(nama_pengguna); 
+            load(); 
         });
         // click simpan 
         $("#btn_reset").click(function(){  
             load();
         });
         // click simpan 
-        $("#btn_simpan").click(function(){      
+        $("#btn_simpan").click(function(){   
+            //closeModal();
             simpan();
-        });
-        // click batal 
-        $("#btn_batal").click(function(){      
-            clearContent();
         });
         // click hapus 
         $("#btn_hapus").click(function(){      
@@ -26,40 +22,69 @@
 
     });
 </script>
+<!-- Function detail :  -->
 <script type="text/javascript">
-	 // load data table
-    function load(nama_pengguna='') {
+    // load data table
+    function load() {
+        closeModal();
         var t_table = $('#tb_data').DataTable();
         t_table.destroy();
         t_table = $('#tb_data').DataTable( {
             "ajax": {
-                "url": "<?php echo base_url('setting/data_pengguna/load_json') ?>",
+                "url": "<?php echo base_url('setting/hak_akses/load_json') ?>",
                 "type": "POST",
-                "data": {"nama_pengguna": nama_pengguna},
+                //"data": {"nama_hak_akses": nama_hak_akses},
             },
             "language": {
               "emptyTable": "No data available in table",
               "zeroRecords": "No records to display"
             },
             searching: false,
+            paging: false,
         } );
        // t_table.destroy();
     } 
-
-	function form_add(){
+    function form_add(){
         $("#form").val('add_process'); // set untuk form add
         clearContent();
+        $("#role").removeAttr("disabled","disabled");
         openModal();
+    }
+
+    function form_edit(data_id=""){
+        $("#form").val('edit_process'); // set untuk form edit
+        //alert(data_id);
+        $.ajax({// menggunakan ajax form
+            url: "<?php echo base_url('setting/hak_akses/get_detail_data'); ?>",
+            type: "POST",
+            data: {"data_id": data_id},
+            beforeSend: function () {
+                // non removable loading
+                // $('#loading_modal').modal({
+                //     backdrop: 'static', keyboard: false
+                // });
+            },
+            success: function (output) {
+                var output = $.parseJSON(output);
+                //alert(JSON.stringify(output));
+                $("#id_role").val(output.data.id_role);
+                $("#role").val(output.data.role );
+                $("#deskripsi").val(output.data.deskripsi);
+                $("#role").attr("disabled","disabled");
+                openModal();
+            },
+        });
     }
 
     // proses tambah data
     function simpan() {        
         var form=$('#form').val(); // cek form edit / form add
+
         var data_fields = $("#dataForm").serialize();
         $.ajax({
-            url: "<?php echo base_url('setting/data_pengguna/'); ?>" + form,
+            url: "<?php echo base_url('setting/hak_akses/'); ?>" + form,
             type: "POST",
-            data: data_fields,
+            data : data_fields,
             beforeSubmit: function() {
                 //loading
             },
@@ -71,7 +96,6 @@
                 if(msg.type=='success'){
                     swal(msg.title, msg.pesan, msg.type);
                     load();
-                    closeModal();
                 }
                 else if(msg.type=='invalid'){
                     var str ="";
@@ -87,33 +111,7 @@
         }); 
     }
 
-    //proses edit data
-    function form_edit(data_id=""){
-        $("#form").val('edit_process'); // set untuk form edit
-        //alert(data_id);
-        $.ajax({// menggunakan ajax form
-            url: "<?php echo base_url('setting/data_pengguna/get_detail_data'); ?>",
-            type: "POST",
-            data: {"id_user": data_id},
-            beforeSend: function () {
-                // non removable loading
-                // $('#loading_modal').modal({
-                //     backdrop: 'static', keyboard: false
-                // });
-            },
-            success: function (output) {
-                var output = $.parseJSON(output);
-                //alert(JSON.stringify(output));
-                $("#id_user").val(output.data.id_user);
-                $("#nama_pengguna").val(output.data.nama_lengkap);
-                $("#email").val(output.data.email);
-                var role = $("#role").val(output.data.role);
-                openModal();
-            },
-        });
-    }
 
-    //proses hapus data
     function form_hapus(data_id=""){
         swal({
               title: 'Hapus Data',
@@ -126,10 +124,10 @@
               cancelButtonText: 'Batal'
           }).then(value => {
              $.ajax({// menggunakan ajax form
-                url: "<?php echo base_url('setting/data_pengguna/delete_process'); ?>",
+                url: "<?php echo base_url('setting/hak_akses/delete_process'); ?>",
                 type: "POST",
                 data: {
-                    "id_user":data_id
+                    "id_hapus":data_id
                 },
                 beforeSend: function () {
                     // non removable loading
@@ -140,16 +138,11 @@
                 success: function (msg) {
                     var msg=$.parseJSON(msg);
                     load();
-                    swal(
-                      'Deleted!',
-                      msg.pesan,
-                      'success'
-                      );
+                    swal(msg.title, msg.pesan, msg.type);
                 },
             });
         }).catch(swal.noop)
     }
-
     function clearContent(){
 
         $('#msg_validation').html('');
@@ -157,4 +150,3 @@
         $('#dataForm').removeClass('error');
     }
 </script>
-
