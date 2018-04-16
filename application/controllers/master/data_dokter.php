@@ -164,14 +164,15 @@ class data_dokter extends MY_Controller {
                 }
 
                 $this->load->library('upload', $config);
-            $params = array(
-                'nama_dokter' => $this->input->post('nama_dokter'),
-                'id_spesialisasi' => $this->input->post('id_spesialisasi'),
-                'id_jabatan_dokter' => $this->input->post('id_jabatan'),
-                'updated_by' => $this->session->userdata('nama_lengkap'),
-                'updated_at' => date('Y-m-d H:i:s'),
-                'foto' => $new_name
-            );
+                $this->upload->do_upload('input_gambar');
+                $params = array(
+                    'nama_dokter' => $this->input->post('nama_dokter'),
+                    'id_spesialisasi' => $this->input->post('id_spesialisasi'),
+                    'id_jabatan_dokter' => $this->input->post('id_jabatan'),
+                    'updated_by' => $this->session->userdata('nama_lengkap'),
+                    'updated_at' => date('Y-m-d H:i:s'),
+                    'foto' => $new_name
+                );
                 
             } else {
                 $params = array(
@@ -199,8 +200,7 @@ class data_dokter extends MY_Controller {
         );
 
         // insert db
-            if ($this->upload->do_upload('input_gambar')) {
-                $this->M_data_dokter->get_edit($params, $where);
+            if ($this->M_data_dokter->get_edit($params, $where)) {
                 $response['type']="success";
                 $response['title']="Tersimpan!";
                 $response['pesan']="Data berhasil disimpan";

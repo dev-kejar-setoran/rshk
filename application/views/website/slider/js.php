@@ -29,11 +29,9 @@
 </script>
 <!-- Function detail :  -->
 <script type="text/javascript">
-    function test(){
-        alert("The paragraph was clicked.");
-    }
     // load data table
     function load(judul='', status='') {
+        closeModal();
         var t_table = $('#tb_data').DataTable();
         t_table.destroy();
         t_table = $('#tb_data').DataTable( {
@@ -50,9 +48,25 @@
         } );
        // t_table.destroy();
     } 
+
+
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            
+            reader.onload = function (e) {
+                $('#image-preview').attr('src', e.target.result);
+            }
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+    $("#attachment").change(function(){
+        readURL(this);
+    });
+
     function form_add(){
-        $('#dataForm')[0].reset();
         $("#form").val('add_process'); // set untuk form add
+        clearContent();
         openModal();
     }
 
@@ -78,6 +92,9 @@
                 $("#deskripsi").val(output.data.deskripsi);
                 $('input:radio[name="posisi"]').filter('[value='+output.data.posisi+']').attr('checked', true);
                 $("#link").val(output.data.link);
+                $("#gambar_edit").val(output.data.gambar);
+                document.getElementById("image-preview").src = "../assets/img/upload/" + output.data.gambar;
+                openModal();
                 openModal();
             },
         });
@@ -85,48 +102,39 @@
 
     // proses tambah data
     function simpan(btn) {  
-        var form=$('#form').val(); // cek form edit / form add
+        $('#aksi').val(btn);
+        var form = $('#form').val(); // cek form edit / form add
         var dataForm=$('form#dataForm')[0];
-        var data = new FormData(dataForm);   
-        // var id_slider=$('#id_slider').val();
-        // var judul=$('#judul').val();
-        // var sub_judul=$('#sub_judul').val();
-        // var deskripsi=$('#deskripsi').val();
-        // var posisi=$("input[name='posisi']:checked").val();
-        // var link=$('#link').val();
-        // var status = btn;
-        // var gambar=$('#gambar').val();
+        var data = new FormData(dataForm);
+       
         $.ajax({
             url: "<?php echo base_url('website/slider/'); ?>" + form,
             type: "POST",
             data: data,
             processData: false,
             contentType: false,
-            // data: {
-            //     "id_slider":id_slider, 
-            //     "judul":judul, 
-            //     "sub_judul":sub_judul, 
-            //     "deskripsi":deskripsi, 
-            //     "posisi":posisi, 
-            //     "link":link, 
-            //     "status": status
-            //     // "gambar":gambar,
-            // },
+            
             beforeSubmit: function() {
                 //loading
             },
             success: function(msg) {
                 var msg=$.parseJSON(msg);
-                if (msg.status=='sukses') {
-                    title_msg = 'Tersimpan!',
-                    type_msg = 'success'
+                $('#msg_validation').html('');
+                // jika form tidak valid
+                if(msg.type=='success'){
+                    swal(msg.title, msg.pesan, msg.type);
+                    load();
                 }
-                else if (msg.status=='gagal') {
-                    title_msg = 'Gagal Tersimpan!',
-                    type_msg = 'warning'
+                else if(msg.type=='invalid'){
+                    var str ="";
+                    $('#dataForm').addClass('error');
+                    $.each( msg.data, function( i, val ) {
+                        str = "<li>" + val + "</li>";
+                        $("#msg_validation").append(str);
+                    });
+                }else{
+                    swal(msg.title, msg.pesan, msg.type);
                 }
-                load();
-                swal(title_msg, msg.pesan, type_msg);
             },
         }); 
     }
@@ -166,5 +174,11 @@
                 },
             });
         }).catch(swal.noop)
+    }
+
+     function clearContent(){
+        $('#msg_validation').html('');
+        $('#dataForm')[0].reset();
+        $('#dataForm').removeClass('error');
     }
 </script>

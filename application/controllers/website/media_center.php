@@ -41,7 +41,7 @@ class media_center extends MY_Controller {
             $row[]=$no++;
             $row[]=$data['nama_media_center'];
             $row[]=$data['deskripsi'];
-            $row[]='<img style="width:150px; height:100px" src="../assets/img/upload/'.$data['gambar'].'"/>';
+            $row[]='<img style="width:100px; height:50px" src="../assets/img/upload/'.$data['gambar'].'"/>';
             $row[]='<span class="ui fluid label">'.$data['nama_tipe_media'].'<span>';
             $row[]=$data['created_at'];
             $row[]=$data['created_by'];
@@ -159,6 +159,7 @@ class media_center extends MY_Controller {
             }
 
             $this->load->library('upload', $config);
+            $this->upload->do_upload('attachment');
             $params = array(
                 'nama_media_center' => $this->input->post('nama_media_center'),
                 'deskripsi' => $this->input->post('deskripsi'),
@@ -189,8 +190,7 @@ class media_center extends MY_Controller {
         $where = array(
             'id_media_center' => $this->input->post('id_media_center'),
         );
-        if ($this->upload->do_upload('attachment')) {
-                $this->M_media_center->get_edit($params, $where);
+        if ($this->M_media_center->get_edit($params, $where)) {
                 $response['type']="success";
                 $response['title']="Tersimpan!";
                 $response['pesan']="Data berhasil disimpan";
