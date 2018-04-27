@@ -32,7 +32,7 @@
         t_table.destroy();
         t_table = $('#tb_data').DataTable( {
             "ajax": {
-                "url": "<?php echo base_url('rumah_sakit/load_json') ?>",
+                "url": "<?php echo base_url('master/rumah_sakit/load_json') ?>",
                 "type": "POST",
                 "data": {"nama_rumah_sakit": nama_rumah_sakit},
             },
@@ -54,7 +54,7 @@
         $("#form").val('edit_process'); // set untuk form edit
         //alert(data_id);
         $.ajax({// menggunakan ajax form
-            url: "<?php echo base_url('rumah_sakit/get_detail_data'); ?>",
+            url: "<?php echo base_url('master/rumah_sakit/get_detail_data'); ?>",
             type: "POST",
             data: {"data_id": data_id},
             beforeSend: function () {
@@ -83,7 +83,7 @@
         var alamat=$('#alamat').val();
         var no_telp=$('#no_telp').val();
         $.ajax({
-            url: "<?php echo base_url('rumah_sakit/'); ?>" + form,
+            url: "<?php echo base_url('master/rumah_sakit/'); ?>" + form,
             type: "POST",
             data: {
                 "id_rumah_sakit":id_rumah_sakit, 
@@ -123,7 +123,7 @@
               cancelButtonText: 'Batal'
           }).then(value => {
              $.ajax({// menggunakan ajax form
-                url: "<?php echo base_url('rumah_sakit/delete_process'); ?>",
+                url: "<?php echo base_url('master/rumah_sakit/delete_process'); ?>",
                 type: "POST",
                 data: {
                     "id_hapus":data_id
