@@ -41,16 +41,16 @@
               <form class="ui filter form">
                 <div class="inline fields">
                   <div class="field">
-                    <input name="filter[cara_bayar]" placeholder="Kewarganegaraan" type="text">
+                    <input id="filter_nama_kewarganegaraan" placeholder="Nama Kewarganegaraan" type="text">
                   </div>
-                  <button type="button" class="ui teal icon filter button" data-content="Cari Data">
+                  <button type="button" class="ui teal icon filter button" id="btn_cari" data-content="Cari Data">
                     <i class="search icon"></i>
                   </button>
-                  <button type="reset" class="ui icon reset button" data-content="Bersihkan Pencarian">
+                  <button type="reset" id="btn_reset" class="ui icon reset button" data-content="Bersihkan Pencarian">
                     <i class="refresh icon"></i>
                   </button>
                   <div style="margin-left: auto; margin-right: 1px;">
-                    <button type="button" class="ui blue add button" onclick="openModal()">
+                    <button type="button" class="ui blue add button" onclick="form_add();">
                       <i class="plus icon"></i>
                       Tambah Data
                     </button>
@@ -59,7 +59,7 @@
                 </div>
               </form>
 
-              <table class="ui celled table">
+                <table id="tb_data" class="display ui celled tabl" style="width:100%">
                 <thead class="center aligned">
                   <tr>
                     <th>No</th>
@@ -70,74 +70,17 @@
                     <th>Aksi</th>
                   </tr>
                 </thead>
-                <tbody>
-                  <tr>
-                    <td class="center aligned">1</td>
-                    <td class="center aligned">WNA</td>
-                    <td>Warga Negara Asing</td>
-                    <td class="center aligned">24 Februari 2018</td>
-                    <td class="center aligned">admin</td>
-                    <td class="center aligned">
-                      <button type="button" data-content="Ubah Data" data-id="" class="ui mini orange icon edit button" onclick="openModal()"><i class="edit icon"></i></button>
-                      <button type="button" data-content="Hapus Data" data-id="" class="ui mini red icon delete button"><i class="trash icon"></i></button>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td class="center aligned">2</td>
-                    <td class="center aligned">WNI</td>
-                    <td>Warga Negara Indonesia</td>
-                    <td class="center aligned">24 Februari 2018</td>
-                    <td class="center aligned">admin</td>
-                    <td class="center aligned">
-                      <button type="button" data-content="Ubah Data" data-id="" class="ui mini orange icon edit button" onclick="openModal()"><i class="edit icon"></i></button>
-                      <button type="button" data-content="Hapus Data" data-id="" class="ui mini red icon delete button"><i class="trash icon"></i></button>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td class="center aligned">3</td>
-                    <td class="center aligned">Utama</td>
-                    <td>Quod quasi, porro.</td>
-                    <td class="center aligned">24 Februari 2018</td>
-                    <td class="center aligned">admin</td>
-                    <td class="center aligned">
-                      <button type="button" data-content="Ubah Data" data-id="" class="ui mini orange icon edit button" onclick="openModal()"><i class="edit icon"></i></button>
-                      <button type="button" data-content="Hapus Data" data-id="" class="ui mini red icon delete button"><i class="trash icon"></i></button>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
+                </table>
             </div>
           </div>
         </div>
-
       </div>
     </div>
-
-    <?php $this->load->view('templete/footer.php'); ?>
-
-    <div v-cloak>
-      <!-- @yield('additional') -->
-    </div>
+      <?php $this->load->view('templete/footer.php'); ?>
   </div>
 
-  <?php include('modal.php') ?>
-
-    <?php $this->load->view('templete/headerjs.php'); ?>
-    <script>
-    function openModal(){
-      $('.ui.modal')
-      .modal({
-        observeChanges: true,
-        closable: false,
-        detachable: false,
-        onShow: function() {
-          $('.ui.dropdown').dropdown();
-        }
-      })
-      .modal('show')
-      .modal("refresh");
-    }
-  </script>
-
+<?php include('modal.php'); ?>
+<?php $this->load->view('templete/headerjs.php'); ?>
+<?php include('js.php') ?>
 </body>
 </html>

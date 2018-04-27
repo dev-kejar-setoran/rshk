@@ -24,11 +24,9 @@
 </script>
 <!-- Function detail :  -->
 <script type="text/javascript">
-    function test(){
-        alert("The paragraph was clicked.");
-    }
     // load data table
     function load(nama_tipe='') {
+        closeModal();
         var t_table = $('#tb_data').DataTable();
         t_table.destroy();
         t_table = $('#tb_data').DataTable( {
@@ -46,13 +44,16 @@
        // t_table.destroy();
     } 
     function form_add(){
+        $('#msg_validation').html('');
         $('#dataForm')[0].reset();
+        $('#dataForm').removeClass('error');
         $("#form").val('add_process'); // set untuk form add
         openModal();
     }
 
     function form_edit(data_id=""){
         $("#form").val('edit_process'); // set untuk form edit
+        $('#dataForm').removeClass('error');
         //alert(data_id);
         $.ajax({// menggunakan ajax form
             url: "<?php echo base_url('master/tipe_media/get_detail_data'); ?>",
@@ -96,16 +97,22 @@
             },
             success: function(msg) {
                 var msg=$.parseJSON(msg);
-                if (msg.status=='sukses') {
-                    title_msg = 'Tersimpan!',
-                    type_msg = 'success'
+                $('#msg_validation').html('');
+                // jika form tidak valid
+                if(msg.type=='success'){
+                    swal(msg.title, msg.pesan, msg.type);
+                    load();
                 }
-                else if (msg.status=='gagal') {
-                    title_msg = 'Gagal Tersimpan!',
-                    type_msg = 'warning'
+                else if(msg.type=='invalid'){
+                    var str ="";
+                    $('#dataForm').addClass('error');
+                    $.each( msg.data, function( i, val ) {
+                        str = "<li>" + val + "</li>";
+                        $("#msg_validation").append(str);
+                    });
+                }else{
+                    swal(msg.title, msg.pesan, msg.type);
                 }
-                load();
-                swal(title_msg, msg.pesan, type_msg);
             },
         }); 
     }

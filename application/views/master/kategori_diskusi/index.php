@@ -86,30 +86,8 @@
     </div>
   </div>
 
-  <?php include('modal.php') ?>
-
    <?php $this->load->view('templete/headerjs.php'); ?>
-  <script>
-     function openModal(){
-      $('.ui.modal.formUtama')
-      .modal({
-        observeChanges: true,
-        closable: false,
-        detachable: false,
-        onShow: function() {
-          $('.ui.dropdown').dropdown();
-        }
-      })
-      .modal('show')
-      .modal("refresh");
-    }
-    function modal_hapus(){
-      $('.ui.modal.form_hapus')
-      .modal('show')
-      .modal("refresh");
-    }
-  </script>
-
+  <?php include('modal.php') ?>
   <?php include('js.php') ?>
 </body>
 </html>

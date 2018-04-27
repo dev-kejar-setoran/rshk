@@ -65,7 +65,7 @@
                   <tr>
                     <th>No</th>
                     <th>Nama</th>
-                    <th>Deskripsi</th>
+                    <th width="40%">Deskripsi</th>
                     <th>Tanggal Entry</th>
                     <th>Oleh</th>
                     <th>Aksi</th>

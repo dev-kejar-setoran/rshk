@@ -1,44 +1,6 @@
-<!-- js list.php -->
 <script type="text/javascript">
-    $(document).ready(function () {
-      $('.start.time').calendar({
-        type: 'time',
-        ampm: false,
-        onChange: function(){
-          $('.end.time').calendar({
-            type: 'time',
-            ampm: false,
-            startCalendar: $('.start.time')
-          });
-        }
-      });
-      $('.end.time').calendar({
-        type: 'time',
-        ampm: false,
-        onChange: function(){
-          $('.start.time').calendar({
-            type: 'time',
-            ampm: false,
-            endCalendar: $('.end.time')
-          });
-        }
-      });
-    });
-  </script>
-<!-- js index.php -->
-<script type="text/javascript">
-    openConfirmationModal = function(){
-      $('.ui.confirmation.modal').modal({
-        observeChanges: true,
-        closable: false,
-        detachable: false,
-        autofocus: false
-      })
-      .modal('show')
-      .modal("refresh");
-    }
-    
-    $(document).ready(function () {
+  // js index.php
+  $(document).ready(function () {
       $('.pusher').removeClass('shown')
       $('.toggler').hide()
 
@@ -88,4 +50,74 @@
       });
     });
 
+  // js list.php
+  $(document).ready(function () {
+      $('.start.time').calendar({
+        type: 'time',
+        ampm: false,
+        onChange: function(){
+          $('.end.time').calendar({
+            type: 'time',
+            ampm: false,
+            startCalendar: $('.start.time')
+          });
+        }
+      });
+      $('.end.time').calendar({
+        type: 'time',
+        ampm: false,
+        onChange: function(){
+          $('.start.time').calendar({
+            type: 'time',
+            ampm: false,
+            endCalendar: $('.end.time')
+          });
+        }
+      });
+    });
+</script>
+
+<script type="text/javascript">
+    // load data riwayat
+    function load_riwayat() {
+        var data_id = $('#data_id').val();
+        var t_table = $('#tb_data_riwayat').DataTable();
+        t_table.destroy();
+        t_table = $('#tb_data_riwayat').DataTable( {
+            "ajax": {
+                "url": "<?php echo base_url('administrasi/perjanjian_online/load_json_riwayat') ?>",
+                "type": "POST",
+                "data": data_id,
+            },
+            "language": {
+              "emptyTable": "No data available in table",
+              "zeroRecords": "No records to display"
+            },
+            searching: false,
+        } );
+       // t_table.destroy();
+    } 
+
+    openConfirmationModal = function(){
+      $('.ui.confirmation.modal').modal({
+        observeChanges: true,
+        closable: false,
+        detachable: false,
+        autofocus: false
+      })
+      .modal('show')
+      .modal("refresh");
+    }
+
+    openHistoryModal = function(){
+      $('.ui.history.modal').modal({
+        observeChanges: true,
+        closable: false,
+        detachable: false,
+        autofocus: false
+      })
+      .modal('show')
+      .modal("refresh");
+    }
+    
 </script>

@@ -17,37 +17,20 @@
           <textarea name="deskripsi" id="deskripsi" cols="100%" rows="5"></textarea>
         </div>
       </div>
+    <!-- tampil error -->
+      <div class="ui error message">
+        <ul class="list" id="msg_validation"></ul>
+      </div>
     </form>
   </div>
   <div class="actions">
     <div class="ui black deny button" id="btn_batal">
       Batal
     </div>
-    <div class="ui positive right labeled icon button" id="btn_simpan">
+    <div class="ui primary right labeled icon button" id="btn_simpan">
       Simpan
       <i class="save icon"></i>
     </div>
   </div>
   
 </div>
-
-
-
-  <div class="ui tiny form_hapus modal">
-    <div class="header">
-      Hapus Data
-    </div>
-    <div class="content">
-      <p>Apakah anda yakin untuk menghapus <b id="data_hapus"></b> ?</p>
-      <input type="hidden" id="id_hapus" name="id_hapus">
-    </div>
-    <div class="actions">
-      <div class="ui negative button">
-        No
-      </div>
-      <div class="ui positive right labeled icon button" id="btn_hapus">
-        Yes
-        <i class="checkmark icon"></i>
-      </div>
-    </div>
-  </div>

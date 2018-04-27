@@ -51,6 +51,21 @@ class tipe_media extends MY_Controller {
 
     // proses tambah data
     public function add_process() {
+        $this->form_validation->set_error_delimiters('', '');
+        $this->form_validation->set_rules('nama_tipe_media','Nama Tipe Media', 'required');
+        $this->form_validation->set_rules('deskripsi','Deskripsi', 'required');
+        // run validation
+        if ($this->form_validation->run() == FALSE) {
+            //$err_msg = validation_errors();
+            $err_msg = $this->form_validation->error_array();
+            $response['type']="invalid";
+            $response['title']="Gagal Tersimpan!";
+            $response['pesan']="Data gagal disimpan";
+            $response['data'] = $err_msg;
+            echo json_encode($response); 
+            return;
+        }
+
         $data = array(
             'nama_tipe_media' => $this->input->post('nama_tipe_media'),
             'deskripsi' => $this->input->post('deskripsi'),
@@ -59,10 +74,12 @@ class tipe_media extends MY_Controller {
         );
          // run fungsi update
         if($this->M_tipe_media->get_add($data)){ //jika update berhasil
-            $response['status']="sukses";
+            $response['type']="success";
+            $response['title']="Tersimpan!";
             $response['pesan']="Data berhasil disimpan";
         }else{ //jika  gagal
-            $response['status']="gagal";
+            $response['type']="warning";
+            $response['title']="Gagal Tersimpan!";
             $response['pesan']="Data gagal disimpan";
         }
         echo json_encode($response);
@@ -91,12 +108,20 @@ class tipe_media extends MY_Controller {
 
     // proses edit setelah di entry
     public function edit_process() {
-        $data['id_tipe_media'] = $this->input->post('id_tipe_media');
-        // validate
-        if (empty($data['id_tipe_media'])) {
-            $response['status']="gagal";
-            $response['pesan']="Data tidak ditemukan!";
-            echo json_encode($response);
+         $this->form_validation->set_error_delimiters('', '');
+        $this->form_validation->set_rules('id_tipe_media','ID Tipe Media', 'required');
+        $this->form_validation->set_rules('nama_tipe_media','Nama Tipe Media', 'required');
+        $this->form_validation->set_rules('deskripsi','Deskripsi', 'required');
+        // run validation
+        if ($this->form_validation->run() == FALSE) {
+            //$err_msg = validation_errors();
+            $err_msg = $this->form_validation->error_array();
+            $response['type']="invalid";
+            $response['title']="Gagal Tersimpan!";
+            $response['pesan']="Data gagal disimpan";
+            $response['data'] = $err_msg;
+            echo json_encode($response); 
+            return;
         }
         // insert db
         $params = array(
@@ -110,10 +135,12 @@ class tipe_media extends MY_Controller {
             'id_tipe_media' => $this->input->post('id_tipe_media'),
         );
         if ($this->M_tipe_media->get_edit($params, $where)) {
-            $response['status']="sukses";
+            $response['type']="success";
+            $response['title']="Tersimpan!";
             $response['pesan']="Data berhasil disimpan";
         }else{ //jika  gagal
-            $response['status']="gagal";
+            $response['type']="warning";
+            $response['title']="Gagal Tersimpan!";
             $response['pesan']="Data gagal disimpan";
         }
         echo json_encode($response);
@@ -125,10 +152,13 @@ class tipe_media extends MY_Controller {
         );
         if ($this->M_tipe_media->get_delete($where)) {
             $response['status']="sukses";
-            $response['pesan']="Data berhasil dihapus";
+             $response['type']="success";
+            $response['title']="Tersimpan!";
+            $response['pesan']="Data berhasil disimpan";
         }else{ //jika  gagal
-            $response['status']="gagal";
-            $response['pesan']="Data gagal dihapus";
+            $response['type']="warning";
+            $response['title']="Gagal Tersimpan!";
+            $response['pesan']="Data gagal disimpan";
         }
         echo json_encode($response);
     }

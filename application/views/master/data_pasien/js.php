@@ -22,6 +22,10 @@
             hapus();
         });
 
+         $('#tgl_lahir').datepicker({
+            format: 'yyyy-mm-dd'
+        });
+
     });
 </script>
 <!-- Function detail :  -->

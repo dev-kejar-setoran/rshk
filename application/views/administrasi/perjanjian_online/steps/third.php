@@ -33,7 +33,7 @@
 						<input type="text" value="Ya" readonly>
 					</div>
 				</div>
-				<a href="#" class="ui teal fluid right icon labeled button">
+				<a href="#" onclick="openHistoryModal()" class="ui teal fluid right icon labeled button">
 					Lihat Riwayat Perjanjian
 					<i class="clipboard icon"></i>
 				</a>

@@ -162,6 +162,7 @@ class Artikel_list extends MY_Controller {
                 'isi' => $this->input->post('isi'),
                 'id_artikel_kategori' => $this->input->post('id_artikel_kategori'),
                 'deskripsi_singkat' => $this->input->post('deskripsi_singkat'),
+                'gambar' => $_FILES['input_gambar']['name'],
                 'updated_by' => $this->session->userdata('nama_lengkap'),
                 'updated_at' => date('Y-m-d H:i:s')
             );

@@ -1,125 +1,52 @@
 <div class="ui fluid accordion" style="padding-top: 4rem;"">
-    <a href="#" class="item">
-        <i class="icon" style="margin-right: 0"></i><i class="left floated dashboard icon"></i>Dashboard
-    </a>
-
-    <a href="#" class="item">
-        <i class="icon" style="margin-right: 0"></i><i class="book icon"></i> Perjanjian Online
-    </a>
-
-    <a href="#" class="item">
-        <i class="icon" style="margin-right: 0"></i><i class="book icon"></i> Tanya Jawab
-    </a>
-
-    <div class="ui title ">
-        <i class="dropdown icon"></i>
-        <i class="address book icon"></i>
-        Halaman Website
-    </div>
-    <div class="ui content ">
-        <a href="#" class=" item">
-            <i class=" icon"></i> Pelayanan
-        </a>
-        <a href="#" class=" item">
-            <i class=" icon"></i> Rujukan Nasional
-        </a>
-        <a href="#"  class=" item">
-            <i class=" icon"></i> Media Center
-        </a>
-        <a href="#"  class=" item">
-            <i class=" icon"></i> Pusat Kesehatan
-        </a>
-        <a href="#" class=" item">
-            <i class=" icon"></i> Slider
-        </a>
-    </div>
-
-    <div class="ui title ">
-        <i class="dropdown icon"></i>
-        <i class="newspaper icon"></i>
-        Artikel
-    </div>
-    <div class="ui content ">
-        <a href="#" class=" item">
-            <i class=" icon"></i> Kategori
-        </a>
-        <a href="#" class=" item">
-            <i class=" icon"></i> List
-        </a>
-    </div>
-
-    <div class="ui title ">
-        <i class="dropdown icon"></i>
-        <i class="computer icon"></i>
-        Konten Dinamis
-    </div>
-    <div class="ui content ">
-        <a href="#" class=" item">
-            <i class=" icon"></i>Halaman Dinamis
-        </a>
-        <a href="#" class=" item">
-            <i class=" icon"></i>Menu Website
-        </a>
-    </div>
-
-    <div class="ui title ">
-        <i class="dropdown icon"></i>
-        <i class="sidebar icon"></i>
-        Master
-    </div>
-    <div class="ui content ">
-        <a href="<?php echo base_url();?>master/data_dokter" class=" item">
-            <i class=" icon"></i> Data Dokter
-        </a>
-        <a href="<?php echo base_url();?>master/data_pasien" class=" item">
-            <i class=" icon"></i> Data Pasien
-        </a>
-        <a href="<?php echo base_url();?>master/kontak" class=" item">
-            <i class=" icon"></i> Kontak
-        </a>
-        <a href="<?php echo base_url();?>master/tautan" class=" item">
-            <i class=" icon"></i> Tautan
-        </a>
-        <a href="<?php echo base_url();?>master/kewarganegaraan" class=" item">
-            <i class=" icon"></i> Kewarganegaraan
-        </a>
-        <a href="<?php echo base_url();?>rumah_sakit" class=" item">
-            <i class=" icon"></i> Rumah Sakit
-        </a>
-        <a href="<?php echo base_url();?>master/poli" class=" item">
-            <i class=" icon"></i> Poli
-        </a>
-        <a href="<?php echo base_url();?>master/kategori_diskusi" class=" item">
-            <i class=" icon"></i> Kategori Diskusi
-        </a>
-        <a href="<?php echo base_url();?>master/spesialisasi" class=" item">
-            <i class=" icon"></i> Spesialisasi
-        </a>
-        <a href="<?php echo base_url();?>master/jabatan_dokter" class=" item">
-            <i class=" icon"></i> Jabatan Dokter
-        </a>
-        <a href="<?php echo base_url();?>master/tipe_media" class=" item">
-            <i class=" icon"></i> Tipe Media
-        </a>
-        <a href="<?php echo base_url();?>master/tipe_pendaftar" class=" item">
-            <i class=" icon"></i> Tipe Pendaftar
-        </a>
-        <a href="<?php echo base_url();?>master/cara_bayar" class=" item">
-            <i class=" icon"></i> Cara Bayar
-        </a>
-    </div>
-
-    <div class="ui title ">
-        <i class="dropdown icon"></i>
-        <i class="setting icon"></i>
-        Setting
-    </div>
-    <div class="ui content ">
-        <a href="<?php echo base_url();?>setting/data_pengguna" class=" item">
-            <i class=" icon"></i> Data Pengguna
-        </a>
-        <a href="<?php echo base_url();?>setting/hak_akses" class=" item">
-            <i class=" icon"></i> Hak Akses
-        </a>
-    </div>
+    <?php 
+    $this->db->select('a.*');
+    $this->db->join('m_role_user b', 'b.id_role_menu = a.id_role_menu', 'inner');    
+    $this->db->where('b.role',$this->session->userdata('role'));
+    $this->db->where('level',1);
+    $this->db->where('status',1);
+    $this->db->order_by('urutan','ASC');
+    $menulevel_1 = $this->db->get('m_role_menu a');
+    //$menulevel_1 = $this->db->order_by('urutan','ASC')->get_where('m_role_menu', array('level' => 1, 'status' => 1)); 
+    // MENU LEVEL 1
+    foreach ($menulevel_1->result() as $main) {
+        // get data
+        $this->db->select('a.*');
+        $this->db->join('m_role_user b', 'b.id_role_menu = a.id_role_menu', 'inner');    
+        $this->db->where('b.role',$this->session->userdata('role'));
+        $this->db->where('level',2);
+        $this->db->where('status',1);
+        $this->db->where('id_parent',$main->id_role_menu);
+        $this->db->order_by('urutan','ASC');
+        $menulevel_2 = $this->db->get('m_role_menu a');
+        // $this->db->order_by('urutan','ASC');
+        // $menulevel_2 = $this->db->order_by('urutan','ASC')->get_where('m_role_menu', array('id_parent' => $main->id_role_menu, 'level' => 2, 'status' => 1 ));
+        if ($menulevel_2->num_rows() > 0) {
+            echo '
+                <div class="ui title ">
+                    <i class="dropdown icon"></i>
+                    <i class=" '.$main->icon.' icon"></i>
+                    '.$main->nama_role_menu.'
+                </div>
+            ';
+            echo '<div class="ui content ">';
+            // MENU LEVEL 2
+            foreach ($menulevel_2->result() as $sub) {
+                echo '
+                    <a href="'. base_url($sub->url) .'" class=" item">
+                        <i class=" '. $sub->icon .' icon"></i> '. $sub->nama_role_menu .'
+                    </a>
+                ';
+            }
+            echo "</div>"; // tutup div ui content
+        }
+        else{
+            echo '
+                <a href="'.base_url($main->url).'" class="item">
+                    <i class="icon" style="margin-right: 0"></i><i class="'.$main->icon.' icon"></i> '.$main->nama_role_menu.'
+                </a>
+            ';
+        }
+    } // emd foreach
+    ?>
 </div>

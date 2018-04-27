@@ -51,6 +51,21 @@ class kategori_diskusi extends MY_Controller {
 
     // proses tambah data
     public function add_process() {
+        $this->form_validation->set_error_delimiters('', '');
+        $this->form_validation->set_rules('nama_kategori_diskusi','Nama Kategori Diskusi', 'required');
+        $this->form_validation->set_rules('deskripsi','Deskripsi', 'required');
+        // run validation
+        if ($this->form_validation->run() == FALSE) {
+            //$err_msg = validation_errors();
+            $err_msg = $this->form_validation->error_array();
+            $response['type']="invalid";
+            $response['title']="Gagal Tersimpan!";
+            $response['pesan']="Data gagal disimpan";
+            $response['data'] = $err_msg;
+            echo json_encode($response); 
+            return;
+        } 
+
         $data = array(
             'nama_kategori_diskusi' => $this->input->post('nama_kategori_diskusi'),
             'deskripsi' => $this->input->post('deskripsi'),
@@ -59,10 +74,12 @@ class kategori_diskusi extends MY_Controller {
         );
          // run fungsi update
         if($this->M_kategori_diskusi->get_add($data)){ //jika update berhasil
-            $response['status']="sukses";
+            $response['type']="success";
+            $response['title']="Tersimpan!";
             $response['pesan']="Data berhasil disimpan";
         }else{ //jika  gagal
-            $response['status']="gagal";
+            $response['type']="warning";
+            $response['title']="Gagal Tersimpan!";
             $response['pesan']="Data gagal disimpan";
         }
         echo json_encode($response);
@@ -91,13 +108,22 @@ class kategori_diskusi extends MY_Controller {
 
     // proses edit setelah di entry
     public function edit_process() {
-        $data['id_kategori_diskusi'] = $this->input->post('id_kategori_diskusi');
-        // validate
-        if (empty($data['id_kategori_diskusi'])) {
-            $response['status']="gagal";
-            $response['pesan']="Data tidak ditemukan!";
-            echo json_encode($response);
-        }
+        $this->form_validation->set_error_delimiters('', '');
+        $this->form_validation->set_rules('id_kategori_diskusi','ID Kategori Diskusi', 'required');
+        $this->form_validation->set_rules('nama_kategori_diskusi','Nama Kategori Diskusi', 'required');
+        $this->form_validation->set_rules('deskripsi','Deskripsi', 'required');
+        // run validation
+        if ($this->form_validation->run() == FALSE) {
+            //$err_msg = validation_errors();
+            $err_msg = $this->form_validation->error_array();
+            $response['type']="invalid";
+            $response['title']="Gagal Tersimpan!";
+            $response['pesan']="Data gagal disimpan";
+            $response['data'] = $err_msg;
+            echo json_encode($response); 
+            return;
+        } 
+
         // insert db
         $params = array(
             'nama_kategori_diskusi' => $this->input->post('nama_kategori_diskusi'),
@@ -110,10 +136,12 @@ class kategori_diskusi extends MY_Controller {
             'id_kategori_diskusi' => $this->input->post('id_kategori_diskusi'),
         );
         if ($this->M_kategori_diskusi->get_edit($params, $where)) {
-            $response['status']="sukses";
+            $response['type']="success";
+            $response['title']="Tersimpan!";
             $response['pesan']="Data berhasil disimpan";
         }else{ //jika  gagal
-            $response['status']="gagal";
+            $response['type']="warning";
+            $response['title']="Gagal Tersimpan!";
             $response['pesan']="Data gagal disimpan";
         }
         echo json_encode($response);

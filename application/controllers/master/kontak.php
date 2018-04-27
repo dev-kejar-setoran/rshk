@@ -25,7 +25,7 @@ class Kontak extends MY_Controller {
         $email = $this->input->post('email');
         $filter['nama_kontak'] = empty($nama_kontak) ? '%' : '%' . $nama_kontak . '%';
         $filter['alamat'] = empty($alamat) ? '%' : '%' . $alamat . '%';
-        $filter['email'] = empty($email) ? '%' :  $nomor_kartu;
+        $filter['email'] = empty($email) ? '%' :  $email;
         $params = array($filter['nama_kontak'], $filter['alamat'], $filter['email']);
         // get data dari model dengan param
         $res = $this->M_kontak->get_all($params);

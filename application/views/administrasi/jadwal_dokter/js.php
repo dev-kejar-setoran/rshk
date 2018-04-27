@@ -1,11 +1,12 @@
 <!--  call event function -->
 <script type="text/javascript">
     $(document).ready(function(){
-        load(); // load tb
+         load(); // load tb
         // click simpan 
         $("#btn_cari").click(function(){  
-            var nama_pengguna=$('#filter_pengguna').val();
-            load(nama_pengguna); 
+            var nama_dokter=$('#filter_nama').val();
+            var hari_praktek=$('#filter_hari').val();
+            load(nama_dokter, hari_praktek); 
         });
         // click simpan 
         $("#btn_reset").click(function(){  
@@ -15,10 +16,6 @@
         $("#btn_simpan").click(function(){      
             simpan();
         });
-        // click batal 
-        $("#btn_batal").click(function(){      
-            clearContent();
-        });
         // click hapus 
         $("#btn_hapus").click(function(){      
             hapus();
@@ -26,16 +23,18 @@
 
     });
 </script>
+<!-- Function detail :  -->
 <script type="text/javascript">
-	 // load data table
-    function load(nama_pengguna='') {
+    // load data table
+    function load(nama_dokter='', hari_praktek='') {
+        closeModal();
         var t_table = $('#tb_data').DataTable();
         t_table.destroy();
         t_table = $('#tb_data').DataTable( {
             "ajax": {
-                "url": "<?php echo base_url('setting/data_pengguna/load_json') ?>",
+                "url": "<?php echo base_url('administrasi/jadwal_dokter/load_json') ?>",
                 "type": "POST",
-                "data": {"nama_pengguna": nama_pengguna},
+                "data": {"nama_dokter": nama_dokter, "hari_praktek": hari_praktek},
             },
             "language": {
               "emptyTable": "No data available in table",
@@ -46,32 +45,57 @@
        // t_table.destroy();
     } 
 
-	function form_add(){
+    function form_add(){
         $("#form").val('add_process'); // set untuk form add
         clearContent();
         openModal();
+    }
+    // t
+    function form_edit(data_id=""){
+        $("#form").val('edit_process'); // set untuk form edit
+        $('#dataForm').removeClass('error');
+        //alert(data_id);
+        $.ajax({// menggunakan ajax form
+            url: "<?php echo base_url('administrasi/jadwal_dokter/get_detail_data'); ?>",
+            type: "POST",
+            data: {"data_id": data_id},
+            beforeSend: function () {
+                // non removable loading
+                // $('#loading_modal').modal({
+                //     backdrop: 'static', keyboard: false
+                // });
+            },
+            success: function (output) {
+                var output = $.parseJSON(output);
+                //alert(JSON.stringify(output));
+                $("#id_jadwal_dokter").val(output.data.id_jadwal_dokter);
+                $("#nama_dokter").val(output.data.id_dokter);
+                $("#hari_praktek").val(output.data.hari_praktek);
+                $("#kuota").val(output.data.max_kuota);
+                $("#jam_mulai").val(output.data.jam_mulai);
+                $("#jam_akhir").val(output.data.jam_akhir);
+                openModal();
+            },
+        });
     }
 
     // proses tambah data
     function simpan() {        
         var form=$('#form').val(); // cek form edit / form add
-        var data_fields = $("#dataForm").serialize();
         $.ajax({
-            url: "<?php echo base_url('setting/data_pengguna/'); ?>" + form,
+            url: "<?php echo base_url('administrasi/jadwal_dokter/'); ?>" + form,
             type: "POST",
-            data: data_fields,
+            data: $('#dataForm').serialize(),
             beforeSubmit: function() {
                 //loading
             },
             success: function(msg) {
                 var msg=$.parseJSON(msg);
-
                 $('#msg_validation').html('');
                 // jika form tidak valid
                 if(msg.type=='success'){
                     swal(msg.title, msg.pesan, msg.type);
                     load();
-                    closeModal();
                 }
                 else if(msg.type=='invalid'){
                     var str ="";
@@ -87,33 +111,7 @@
         }); 
     }
 
-    //proses edit data
-    function form_edit(data_id=""){
-        $("#form").val('edit_process'); // set untuk form edit
-        //alert(data_id);
-        $.ajax({// menggunakan ajax form
-            url: "<?php echo base_url('setting/data_pengguna/get_detail_data'); ?>",
-            type: "POST",
-            data: {"id_user": data_id},
-            beforeSend: function () {
-                // non removable loading
-                // $('#loading_modal').modal({
-                //     backdrop: 'static', keyboard: false
-                // });
-            },
-            success: function (output) {
-                var output = $.parseJSON(output);
-                //alert(JSON.stringify(output));
-                $("#id_user").val(output.data.id_user);
-                $("#nama_pengguna").val(output.data.nama_lengkap);
-                $("#email").val(output.data.email);
-                var role = $("#role").val(output.data.role);
-                openModal();
-            },
-        });
-    }
 
-    //proses hapus data
     function form_hapus(data_id=""){
         swal({
               title: 'Hapus Data',
@@ -126,10 +124,10 @@
               cancelButtonText: 'Batal'
           }).then(value => {
              $.ajax({// menggunakan ajax form
-                url: "<?php echo base_url('setting/data_pengguna/delete_process'); ?>",
+                url: "<?php echo base_url('administrasi/jadwal_dokter/delete_process'); ?>",
                 type: "POST",
                 data: {
-                    "id_user":data_id
+                    "id_hapus":data_id
                 },
                 beforeSend: function () {
                     // non removable loading
@@ -150,11 +148,11 @@
         }).catch(swal.noop)
     }
 
+    // untuk membersihkan form tambah / edit
     function clearContent(){
-
         $('#msg_validation').html('');
         $('#dataForm')[0].reset();
         $('#dataForm').removeClass('error');
     }
-</script>
 
+</script>

@@ -8,6 +8,7 @@
   <div class="ui sidebar inverted visible vertical menu">
     <?php $this->load->view('templete/sidebar.php'); ?>
   </div>
+
   <div id="cover">
     <div class="ui active inverted dimmer">
       <div class="ui text loader">Loading</div>
@@ -76,13 +77,17 @@
     </div>
 
     <?php $this->load->view('templete/footer.php'); ?>
-
     <div v-cloak>
       <!-- @yield('additional') -->
     </div>
   </div>
-  <?php include('modal.php') ?>
+
   <?php $this->load->view('templete/headerjs.php'); ?>
+
+  <?php include('modal-confirmation.php') ?>
+  <?php include('modal-history.php') ?>
+  <?php include('modal.php') ?>
   <?php include('js.php') ?>
-</body>
+
+  </body>
 </html>

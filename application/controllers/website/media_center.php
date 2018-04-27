@@ -41,7 +41,7 @@ class media_center extends MY_Controller {
             $row[]=$no++;
             $row[]=$data['nama_media_center'];
             $row[]=$data['deskripsi'];
-            $row[]='<img style="width:150px; height:100px" src="../assets/img/upload/'.$data['gambar'].'"/>';
+            $row[]='<img style="width:100px; height:50px" src="../assets/img/upload/'.$data['gambar'].'"/>';
             $row[]='<span class="ui fluid label">'.$data['nama_tipe_media'].'<span>';
             $row[]=$data['created_at'];
             $row[]=$data['created_by'];
@@ -57,17 +57,41 @@ class media_center extends MY_Controller {
 
  // proses tambah data
     public function add_process() {
+
+        $this->form_validation->set_error_delimiters('', '');
+        $this->form_validation->set_rules('nama_media_center','Nama Media Center', 'required');
+        $this->form_validation->set_rules('deskripsi','Deskripsi', 'required');
+        $this->form_validation->set_rules('id_tipe_media','Tipe', 'required');
+
         if (!empty($_FILES['attachment']['name'])){
-                // $new_name = str_replace(".","",$data['KD_KONTRAK_TRANS']).'_'.date("YmdHis");
-                $new_name = $_FILES['attachment']['name'];
+                $name_image = str_replace(" ","",$_FILES['attachment']['name']);
+                $new_name = 'MC_'.$name_image;
                 $config['file_name'] = $new_name;
                 $config['upload_path'] = 'assets/img/upload/';
                 $config['allowed_types'] = 'gif|jpg|jpeg|png';
                 $config['max_size'] = 1024 * 10;
 
+                $target='assets/img/upload/'.$new_name;
+
+                if(file_exists($target)){
+                    unlink($target);
+                }
+
                 $this->load->library('upload', $config);
-                // $this->form_validation->set_rules('FILE_UPLOAD', 'Upload Dokumen', 'required');
-            } 
+            } else {
+                $this->form_validation->set_rules('attachment', 'Upload Foto', 'required');
+            }
+            
+        if ($this->form_validation->run() == FALSE) {
+            //$err_msg = validation_errors();
+            $err_msg = $this->form_validation->error_array();
+            $response['type']="invalid";
+            $response['title']="Gagal Tersimpan!";
+            $response['pesan']="Data gagal disimpan";
+            $response['data'] = $err_msg;
+            echo json_encode($response); 
+            return;
+        } 
 
         $data = array(
             'nama_media_center' => $this->input->post('nama_media_center'),
@@ -75,16 +99,18 @@ class media_center extends MY_Controller {
             'id_tipe_media' => $this->input->post('id_tipe_media'),
             'created_by' => $this->session->userdata('nama_lengkap'),
             'created_at' => date('Y-m-d H:i:s'),
-            'gambar' => $_FILES['attachment']['name'],
+            'gambar' => $new_name
         );
          // run fungsi update
         if($this->upload->do_upload('attachment')){ //jika upload berhasil
             $this->M_media_center->get_add($data); //jika update berhasil
-            $response['status']="sukses";
-            $response['pesan']="Data berhasil disimpan";
-        }else{ //jika  gagal
-            $response['status']="gagal";
-            $response['pesan']="Data gagal disimpan";
+                $response['type']="success";
+                $response['title']="Tersimpan!";
+                $response['pesan']="Data berhasil disimpan";
+            }else{ //jika  gagal
+                $response['type']="warning";
+                $response['title']="Gagal Tersimpan!";
+                $response['pesan']="Data gagal disimpan";
         }
         echo json_encode($response);
     }
@@ -112,34 +138,80 @@ class media_center extends MY_Controller {
 
     // proses edit setelah di entry
     public function edit_process() {
-        $data['id_media_center'] = $this->input->post('id_media_center');
-        // validate
-        if (empty($data['id_media_center'])) {
-            $response['status']="gagal";
-            $response['pesan']="Data tidak ditemukan!";
-            echo json_encode($response);
-        }
+        $this->form_validation->set_error_delimiters('', '');
+        $this->form_validation->set_rules('nama_media_center','Nama Media Center', 'required');
+        $this->form_validation->set_rules('deskripsi','Deskripsi', 'required');
+        $this->form_validation->set_rules('id_tipe_media','Tipe', 'required');
+
+        if (!empty($_FILES['attachment']['name'])){
+            $name_image = str_replace(" ","",$_FILES['attachment']['name']);
+            $new_name = 'MC_'.$name_image;
+            $config['file_name'] = $new_name;
+            $config['upload_path'] = 'assets/img/upload/';
+            $config['allowed_types'] = 'gif|jpg|jpeg|png';
+            $config['max_size'] = 1024 * 10;
+
+            $gambar_edit = $this->input->post('gambar_edit');
+            $target='assets/img/upload/'.$gambar_edit;
+
+            if(file_exists($target)){
+                unlink($target);
+            }
+
+            $this->load->library('upload', $config);
+            $this->upload->do_upload('attachment');
+            $params = array(
+                'nama_media_center' => $this->input->post('nama_media_center'),
+                'deskripsi' => $this->input->post('deskripsi'),
+                'updated_by' => $this->session->userdata('username'),
+                'updated_at' => date('Y-m-d H:i:s'),
+                'gambar' => $new_name
+            );
+        } else {
+            $params = array(
+                'nama_media_center' => $this->input->post('nama_media_center'),
+                'deskripsi' => $this->input->post('deskripsi'),
+                'updated_by' => $this->session->userdata('username'),
+                'updated_at' => date('Y-m-d H:i:s'),
+            );
+        } 
+
+        if ($this->form_validation->run() == FALSE) {
+            //$err_msg = validation_errors();
+            $err_msg = $this->form_validation->error_array();
+            $response['type']="invalid";
+            $response['title']="Gagal Tersimpan!";
+            $response['pesan']="Data gagal disimpan";
+            $response['data'] = $err_msg;
+            echo json_encode($response); 
+            return;
+        } 
         // insert db
-        $params = array(
-            'nama_media_center' => $this->input->post('nama_media_center'),
-            'deskripsi' => $this->input->post('deskripsi'),
-            'updated_by' => $this->session->userdata('username'),
-            'updated_at' => date('Y-m-d H:i:s'),
-        );
         $where = array(
             'id_media_center' => $this->input->post('id_media_center'),
         );
         if ($this->M_media_center->get_edit($params, $where)) {
-            $response['status']="sukses";
-            $response['pesan']="Data berhasil disimpan";
-        }else{ //jika  gagal
-            $response['status']="gagal";
-            $response['pesan']="Data gagal disimpan";
+                $response['type']="success";
+                $response['title']="Tersimpan!";
+                $response['pesan']="Data berhasil disimpan";
+            }else{ //jika  gagal
+                $response['type']="warning";
+                $response['title']="Gagal Tersimpan!";
+                $response['pesan']="Data gagal disimpan";
         }
         echo json_encode($response);
     }
 
     public function delete_process() {
+        $data_id = $this->input->post('id_hapus');
+        // parameter
+        $data = $this->M_media_center->get_detail_data($data_id);
+        $target='assets/img/upload/'.$data['gambar'];
+
+            if(file_exists($target)){
+                unlink($target);
+            }
+
         $where = array(
             'id_media_center' => $this->input->post('id_hapus')
         );

@@ -116,6 +116,7 @@
                     swal(msg.title, msg.pesan, msg.type);
                     load();
                     redirect();
+                    clearContent();
                 }
                 else if(msg.type=='invalid'){
                     var str ="";

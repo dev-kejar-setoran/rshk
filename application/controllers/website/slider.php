@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class slider extends CI_Controller {
+class slider extends MY_Controller {
 
     public function __construct()
     {
@@ -36,7 +36,7 @@ class slider extends CI_Controller {
             $row=array();
             $row[]=$no++;
             $row[]=$data['judul'];
-            $row[]=$data['gambar'];
+            $row[]='<img style="width:100px; height:50px" src="../assets/img/upload/'.$data['gambar'].'"/>';
             $row[]=$data['posisi'];
             $row[]=($data['status'] == 'Draft' ? '<span class="ui fluid orange label" style="text-align:center">'.$data['status'].'<span>':'<span class="ui fluid green label" style="text-align:center">'.$data['status'].'<span>');
             $row[]=$data['created_at'];
@@ -53,24 +53,68 @@ class slider extends CI_Controller {
 
  // proses tambah data
     public function add_process() {
+        $this->form_validation->set_error_delimiters('', '');
+        $this->form_validation->set_rules('judul','Judul', 'required');
+        $this->form_validation->set_rules('sub_judul','Sub Judul', 'required');
+        $this->form_validation->set_rules('deskripsi','Deskripsi','required');
+        $this->form_validation->set_rules('posisi','Posisi','required');
+        $this->form_validation->set_rules('link','Link','required');
+
+        // run validation
+         if (!empty($_FILES['attachment']['name'])){
+                $name_image = str_replace(" ","",$_FILES['attachment']['name']);
+                $new_name = 'slide_'.$name_image;
+                $config['file_name'] = $new_name;
+                $config['upload_path'] = 'assets/img/upload/';
+                $config['allowed_types'] = 'jpg|jpeg|png';
+                $config['max_size'] = 1024 * 10;
+
+                $target='assets/img/upload/'.$new_name;
+
+                if(file_exists($target)){
+                    unlink($target);
+                }
+
+
+                $this->load->library('upload', $config);
+            } else{
+                $this->form_validation->set_rules('attachment', 'Upload Foto', 'required');
+            }
+             
+            if ($this->form_validation->run() == FALSE) {
+                //$err_msg = validation_errors();
+                $err_msg = $this->form_validation->error_array();
+                $response['type']="invalid";
+                $response['title']="Gagal Tersimpan!";
+                $response['pesan']="Data gagal disimpan";
+                $response['data'] = $err_msg;
+                echo json_encode($response); 
+                return;
+            } 
+
         $data = array(
             'judul' => $this->input->post('judul'),
             'sub_judul' => $this->input->post('sub_judul'),
             'deskripsi' => $this->input->post('deskripsi'),
             'posisi' => $this->input->post('posisi'),
             'link' => $this->input->post('link'),
-            'status' => $this->input->post('status'),
+            'status' => $this->input->post('aksi'),
             'created_by' => $this->session->userdata('nama_lengkap'),
             'created_at' => date('Y-m-d H:i:s'),
+            'gambar' => $new_name
         );
          // run fungsi update
-        if($this->M_slider->get_add($data)){ //jika update berhasil
-            $response['status']="sukses";
-            $response['pesan']="Data berhasil disimpan";
-        }else{ //jika  gagal
-            $response['status']="gagal";
-            $response['pesan']="Data gagal disimpan";
-        }
+         if ($this->upload->do_upload('attachment')) {
+                $this->M_slider->get_add($data);
+                $response['type']="success";
+                $response['title']="Tersimpan!";
+                $response['pesan']="Data berhasil disimpan";
+            }else{ //jika  gagal
+                $response['type']="warning";
+                $response['title']="Gagal Tersimpan!";
+                $response['pesan']="Data gagal disimpan";
+                // $res = $this->upload->data();
+            }
         echo json_encode($response);
     }
 
@@ -97,38 +141,92 @@ class slider extends CI_Controller {
 
     // proses edit setelah di entry
     public function edit_process() {
-        $data['id_slider'] = $this->input->post('id_slider');
-        // validate
-        if (empty($data['id_slider'])) {
-            $response['status']="gagal";
-            $response['pesan']="Data tidak ditemukan!";
-            echo json_encode($response);
-        }
+       $this->form_validation->set_error_delimiters('', '');
+        $this->form_validation->set_rules('judul','Judul', 'required');
+        $this->form_validation->set_rules('sub_judul','Sub Judul', 'required');
+        $this->form_validation->set_rules('deskripsi','Deskripsi','required');
+        $this->form_validation->set_rules('posisi','Posisi','required');
+        $this->form_validation->set_rules('link','Link','required');
+
+        // run validation
+         if (!empty($_FILES['attachment']['name'])){
+                $name_image = str_replace(" ","",$_FILES['attachment']['name']);
+                $new_name = 'slide_'.$name_image;
+                $config['file_name'] = $new_name;
+                $config['upload_path'] = 'assets/img/upload/';
+                $config['allowed_types'] = 'jpg|jpeg|png';
+                $config['max_size'] = 1024 * 10;
+
+                $target='assets/img/upload/'.$new_name;
+
+                if(file_exists($target)){
+                    unlink($target);
+                }
+
+
+                $this->load->library('upload', $config);
+                $this->upload->do_upload('attachment');
+                $params = array(
+                    'judul' => $this->input->post('judul'),
+                    'sub_judul' => $this->input->post('sub_judul'),
+                    'deskripsi' => $this->input->post('deskripsi'),
+                    'posisi' => $this->input->post('posisi'),
+                    'link' => $this->input->post('link'),
+                    'status' => $this->input->post('aksi'),
+                    'updated_by' => $this->session->userdata('nama_lengkap'),
+                    'updated_at' => date('Y-m-d H:i:s'),
+                    'gambar' => $new_name
+                );
+            } else {
+                 $params = array(
+                    'judul' => $this->input->post('judul'),
+                    'sub_judul' => $this->input->post('sub_judul'),
+                    'deskripsi' => $this->input->post('deskripsi'),
+                    'posisi' => $this->input->post('posisi'),
+                    'link' => $this->input->post('link'),
+                    'status' => $this->input->post('aksi'),
+                    'updated_by' => $this->session->userdata('nama_lengkap'),
+                    'updated_at' => date('Y-m-d H:i:s'),
+                );
+            }
+             
+            if ($this->form_validation->run() == FALSE) {
+                //$err_msg = validation_errors();
+                $err_msg = $this->form_validation->error_array();
+                $response['type']="invalid";
+                $response['title']="Gagal Tersimpan!";
+                $response['pesan']="Data gagal disimpan";
+                $response['data'] = $err_msg;
+                echo json_encode($response); 
+                return;
+            } 
+
         // insert db
-        $params = array(
-            'judul' => $this->input->post('judul'),
-            'sub_judul' => $this->input->post('sub_judul'),
-            'deskripsi' => $this->input->post('deskripsi'),
-            'posisi' => $this->input->post('posisi'),
-            'link' => $this->input->post('link'),
-            'status' => $this->input->post('status'),
-            'updated_by' => $this->session->userdata('nama_lengkap'),
-            'updated_at' => date('Y-m-d H:i:s'),
-        );
         $where = array(
             'id_slider' => $this->input->post('id_slider'),
         );
         if ($this->M_slider->get_edit($params, $where)) {
-            $response['status']="sukses";
-            $response['pesan']="Data berhasil disimpan";
-        }else{ //jika  gagal
-            $response['status']="gagal";
-            $response['pesan']="Data gagal disimpan";
+                $response['type']="success";
+                $response['title']="Tersimpan!";
+                $response['pesan']="Data berhasil disimpan";
+            }else{ //jika  gagal
+                $response['type']="warning";
+                $response['title']="Gagal Tersimpan!";
+                $response['pesan']="Data gagal disimpan";
         }
         echo json_encode($response);
     }
 
     public function delete_process() {
+        $data_id = $this->input->post('id_hapus');
+        // parameter
+        $data = $this->M_slider->get_detail_data($data_id);
+        $target='assets/img/upload/'.$data['gambar'];
+
+            if(file_exists($target)){
+                unlink($target);
+            }
+
         $where = array(
             'id_slider' => $this->input->post('id_hapus')
         );

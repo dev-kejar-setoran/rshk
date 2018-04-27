@@ -8,18 +8,30 @@ class m_data_pengguna extends CI_Model {
     function __construct() {
         parent::__construct();
     }
-    
-    public function get_all($params) {
-        $sql = "SELECT id_user, nama_lengkap, email, tlp, role, created_at, created_by 
-                FROM m_users
-                WHERE nama_lengkap LIKE ? ";
-        $query = $this->db->query($sql,$params);
+
+    // get list kewarganegaraan 
+    public function get_role_master() {
+        $query = $this->db->get('m_role_master');
         if ($query->num_rows() > 0) {
-            $result = $query->result_array();
-            $query->free_result();
-        } else {
-            $result = array();
-        }
+                $result = $query->result_array();
+                $query->free_result();
+            } else {
+                $result = array();
+            }
+        return $result;
+    }
+    
+    // get list m_users 
+    public function get_all($params) {
+
+        $this->db->like('nama_lengkap', $params);
+        $query = $this->db->get('m_users');
+        if ($query->num_rows() > 0) {
+                $result = $query->result_array();
+                $query->free_result();
+            } else {
+                $result = array();
+            }
         return $result;
     }
 
