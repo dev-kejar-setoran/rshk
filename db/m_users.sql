@@ -33,11 +33,11 @@ CREATE TABLE `m_users` (
   `updated_by` varchar(50) NOT NULL,
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id_user`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 
 /*Data for the table `m_users` */
 
-insert  into `m_users`(`id_user`,`username`,`password`,`nama_lengkap`,`email`,`tlp`,`role`,`status`,`last_login`,`created_by`,`created_at`,`updated_by`,`updated_at`) values (1,'admin','827ccb0eea8a706c4c34a16891f84e7b','Admin','admin@gmail.com','123456','admin',1,'2018-04-02 15:44:48','','2018-04-09 02:25:58','','2018-04-09 02:25:58');
+insert  into `m_users`(`id_user`,`username`,`password`,`nama_lengkap`,`email`,`tlp`,`role`,`status`,`last_login`,`created_by`,`created_at`,`updated_by`,`updated_at`) values (1,'admin','827ccb0eea8a706c4c34a16891f84e7b','Admin','admin@gmail.com','123456','admin',1,'2018-04-02 15:44:48','','2018-04-09 02:25:58','','2018-04-09 02:25:58'),(2,'manager','827ccb0eea8a706c4c34a16891f84e7b','Manager','manager@mail.com','098746789','manager',1,'2018-04-15 14:29:44','sql','2018-04-15 14:30:11','','2018-04-15 14:30:16'),(5,'mae@gmail.com','28809d43a0954ec0fed027e93acc428e','Maemunah','mae@gmail.com','0987345673','admin',1,'2018-04-15 22:45:20','Admin','2018-04-16 13:45:03','','2018-04-16 13:45:03');
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
