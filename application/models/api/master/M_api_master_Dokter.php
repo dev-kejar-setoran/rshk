@@ -28,7 +28,6 @@ class M_api_master_Dokter extends CI_Model {
 		return $result[0]['allcount'];
 	}
 
-
 	public function getDataDokter()
 	{
 		$limit = 1;

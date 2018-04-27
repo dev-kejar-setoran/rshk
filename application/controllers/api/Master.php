@@ -17,8 +17,6 @@ class Master extends CI_Controller {
 	public function getDataDokter()
 	{
 
-
-
 		$method = $_SERVER['REQUEST_METHOD'];
 		if($method != 'GET'){
 			json_output(400,array('status' => 400,'message' => 'Bad request.'));
