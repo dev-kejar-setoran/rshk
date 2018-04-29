@@ -37,7 +37,7 @@ class M_api_master_Dokter extends CI_Model {
 		$this->db->from('m_data_dokter');
 		$this->db->join('m_spesialisasi', 'm_spesialisasi.id_spesialisasi = m_data_dokter.id_spesialisasi');
 		$this->db->join('m_jabatan_dokter', 'm_jabatan_dokter.id_jabatan_dokter = m_data_dokter.id_jabatan_dokter');
-		$this->db->limit($limit, $start);
+		//$this->db->limit($limit, $start);
 		//$this->db->record_count();
 		return $this->db->get()->result();	
 
